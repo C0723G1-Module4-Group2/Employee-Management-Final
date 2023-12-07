@@ -3,6 +3,7 @@ package com.example.employeemanagementcasestudy.controller;
 import com.example.employeemanagementcasestudy.dto.ClassDto;
 import com.example.employeemanagementcasestudy.model.Classes;
 import com.example.employeemanagementcasestudy.service.IClassesService;
+import com.example.employeemanagementcasestudy.service.IUserRoleService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -17,11 +18,15 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.security.Principal;
+
 @Controller
 @RequestMapping("/classes")
 public class ClassesController {
     @Autowired
     private IClassesService classesService;
+    @Autowired
+    private IUserRoleService userRoleService;
 
     @GetMapping
     public String showList(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "") String searchingName, Model model) {
@@ -61,7 +66,13 @@ public class ClassesController {
     }
 
     @GetMapping("/edit")
-    public String showUpdateForm(@RequestParam int id, Model model) {
+    public String showUpdateForm(@RequestParam int id, Model model, Principal principal) {
+        if (principal == null) {
+            return "redirect:/login";
+        }
+        if (!userRoleService.isUserAdmin(principal.getName())) {
+            return "redirect:/403";
+        }
         Classes editingClass = classesService.findById(id);
         ClassDto editingClassDto = new ClassDto();
         BeanUtils.copyProperties(editingClass, editingClassDto);
@@ -94,7 +105,13 @@ public class ClassesController {
 
     @Transactional
     @GetMapping("/delete")
-    public String delete(@RequestParam int id, RedirectAttributes attributes) {
+    public String delete(@RequestParam int id, RedirectAttributes attributes,Principal principal) {
+        if (principal == null) {
+            return "redirect:/login";
+        }
+        if (!userRoleService.isUserAdmin(principal.getName())) {
+            return "redirect:/403";
+        }
         classesService.remove(id);
         attributes.addFlashAttribute("success", "Xoá thành công");
         return "redirect:/classes";
