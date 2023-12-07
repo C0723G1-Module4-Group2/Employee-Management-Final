@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="/layout::head">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+            integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+            crossOrigin="anonymous" referrerpolicy="no-referrer">
+    </script>
+<div class="container-fluid">
+    <div class="row">
+        <div th:replace="/layout::sidebar"></div>
+        <div class="col-9 my-3">
+            <h3>Lương nhân viên:</h3>
+            <table width="100%">
+                <tbody id="content">
+                <tr>
+                    <td class="span-field" width="20%">
+                        <span class="input-group-text" >Chọn giảng viên:</span>
+                    </td>
+                    <td>
+                        <select class="form-select input-group-text" aria-label="Default select example" id="teacher" onchange="displayBasicSalary(), calcSalary()">
+
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class=" input-group-text" >Lương cơ bản:</span>
+                    </td>
+                    <td id="basicSalary">
+                        <input readonly type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class="input-group-text" >Hệ số lương:</span>
+                    </td>
+                    <td id="coefficientSalary">
+                        <input  readonly type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class="input-group-text" >Phụ cấp:</span>
+                    </td>
+                    <td id="allowance">
+                        <input readonly type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class="input-group-text" >Warning (%):</span>
+                    </td>
+                    <td id="warning">
+                        <input readonly type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class="input-group-text" >Tổng lương:</span>
+                    </td>
+                    <td id="result">
+                        <input readonly type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+<!--            <button onclick="calcSalary()" class="btn-success">Tính</button>-->
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+            display();
+
+        }
+    )
+
+    function display() {
+        let teacher = "<option value='0'> -- Chọn giảng viên --</option>"
+        $.ajax(
+            {
+                contentType: "application/json",
+                dataType: "json",
+                method: "GET",
+                url:"http://localhost:8080/api-salary",
+                success: function (data) {
+                    for (let i = 0; i < data.length; i++) {
+                        teacher += `<option value="${data[i][0]}">${data[i][10]}</option>`
+                    }
+                    $("#teacher").html(teacher)
+                }
+            }
+        )
+    }
+
+    function displayBasicSalary(){
+        let basicSalary="";
+        let coefficientSalary="";
+        let warning="";
+        let allowance ="";
+        let teacherId =$("#teacher").val();
+        if(teacherId==0){
+            $("#basicSalary").html("<input  readonly type=\"text\" class=\"form-control\" aria-label=\"Sizing example input\" aria-describedby=\"inputGroup-sizing-default\">\n")
+            $("#coefficientSalary").html("<input  readonly type=\"text\" class=\"form-control\" aria-label=\"Sizing example input\" aria-describedby=\"inputGroup-sizing-default\">\n")
+            $("#warning").html("<input  readonly type=\"text\" class=\"form-control\" aria-label=\"Sizing example input\" aria-describedby=\"inputGroup-sizing-default\">\n")
+            $("#allowance").html("<input  readonly type=\"text\" class=\"form-control\" aria-label=\"Sizing example input\" aria-describedby=\"inputGroup-sizing-default\">\n")
+            return
+        }
+        $.ajax(
+            {
+                contentType: "application/json",
+                dataType: "json",
+                method: "GET",
+                url:`http://localhost:8080/api-salary/change-teacher?teacherId=${teacherId}`,
+                success: function (data) {
+                    console.log(data)
+                    for (let i = 0; i < data.length; i++) {
+                            basicSalary = `<input value="${data[i][2]}" id="basicSalary" readonly type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">`;
+                            coefficientSalary = `<input value="${data[i][14]}" readonly type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">`
+                            warning = `<input value="${data[i][11]}" readonly type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">`
+                            allowance = `<input value="${data[i][15]}" readonly type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">`
+                    }
+                    $("#basicSalary").html(basicSalary)
+                    $("#coefficientSalary").html(coefficientSalary)
+                    $("#warning").html(warning)
+                    $("#allowance").html(allowance)
+                }
+            }
+        )
+    }
+
+    function calcSalary(){
+        let salary = 0;
+        let basicSalary=0;
+        let coefficientSalary=0;
+        let warning=0;
+        let allowance =0;
+        let result = "";
+        let teacherId = $("#teacher").val();
+        if (teacherId == 0){
+            $("#result").html(
+                "<input readonly type=\"text\" class=\"form-control\" aria-label=\"Sizing example input\" aria-describedby=\"inputGroup-sizing-default\">"
+            )
+            return
+        }
+
+        $.ajax(
+            {
+                contentType: "application/json",
+                dataType: "json",
+                method: "GET",
+                url:`http://localhost:8080/api-salary/change-teacher?teacherId=${teacherId}`,
+                success: function (data) {
+                    console.log(data)
+                    for (let i = 0; i < data.length; i++){
+                        basicSalary = data[i][2];
+                        coefficientSalary = data[i][14];
+                        warning = data[i][11];
+                        allowance = data[i][15];
+                    }
+                    salary = (basicSalary*coefficientSalary+allowance) - (warning*basicSalary)
+                    result = `<input value='${salary} VND' readOnly type="text" class="form-control"
+                                    aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">`
+                    $("#result").html(result);
+                }
+            }
+        )
+    }
+
+</script>
+</body>
+</html>
