@@ -7,6 +7,7 @@ import com.example.employeemanagementcasestudy.model.Contract;
 import com.example.employeemanagementcasestudy.model.SalaryLevel;
 import com.example.employeemanagementcasestudy.service.IContractService;
 import com.example.employeemanagementcasestudy.service.ISalaryLevelService;
+import com.example.employeemanagementcasestudy.service.IUserRoleService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.security.Principal;
 import java.sql.Date;
 import java.util.List;
 
@@ -32,6 +34,8 @@ public class ContractController {
     private IContractService contractService;
     @Autowired
     private ISalaryLevelService salaryLevelService;
+    @Autowired
+    private IUserRoleService userRoleService;
 
     @GetMapping
     public String showList(@RequestParam(defaultValue = "0") int page,
@@ -80,7 +84,13 @@ public class ContractController {
     }
 
     @GetMapping("/edit/{id}")
-    public String showUpdateForm(@PathVariable int id, Model model,RedirectAttributes redirectAttributes) {
+    public String showUpdateForm(@PathVariable int id, Model model, RedirectAttributes redirectAttributes, Principal principal) {
+        if (principal == null) {
+            return "redirect:/login";
+        }
+        if (!userRoleService.isUserAdmin(principal.getName())) {
+            return "redirect:/403";
+        }
         List<SalaryLevel> salaryLevelList = salaryLevelService.findAllSalaryLevel();
         Contract editContract = contractService.findById(id);
         if (editContract == null){
@@ -106,7 +116,13 @@ public class ContractController {
     }
     @Transactional
     @GetMapping("/delete")
-    public String delete(@RequestParam int id, RedirectAttributes attributes) {
+    public String delete(@RequestParam int id, RedirectAttributes attributes,Principal principal) {
+        if (principal == null) {
+            return "redirect:/login";
+        }
+        if (!userRoleService.isUserAdmin(principal.getName())) {
+            return "redirect:/403";
+        }
         contractService.deleteContract(id);
         attributes.addFlashAttribute("message", "Xoá thành công");
         return "redirect:/contracts";
