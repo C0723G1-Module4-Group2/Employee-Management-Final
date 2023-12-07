@@ -9,6 +9,10 @@ import com.example.employeemanagementcasestudy.service.IAppUserService;
 import com.example.employeemanagementcasestudy.service.IUserRoleService;
 import com.example.employeemanagementcasestudy.util.EncrytedPasswordUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,12 +35,23 @@ public class AppUserController {
     @Autowired
     private IUserRoleService userRoleService;
 
-    @GetMapping
-    public String showList(Model model) {
-        List<AppUser> appUserList = appUserService.findAllAppUser();
-        model.addAttribute("appUserList", appUserList);
-        return "user/list";
-    }
+//    @GetMapping
+//    public String showList(Model model) {
+//        List<AppUser> appUserList = appUserService.findAllAppUser();
+//        model.addAttribute("appUserList", appUserList);
+//        return "user/list";
+//    }
+@GetMapping
+public String showList(Model model,
+                       @RequestParam(defaultValue = "0") int page,
+                       @RequestParam(defaultValue = "") String name) {
+    Pageable pageable = PageRequest.of(page, 7, Sort.by("username").descending());
+    Page<AppUser> blogAppUser;
+        blogAppUser = appUserService.findAllAppUser(name, pageable);
+    model.addAttribute("blogAppUser", blogAppUser);
+    model.addAttribute("name", name);
+    return "user/list";
+}
 
     @GetMapping("/create")
     public String showFormCreate(Model model) {
