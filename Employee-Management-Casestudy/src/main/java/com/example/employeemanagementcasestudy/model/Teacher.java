@@ -5,11 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.sql.Date;
 import java.util.Set;
 
 @Entity
@@ -29,7 +27,7 @@ public class Teacher {
     @Column(nullable = false)
     private String teacherName;
     @Column(nullable = false)
-    private LocalDate dateOfBirth;
+    private Date dateOfBirth;
     @Column(nullable = false)
     private String address;
     @Column(nullable = false, unique = true)
