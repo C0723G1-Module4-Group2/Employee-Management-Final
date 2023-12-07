@@ -201,7 +201,7 @@
                                id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
                                 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/40/Mangekyou_Sharingan_Kakashi.svg/1024px-Mangekyou_Sharingan_Kakashi.svg.png"
                                      alt="" width="32" height="32" class="rounded-circle me-2">
-                                <strong>Admin</strong>
+                                <strong th:utext="${#request.userPrincipal.name}"></strong>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-dark text-small shadow"
                                 aria-labelledby="dropdownUser1">
@@ -209,7 +209,7 @@
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>
-                                <li><a class="dropdown-item" href="#">Đăng xuất</a></li>
+                                <li><a class="dropdown-item" th:href="@{/logout}">Đăng xuất</a></li>
                             </ul>
                         </div>
                     </div>

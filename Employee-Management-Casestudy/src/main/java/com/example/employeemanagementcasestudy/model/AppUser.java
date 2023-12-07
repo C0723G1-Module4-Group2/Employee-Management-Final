@@ -25,4 +25,9 @@ public class AppUser {
     @OneToMany(mappedBy = "appUser")
     private Set<UserRole> userRoles;
     private boolean status;
+    public AppUser(String username, String password, boolean status) {
+        this.username = username;
+        this.password = password;
+        this.status = status;
+    }
 }

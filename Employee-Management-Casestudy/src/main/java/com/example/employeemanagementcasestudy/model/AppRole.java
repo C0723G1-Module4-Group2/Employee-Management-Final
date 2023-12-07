@@ -24,4 +24,8 @@ public class AppRole {
     @OneToMany(mappedBy = "appRole")
     private Set<UserRole> userRoles;
     private boolean status;
+    public AppRole(String roleName, boolean status) {
+        this.roleName = roleName;
+        this.status = status;
+    }
 }
