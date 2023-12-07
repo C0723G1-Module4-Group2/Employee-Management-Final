@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.time.LocalDate;
+import java.sql.Date;
 
 @Entity
 @Setter
@@ -20,8 +20,8 @@ public class Contract {
     @Column(nullable = false,unique = true)
     private String contractCode;
     @Column(nullable = false)
-    private LocalDate startDate;
-    private LocalDate endDate;
+    private Date startDate;
+    private Date endDate;
 
     @ManyToOne
     @JoinColumn(name="salary_level_id", nullable = false)
