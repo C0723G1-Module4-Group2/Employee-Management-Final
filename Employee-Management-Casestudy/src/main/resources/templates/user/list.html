@@ -39,6 +39,11 @@
             <a href="/app-user/create">
                 <button class="my-2 bg-secondary">Thêm mới user</button>
             </a>
+            <form class="d-flex col-3 my-3" role="search" action="/app-user" method="get">
+                <input th:value="${name}" class="form-control me-2" type="search" placeholder="Nhập username" aria-label="Search"
+                       name="name">
+                <button class="btn btn-outline-success" type="submit">Tìm kiếm</button>
+            </form>
             <table class="table">
                 <thead>
                 <tr>
@@ -50,7 +55,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="user,status: ${appUserList}">
+                <tr th:each="user,status: ${blogAppUser}">
                     <td th:text="${status.count}"></td>
                     <td th:text="${user.getUsername()}"></td>
                     <td>
@@ -79,8 +84,19 @@
                         </button>
                     </td>
                 </tr>
+                <tr th:if="${blogAppUser.isEmpty()}">
+                    <td th:colspan="5" class="text-danger">Danh sách rỗng</td>
+                </tr>
                 </tbody>
             </table>
+            <div>
+                <a th:if="${blogAppUser.hasPrevious()}"
+                   th:href="@{/app-user(page=${blogAppUser.getNumber()-1},name=${name})}">Trang sau</a>
+                <span th:text="${blogAppUser.number+1}"></span>/
+                <span th:text="${blogAppUser.totalPages}"></span>
+                <a th:if="${blogAppUser.hasNext()}"
+                   th:href="@{/app-user(page=${blogAppUser.number+1},name=${name})}">Trang trước</a>
+            </div>
         </div>
         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
              aria-hidden="true">
