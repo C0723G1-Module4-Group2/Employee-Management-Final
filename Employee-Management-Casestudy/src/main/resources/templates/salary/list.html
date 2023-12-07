@@ -89,7 +89,7 @@
                 url:"http://localhost:8080/api-salary",
                 success: function (data) {
                     for (let i = 0; i < data.length; i++) {
-                        teacher += `<option value="${data[i][0]}">${data[i][10]}</option>`
+                        teacher += `<option value="${data[i][0]}">${data[i][10]}  ${data[i][11]}</option>`
                     }
                     $("#teacher").html(teacher)
                 }
@@ -120,9 +120,9 @@
                     console.log(data)
                     for (let i = 0; i < data.length; i++) {
                             basicSalary = `<input value="${data[i][2]}" id="basicSalary" readonly type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">`;
-                            coefficientSalary = `<input value="${data[i][14]}" readonly type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">`
-                            warning = `<input value="${data[i][11]}" readonly type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">`
-                            allowance = `<input value="${data[i][15]}" readonly type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">`
+                            coefficientSalary = `<input value="${data[i][15]}" readonly type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">`
+                            warning = `<input value="${data[i][12]}" readonly type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">`
+                            allowance = `<input value="${data[i][16]}" readonly type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">`
                     }
                     $("#basicSalary").html(basicSalary)
                     $("#coefficientSalary").html(coefficientSalary)
@@ -158,9 +158,9 @@
                     console.log(data)
                     for (let i = 0; i < data.length; i++){
                         basicSalary = data[i][2];
-                        coefficientSalary = data[i][14];
-                        warning = data[i][11];
-                        allowance = data[i][15];
+                        coefficientSalary = data[i][15];
+                        warning = data[i][12];
+                        allowance = data[i][16];
                     }
                     salary = (basicSalary*coefficientSalary+allowance) - (warning*basicSalary)
                     result = `<input value='${salary} VND' readOnly type="text" class="form-control"

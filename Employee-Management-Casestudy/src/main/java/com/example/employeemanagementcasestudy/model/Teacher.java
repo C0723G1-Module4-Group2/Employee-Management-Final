@@ -5,8 +5,10 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Set;
 
@@ -27,7 +29,7 @@ public class Teacher {
     @Column(nullable = false)
     private String teacherName;
     @Column(nullable = false)
-    private LocalDateTime dateOfBirth;
+    private LocalDate dateOfBirth;
     @Column(nullable = false)
     private String address;
     @Column(nullable = false, unique = true)
@@ -39,10 +41,15 @@ public class Teacher {
     @Column(nullable = false, unique = true)
     private String identificationCard;
     @Column(nullable = false)
-    private String basicSalary;
+    private int basicSalary;
     @Column(nullable = false)
-    private String warningCoefficient;
+    private int warningCoefficient;
     private boolean status;
+
+    @Column(columnDefinition = "longtext")
+    private String imgOfTeacher;
+
+
     @OneToOne
     @JoinColumn(name = "user_id", nullable = false)
     private AppUser appUser;
@@ -54,7 +61,10 @@ public class Teacher {
     @OneToMany(mappedBy = "teacher")
     private Set<TeachingSchedule> teachingSchedules;
 
+
     public Teacher(int teacherId) {
         this.teacherId = teacherId;
     }
+
+
 }
