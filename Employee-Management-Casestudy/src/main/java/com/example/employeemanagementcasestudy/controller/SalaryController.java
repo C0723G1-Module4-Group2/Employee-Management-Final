@@ -11,4 +11,5 @@ public class SalaryController {
     public String showSalaryPage(){
         return "/salary/list";
     }
+
 }
