@@ -5,6 +5,8 @@ import com.example.employeemanagementcasestudy.model.AppUser;
 import com.example.employeemanagementcasestudy.repository.IAppUserRepository;
 import com.example.employeemanagementcasestudy.service.IAppUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -40,6 +42,11 @@ public class AppUserService implements IAppUserService {
     @Override
     public Integer findUserIdByUsername(String username) {
         return appUserRepository.findUserIdByUsername(username);
+    }
+
+    @Override
+    public Page<AppUser> findAllAppUser( String username,Pageable pageable) {
+        return appUserRepository.search("%"+username+"%",pageable);
     }
 
 
