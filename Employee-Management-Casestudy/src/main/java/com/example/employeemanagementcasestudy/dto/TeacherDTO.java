@@ -2,16 +2,12 @@ package com.example.employeemanagementcasestudy.dto;
 
 import com.example.employeemanagementcasestudy.model.AppUser;
 import com.example.employeemanagementcasestudy.model.Contract;
-import com.example.employeemanagementcasestudy.model.TeachingSchedule;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.*;
 import java.sql.Date;
-import java.util.Set;
 
 
 @Setter
