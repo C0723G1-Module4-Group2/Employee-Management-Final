@@ -15,4 +15,5 @@ public interface ITeacherService {
     public Teacher findById(int id);
 
     Page<Teacher> displayAllTeacher(String teacherName, Pageable pageable);
+    void updateTeacher(Teacher teacher);
 }

@@ -1,8 +1,6 @@
 package com.example.employeemanagementcasestudy.dto;
 
-import com.example.employeemanagementcasestudy.model.AppUser;
-import com.example.employeemanagementcasestudy.model.Contract;
-import com.example.employeemanagementcasestudy.model.TeachingSchedule;
+import com.example.employeemanagementcasestudy.model.*;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,7 +8,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.sql.Date;
+import java.util.List;
 import java.util.Set;
 
 
@@ -34,5 +34,9 @@ public class TeacherDTO {
     private String imgOfTeacher;
     private AppUser appUser;
     private Contract contract;
-
+    private String contractCode;
+    private Date startDate;
+    private Date endDate;
+    private SalaryLevel salaryLevel;
+    private List<AppRole> appRoles;
 }

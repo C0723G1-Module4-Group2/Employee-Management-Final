@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ITeacherRepository extends JpaRepository<Teacher,Integer> {
-    @Query(nativeQuery = true,value = "select  * from teacher where teacher_name like :teacherName ")
+    @Query(nativeQuery = true,value = "select  * from teacher where teacher_name like :teacherName and status = 1")
     Page<Teacher> searchName(@Param("teacherName")String teacherName, Pageable pageable);
 
 }
