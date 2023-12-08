@@ -89,29 +89,67 @@
     <div id="content-to-print">
         <h4>CỘNG HOÀ XÃ HỘI CHỦ NGHĨA VIỆT NAM</h4>
         <h5>Độc lập - Tự do - Hạnh phúc</h5>
-        <h2>
-            Giấy xác nhận lương
-        </h2>
-        <p>
-            Tôi là: <span id="teacher1"></span>
-        </p>
-        <p>
-            Lương cơ bản: <span id="basicSalary1"></span>
-        </p>
-        <p>
-            Hệ số lương: <span id="coefficientSalary1"></span>
-        </p>
-        <p>
-            Phụ cấp: <span id="allowance1"></span>
-        </p>
-        <p>
-            Khấu trừ (%): <span id="warning1"> </span>
-        </p>
-        <p>
-            Thực nhận: <span id="result1"></span>
-        </p>
-        <p>Xác nhận đã nhận lương vào ngày <span id="dateTimeReceive"></span></p>
-        <p>Kí, ghi rõ họ tên</p>
+        <table>
+            <caption>
+                Giấy xác nhận lương
+            </caption>
+            <tr>
+                <td>
+                    Tôi là:
+                </td>
+                <td>
+                    <span id="teacher1"></span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Lương cơ bản:
+                </td>
+                <td>
+                    <span id="basicSalary1"></span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Hệ số lương:
+                </td>
+                <td>
+                    <span id="coefficientSalary1"></span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Phụ cấp:
+                </td>
+                <td>
+                    <span id="allowance1"></span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Khấu trừ (%):
+                </td>
+                <td>
+                    <span id="warning1"> </span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Thực nhận:
+                </td>
+                <td>
+                    <span id="result1"></span>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>Xác nhận đã nhận lương vào ngày <span id="dateTimeReceive"></span></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>Kí, ghi rõ họ tên</td>
+            </tr>
+        </table>
     </div>
 </div>
 
@@ -185,11 +223,11 @@
                     $("#warning").html(warning)
                     $("#allowance").html(allowance)
 
-                    document.getElementById('teacher1').innerText=teacherName;
-                    document.getElementById('basicSalary1').innerText=basicSalary1;
-                    document.getElementById('coefficientSalary1').innerText=coefficientSalary1;
-                    document.getElementById('warning1').innerText=warning1;
-                    document.getElementById('allowance1').innerText=allowance1;
+                    document.getElementById('teacher1').innerText = teacherName;
+                    document.getElementById('basicSalary1').innerText = basicSalary1;
+                    document.getElementById('coefficientSalary1').innerText = coefficientSalary1;
+                    document.getElementById('warning1').innerText = warning1;
+                    document.getElementById('allowance1').innerText = allowance1;
                 }
             }
         )
@@ -229,7 +267,7 @@
                     result = `<input value='${salary} VND' readOnly type="text" class="form-control"
                                     aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">`
                     $("#result").html(result);
-                    document.getElementById('result1').innerText=salary;
+                    document.getElementById('result1').innerText = salary;
                     document.getElementById('dateTimeReceive').innerHTML = new Date().toLocaleDateString('en-GB');
                 }
             }
