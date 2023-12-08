@@ -1,0 +1,26 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="/layout::head">
+  <script>
+    function displayToast(message, color) {
+      document.getElementById("toastContent").innerHTML = message;
+      document.getElementById("liveToast").style.background = color;
+      let myAlert = document.getElementById('liveToast');//select id of toast
+      let bsAlert = new bootstrap.Toast(myAlert);//inizialize it
+      bsAlert.show();//show it
+    }
+  </script>
+</head>
+<body>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-3" th:replace="/layout::sidebar">
+    </div>
+
+    <div class="col-9" style="padding: 0">
+      <h1>Chào mừng đến với chúng tôi</h1>
+    </div>
+  </div>
+</div>
+</body>
+</html>
