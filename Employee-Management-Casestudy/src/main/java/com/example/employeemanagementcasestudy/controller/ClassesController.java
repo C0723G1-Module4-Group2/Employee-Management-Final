@@ -67,12 +67,12 @@ public class ClassesController {
 
     @GetMapping("/edit")
     public String showUpdateForm(@RequestParam int id, Model model, Principal principal) {
-        if (principal == null) {
-            return "redirect:/login";
-        }
-        if (!userRoleService.isUserAdmin(principal.getName())) {
-            return "redirect:/403";
-        }
+//        if (principal == null) {
+//            return "redirect:/login";
+//        }
+//        if (!userRoleService.isUserAdmin(principal.getName())) {
+//            return "redirect:/403";
+//        }
         Classes editingClass = classesService.findById(id);
         ClassDto editingClassDto = new ClassDto();
         BeanUtils.copyProperties(editingClass, editingClassDto);
@@ -106,12 +106,12 @@ public class ClassesController {
     @Transactional
     @GetMapping("/delete")
     public String delete(@RequestParam int id, RedirectAttributes attributes,Principal principal) {
-        if (principal == null) {
-            return "redirect:/login";
-        }
-        if (!userRoleService.isUserAdmin(principal.getName())) {
-            return "redirect:/403";
-        }
+//        if (principal == null) {
+//            return "redirect:/login";
+//        }
+//        if (!userRoleService.isUserAdmin(principal.getName())) {
+//            return "redirect:/403";
+//        }
         classesService.remove(id);
         attributes.addFlashAttribute("success", "Xoá thành công");
         return "redirect:/classes";

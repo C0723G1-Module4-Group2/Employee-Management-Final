@@ -52,12 +52,12 @@ public class AppRoleController {
 
     @GetMapping("/edit")
     public String showFromEdit(Model model, @RequestParam int id, Principal principal) {
-        if (principal == null) {
-            return "redirect:/login";
-        }
-        if (!userRoleService.isUserAdmin(principal.getName())) {
-            return "redirect:/403";
-        }
+//        if (principal == null) {
+//            return "redirect:/login";
+//        }
+//        if (!userRoleService.isUserAdmin(principal.getName())) {
+//            return "redirect:/403";
+//        }
         AppRole appRole = appRoleService.findAppRoleById(id);
         model.addAttribute("appRole", appRole);
         return "/role/edit";

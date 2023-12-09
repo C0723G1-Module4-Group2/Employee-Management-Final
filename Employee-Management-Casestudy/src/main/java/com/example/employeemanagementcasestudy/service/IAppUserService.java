@@ -19,4 +19,5 @@ public interface IAppUserService {
     Integer findUserIdByUsername(String username);
 
     Page<AppUser> findAllAppUser( String username,Pageable pageable);
+    AppUser findByUsername(String username);
 }
