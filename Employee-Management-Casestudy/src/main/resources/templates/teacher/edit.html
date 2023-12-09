@@ -73,8 +73,10 @@
                   <input hidden th:field="*{teacherId}" th:value="${teacherDTO.teacherId}">
                   Họ Và Tên
                   <input class="form-control" type="text" placeholder="Ex: Trần Anh Tuấn" aria-label="default input example" th:field="*{teacherName}" th:value="${teacherDTO.getTeacherName()}">
+                  <p style="color: red" th:if="${#fields.hasErrors('teacherName')}" th:errors="*{teacherName}"></p>
                   Địa Chỉ
                   <input class="form-control" type="text" placeholder="Ex: 280 Đ. Trần Hưng Đạo, An Hải Tây, Sơn Trà, Đà Nẵng 550000" aria-label="default input example" th:field="*{address}" th:value="${teacherDTO.getAddress()}">
+                  <p style="color: red" th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></p>
                   Ngày Tháng Năm Sinh
                   <input class="form-control" type="date" placeholder="Default input" aria-label="default input example" th:field="*{dateOfBirth}" th:value="${teacherDTO.getDateOfBirth()}">
                   Giới Tính
@@ -92,16 +94,22 @@
                   </div>
                   Số CMND / CCCD:
                   <input class="form-control" type="text" placeholder="Ex : 1234567899" aria-label="default input example" th:value="${teacherDTO.getIdentificationCard()}" th:field="*{identificationCard}">
+                  <p style="color: red" th:if="${#fields.hasErrors('identificationCard')}" th:errors="*{identificationCard}"></p>
                 </div>
                 <div class="col-6">
                   Mã Giáo Viên
                   <input class="form-control" type="text" placeholder="Ex : TC-01" aria-label="default input example" th:field="*{teacherCode}" th:value="${teacherDTO.getTeacherCode()}">
+                  <p style="color: red" th:if="${#fields.hasErrors('teacherCode')}" th:errors="*{teacherCode}"></p>
                   Mail:
                   <input class="form-control" type="text" placeholder="Ex : Name@gmail.com" aria-label="default input example" th:field="*{mail}" th:value="${teacherDTO.getMail()}">
+                  <p style="color: red" th:if="${#fields.hasErrors('mail')}" th:errors="*{mail}"></p>
                   Số Điện Thoại:
                   <input class="form-control" type="text" placeholder="Ex :0236 6517 021" aria-label="default input example" th:field="*{phoneNumber}" th:value="${teacherDTO.getPhoneNumber()}">
+                  <p style="color: red" th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}"></p>
+
                   Lương:
                   <input class="form-control" type="number" placeholder="Ex : 50000000" aria-label="default input example" th:field="*{basicSalary}" th:value="${teacherDTO.getBasicSalary()}">
+                  <p style="color: red" th:if="${#fields.hasErrors('basicSalary')}" th:errors="*{basicSalary}"></p>
                   Hình Ảnh
                   <input class="form-control" type="text" placeholder="Đường Link Của Ảnh" aria-label="default input example" th:field="*{imgOfTeacher}" th:value="${teacherDTO.getImgOfTeacher()}">
                   <button  style="margin-top: 10px ; text-align: right" type="submit" class="btn btn-success">Success</button>
