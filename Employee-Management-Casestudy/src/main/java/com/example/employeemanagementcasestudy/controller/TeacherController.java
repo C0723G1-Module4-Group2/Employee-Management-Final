@@ -1,22 +1,22 @@
 package com.example.employeemanagementcasestudy.controller;
 
 
-import com.example.employeemanagementcasestudy.dto.ContractDto;
 import com.example.employeemanagementcasestudy.dto.TeacherDTO;
 import com.example.employeemanagementcasestudy.model.*;
 import com.example.employeemanagementcasestudy.service.*;
 import com.example.employeemanagementcasestudy.util.EncrytedPasswordUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller()
@@ -68,24 +68,27 @@ public class TeacherController {
 //        return "redirect:/teacher";
 //    }
     @PostMapping("/add")
-    public String addNewTeacher(@ModelAttribute("teacherDTO") TeacherDTO teacherDTO) {
-        Contract contract = new Contract();
-        String password = EncrytedPasswordUtils.encrytePassword("123");
-        AppUser appUser = new AppUser(teacherDTO.getMail(), password, true);
-
-        iAppUserService.createAppUser(appUser);
-        for (AppRole appRole:teacherDTO.getAppRoles()) {
-            userRoleService.createUserRole(new UserRole(appRole,appUser));
+    public String addNewTeacher(@Valid @ModelAttribute("teacherDTO") TeacherDTO teacherDTO , BindingResult bindingResult) {
+        if (bindingResult.hasFieldErrors()){
+            return "/teacher/add";
+        }else {
+            Contract contract = new Contract();
+            String password = EncrytedPasswordUtils.encrytePassword("123");
+            AppUser appUser = new AppUser(teacherDTO.getMail(), password, true);
+            iAppUserService.createAppUser(appUser);
+            for (AppRole appRole:teacherDTO.getAppRoles()) {
+                userRoleService.createUserRole(new UserRole(appRole,appUser));
+            }
+            BeanUtils.copyProperties(teacherDTO, contract);
+            iContractService.createContract(contract);
+            Teacher teacher = new Teacher();
+            BeanUtils.copyProperties(teacherDTO, teacher);
+            teacher.setContract(contract);
+            teacher.setAppUser(appUser);
+            teacher.setStatus(true);
+            iTeacherService.addNewTeacher(teacher);
+            return "redirect:/teacher";
         }
-        BeanUtils.copyProperties(teacherDTO, contract);
-        iContractService.createContract(contract);
-         Teacher teacher = new Teacher();
-        BeanUtils.copyProperties(teacherDTO, teacher);
-        teacher.setContract(contract);
-        teacher.setAppUser(appUser);
-        teacher.setStatus(true);
-        iTeacherService.addNewTeacher(teacher);
-        return "redirect:/teacher";
     }
 
     @GetMapping("/edit")
@@ -97,11 +100,16 @@ public class TeacherController {
         return "/teacher/edit";
     }
     @PostMapping("/edit")
-    public String edit(@ModelAttribute TeacherDTO teacherDTO){
-        Teacher teacher1 = iTeacherService.findById(teacherDTO.getTeacherId());
-        BeanUtils.copyProperties(teacherDTO,teacher1);
-        iTeacherService.addNewTeacher(teacher1);
-        return "redirect:/teacher";
+    public String edit(@Valid @ModelAttribute TeacherDTO teacherDTO , BindingResult bindingResult){
+        if (bindingResult.hasFieldErrors()){
+            return "/teacher/edit";
+        }else {
+            Teacher teacher1 = iTeacherService.findById(teacherDTO.getTeacherId());
+            BeanUtils.copyProperties(teacherDTO,teacher1);
+            iTeacherService.addNewTeacher(teacher1);
+            return "redirect:/teacher";
+        }
+
     }
 
     @GetMapping("/detail{id}")
