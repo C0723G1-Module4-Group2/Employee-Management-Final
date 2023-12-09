@@ -49,5 +49,10 @@ public class AppUserService implements IAppUserService {
         return appUserRepository.search("%"+username+"%",pageable);
     }
 
+    @Override
+    public AppUser findByUsername(String username) {
+        return appUserRepository.findByUsername(username);
+    }
+
 
 }
