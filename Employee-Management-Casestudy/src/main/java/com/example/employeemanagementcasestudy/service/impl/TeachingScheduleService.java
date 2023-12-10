@@ -3,12 +3,16 @@ package com.example.employeemanagementcasestudy.service.impl;
 import com.example.employeemanagementcasestudy.dto.TeacherDtoMap;
 import com.example.employeemanagementcasestudy.dto.TeachingScheduleDto;
 import com.example.employeemanagementcasestudy.dto.TimeSheetDto;
+import com.example.employeemanagementcasestudy.model.Teacher;
 import com.example.employeemanagementcasestudy.model.TeachingSchedule;
 import com.example.employeemanagementcasestudy.repository.ITeachingScheduleRepository;
+import com.example.employeemanagementcasestudy.service.IAppUserService;
+import com.example.employeemanagementcasestudy.service.ITeacherService;
 import com.example.employeemanagementcasestudy.service.ITeachingScheduleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.security.Principal;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -16,6 +20,10 @@ import java.util.List;
 public class TeachingScheduleService implements ITeachingScheduleService {
     @Autowired
     private ITeachingScheduleRepository teachingScheduleRepository;
+    @Autowired
+    private IAppUserService appUserService;
+    @Autowired
+    private ITeacherService teacherService;
 
     @Override
     public void save(TeachingSchedule teachingSchedule) {
@@ -71,4 +79,12 @@ public class TeachingScheduleService implements ITeachingScheduleService {
     public List<TeacherDtoMap> getTeacherFreeForUpdate(int teachingScheduleId, LocalDate startDate, LocalDate endDate, int timeSheetId) {
         return teachingScheduleRepository.getTeacherFreeForUpdate(startDate,endDate,timeSheetId,teachingScheduleId);
     }
+
+    @Override
+    public List<TeachingScheduleDto> getAllScheduleByTeacher(String username) {
+        return teachingScheduleRepository.getAllScheduleByTeacher(username);
+    }
+
+
+
 }

@@ -13,8 +13,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -126,4 +128,14 @@ public class RestTeachingScheduleController {
         }
         return new ResponseEntity<>(teachingSchedule, HttpStatus.OK);
     }
+    @GetMapping("/user")
+    public ResponseEntity<List<TeachingScheduleDto>> showCalendarForUser(Principal principal){
+
+        List<TeachingScheduleDto> events = teachingScheduleService.getAllScheduleByTeacher(principal.getName());
+        if (events.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(events, HttpStatus.OK);
+    }
+
 }

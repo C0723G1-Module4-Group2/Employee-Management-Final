@@ -1,6 +1,7 @@
 package com.example.employeemanagementcasestudy.repository;
 
 
+import com.example.employeemanagementcasestudy.model.Teacher;
 import com.example.employeemanagementcasestudy.model.TeachingSchedule;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -72,4 +73,10 @@ public interface ITeachingScheduleRepository extends JpaRepository<TeachingSched
             @Param("endDate") LocalDate endDate,
             @Param("timeSheetId") int timeSheetId,
             @Param("teachingScheduleId") int teachingScheduleId);
+    @Query(value = "SELECT ts.*,c.class_name,t.teacher_name,ti.start_time,ti.end_time FROM teaching_schedule ts \n" +
+            "            join classes c on c.class_id = ts.class_id\n" +
+            "            join teacher t on t.teacher_id = ts.teacher_id\n" +
+            "            join time_sheets ti on ti.time_sheet_id = ts.time_sheet_id\n" +
+            "            where t.teacher_id = (select teacher_id from teacher where user_id = (select user_id from app_user where username = :username)) ;", nativeQuery = true)
+    <TeachingScheduleDto> List<TeachingScheduleDto> getAllScheduleByTeacher(@Param("username") String username);
 }

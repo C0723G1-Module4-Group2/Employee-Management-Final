@@ -363,8 +363,8 @@
                     $("#modal-class").html(`${info.event.title}`)
                     $("#modal-teacher").html(`${info.event.extendedProps.teacherName}`)
                     $("#modal-current").html("Ngày đang chọn: " + new Date(`${info.event.extendedProps.dates}`).toLocaleDateString('en-GB'));
-                    $("#modal-startDate").html(`${info.event.extendedProps.startDate}`)
-                    $("#modal-endDate").html(`${info.event.extendedProps.endDate}`)
+                    $("#modal-startDate").html(new Date(`${info.event.extendedProps.startDate}`).toLocaleDateString('en-GB'))
+                    $("#modal-endDate").html(new Date(`${info.event.extendedProps.endDate}`).toLocaleDateString('en-GB'))
                     $("#modal-startTime").html(`${info.event.extendedProps.startTime}`)
                     $("#modal-endTime").html(`${info.event.extendedProps.endTime}`)
                     $("#teachingScheduleId").val(`${info.event.extendedProps.teachingScheduleId}`)
