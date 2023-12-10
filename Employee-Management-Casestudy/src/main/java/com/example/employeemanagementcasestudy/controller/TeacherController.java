@@ -40,7 +40,7 @@ public class TeacherController {
     public String showManagementTeacher(@RequestParam(defaultValue = "0") int page,
                                         @RequestParam(defaultValue = "") String searchName,
                                         Model model) {
-        Pageable pageable = PageRequest.of(page, 1, Sort.by("teacher_name").ascending());
+        Pageable pageable = PageRequest.of(page, 5, Sort.by("teacher_name").ascending());
         Page<Teacher> teacherPage = iTeacherService.displayAllTeacher(searchName, pageable);
         model.addAttribute("teacherPage", teacherPage);
         model.addAttribute("searchName", searchName);
@@ -131,6 +131,12 @@ public class TeacherController {
 
     @GetMapping("/user/detail")
     public String detail(Model model, Principal principal) {
+                if (principal == null) {
+            return "redirect:/login";
+        }
+        if (userRoleService.isUserAdmin(principal.getName())) {
+            return "redirect:/403";
+        }
         AppUser appUser = iAppUserService.findByUsername(principal.getName());
         Teacher teacher = iTeacherService.findTeacherByAppUser(appUser);
         model.addAttribute("teacher", teacher);

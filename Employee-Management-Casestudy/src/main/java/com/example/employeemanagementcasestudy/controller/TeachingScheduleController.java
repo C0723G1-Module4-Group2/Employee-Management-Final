@@ -5,6 +5,7 @@ import com.example.employeemanagementcasestudy.model.TeachingSchedule;
 import com.example.employeemanagementcasestudy.service.IAppUserService;
 import com.example.employeemanagementcasestudy.service.ITeacherService;
 import com.example.employeemanagementcasestudy.service.ITeachingScheduleService;
+import com.example.employeemanagementcasestudy.service.IUserRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,7 +23,8 @@ public class TeachingScheduleController {
     @Autowired
     private ITeachingScheduleService teachingScheduleService;
     @Autowired
-    private ITeacherService teacherService;
+    private IUserRoleService userRoleService;
+
 
     @GetMapping("")
     public String showCalendar(Model model){
@@ -30,10 +32,12 @@ public class TeachingScheduleController {
     }
     @GetMapping("/user")
     public String showCalendarForUser(Model model, Principal principal){
-//        AppUser appUser = appUserService.findByUsername(principal.getName());
-//        Teacher teacher = teacherService.findTeacherByAppUser(appUser);
-//        List<TeachingSchedule> teachingSchedules = teachingScheduleService.findTeachingScheduleByTeacher(teacher);
-//        model.addAttribute("listSchedule",teachingSchedules);
+        if (principal == null) {
+            return "redirect:/login";
+        }
+        if (userRoleService.isUserAdmin(principal.getName())) {
+            return "redirect:/403";
+        }
         return "teaching_schedule/listForTeacher";
     }
 }

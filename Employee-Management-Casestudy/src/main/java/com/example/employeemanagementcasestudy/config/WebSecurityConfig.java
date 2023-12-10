@@ -57,7 +57,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/contracts/edit/**","/contracts/delete/**","/salary","/teacher","teacher/add",
                         "teacher/edit/**","teacher/delete/**","teacher/detail/**","/schedule")
                 .access("hasRole('ROLE_ADMIN')");
-        http.authorizeRequests().antMatchers("/teacher/user/detail")
+        http.authorizeRequests().antMatchers("/teacher/user/detail","/schedule/user")
                 .access("hasAnyRole('ROLE_USER')");
 
         // Khi người dùng đã login, với vai trò XX.
