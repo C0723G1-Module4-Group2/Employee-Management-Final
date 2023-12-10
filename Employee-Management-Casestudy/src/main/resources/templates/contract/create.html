@@ -1,7 +1,9 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html" lang="en">
 <head th:replace="/layout :: head">
   <title>Classes</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.10.1/sweetalert2.css" rel="stylesheet">
+
 </head>
 <body>
 <div class="container-fluid">
@@ -10,11 +12,6 @@
     </div>
     <div class="col-9">
       <div>
-        <div class="notify">
-          <div>
-            <span th:text="${message}"></span>
-          </div>
-        </div>
         <h3>Thêm mới hợp đồng</h3>
         <p>
           <a class="btn btn-sm btn-outline-primary" th:href="@{/contracts}">
@@ -45,7 +42,7 @@
                 <option th:value="${salaryLevel.getSalaryLevelId()}" th:each="salaryLevel: ${salaryLevelList}" th:text="${salaryLevel.getCoefficientsSalary()}"></option>
               </select>
             </div>
-            <input type="submit" value="Thêm mới hợp đồng" class="btn btn-sm btn-outline-success"/>
+            <button  class="btn btn-sm btn-outline-success" id="btn-add">Thêm mới hợp đồng</button>
           </form>
         </div>
       </div>
@@ -66,6 +63,18 @@
   // var formattedDate = (day < 10 ? '0' : '') + day + '/' + (month < 10 ? '0' : '') + month + '/' + year;
   // Gán giá trị cho ô input
   document.getElementById('currentDate').value = formattedDate;
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.10.1/sweetalert2.min.js"></script>
+<script>
+  $("#btn-add").click(function (){
+    Swal.fire({
+      position: "top",
+      icon: "success",
+      title: "Đã thêm lịch thành công",
+      showConfirmButton: false,
+      timer: 1500
+    });
+  })
 </script>
 </body>
 </html>
