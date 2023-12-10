@@ -85,12 +85,12 @@ public class ContractController {
 
     @GetMapping("/edit/{id}")
     public String showUpdateForm(@PathVariable int id, Model model, RedirectAttributes redirectAttributes, Principal principal) {
-        if (principal == null) {
-            return "redirect:/login";
-        }
-        if (!userRoleService.isUserAdmin(principal.getName())) {
-            return "redirect:/403";
-        }
+//        if (principal == null) {
+//            return "redirect:/login";
+//        }
+//        if (!userRoleService.isUserAdmin(principal.getName())) {
+//            return "redirect:/403";
+//        }
         List<SalaryLevel> salaryLevelList = salaryLevelService.findAllSalaryLevel();
         Contract editContract = contractService.findById(id);
         if (editContract == null){
@@ -117,12 +117,12 @@ public class ContractController {
     @Transactional
     @GetMapping("/delete")
     public String delete(@RequestParam int id, RedirectAttributes attributes,Principal principal) {
-        if (principal == null) {
-            return "redirect:/login";
-        }
-        if (!userRoleService.isUserAdmin(principal.getName())) {
-            return "redirect:/403";
-        }
+//        if (principal == null) {
+//            return "redirect:/login";
+//        }
+//        if (!userRoleService.isUserAdmin(principal.getName())) {
+//            return "redirect:/403";
+//        }
         contractService.deleteContract(id);
         attributes.addFlashAttribute("message", "Xoá thành công");
         return "redirect:/contracts";
