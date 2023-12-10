@@ -94,7 +94,7 @@ public class ClassesController {
         if (classesService.findByName(editingClass.getClassName()) == null) {
             editingClass.setStatus(true);
             classesService.addClass(editingClass);
-            attributes.addFlashAttribute("success", "Đã sửa thành công!");
+            attributes.addFlashAttribute("edit", "Đã sửa thành công!");
             return "redirect:/classes";
         } else {
             int id = editingClass.getClassId();
@@ -113,7 +113,7 @@ public class ClassesController {
 //            return "redirect:/403";
 //        }
         classesService.remove(id);
-        attributes.addFlashAttribute("success", "Xoá thành công");
+        attributes.addFlashAttribute("delete", "Xoá thành công");
         return "redirect:/classes";
     }
 
