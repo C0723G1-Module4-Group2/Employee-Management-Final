@@ -425,6 +425,8 @@
         if (updateEndDate < updateStartDate) {
             endDateBelowThanStartDate()
             $("#updateEndDate").val($("#updateEndDateHiden").val());
+        }else {
+            $("#btn-update").prop("disabled", false)
         }
 
     }
@@ -566,6 +568,7 @@
     }
 
     function displayInfoUpdate() {
+        $("#btn-update").prop("disabled", true)
         $("#updateEndDate").on("change", function () {
             validateEndDate();
         });
@@ -574,6 +577,12 @@
             validateStartDate()
         });
         displaySheetForUpdate(displayTeacherForUpdate);
+        $("#updateTimeSheet").on("change", function () {
+            $("#btn-update").prop("disabled", false)
+        });
+        $("#updateTeacher").on("change", function () {
+            $("#btn-update").prop("disabled", false)
+        });
     }
 
     function validateStartDate() {
@@ -583,8 +592,10 @@
         if (updateEndDate < updateStartDate) {
             startDateGreaterThanEndDate()
             $("#updateStartDate").val($("#updateStartDateHiden").val());
-
+        }else {
+            $("#btn-update").prop("disabled", false)
         }
+
         let startDate = new Date($("#startDate").val());
         let endDate = new Date($("#endDate").val());
 
