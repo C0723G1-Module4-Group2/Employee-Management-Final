@@ -20,4 +20,10 @@ public class TeachingScheduleController {
         model.addAttribute("listSchedule",teachingSchedules);
         return "teaching_schedule/list";
     }
+    @GetMapping("/user")
+    public String showCalendarForUser(Model model){
+//        List<TeachingSchedule> teachingSchedules = teachingScheduleService.getAll();
+//        model.addAttribute("listSchedule",teachingSchedules);
+        return "teaching_schedule/listForTeacher";
+    }
 }
