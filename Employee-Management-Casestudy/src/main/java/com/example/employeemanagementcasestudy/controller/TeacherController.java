@@ -39,7 +39,7 @@ public class TeacherController {
     public String showManagementTeacher(@RequestParam(defaultValue = "0") int page,
                                         @RequestParam(defaultValue = "") String searchName,
                                         Model model) {
-        Pageable pageable = PageRequest.of(page, 1, Sort.by("teacher_name").ascending());
+        Pageable pageable = PageRequest.of(page, 5, Sort.by("teacher_name").ascending());
         Page<Teacher> teacherPage = iTeacherService.displayAllTeacher(searchName, pageable);
         model.addAttribute("teacherPage", teacherPage);
         model.addAttribute("searchName", searchName);
