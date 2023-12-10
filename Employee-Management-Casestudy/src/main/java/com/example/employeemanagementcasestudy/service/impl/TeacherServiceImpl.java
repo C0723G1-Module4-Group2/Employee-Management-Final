@@ -1,6 +1,7 @@
 package com.example.employeemanagementcasestudy.service.impl;
 
 
+import com.example.employeemanagementcasestudy.model.AppUser;
 import com.example.employeemanagementcasestudy.model.Teacher;
 import com.example.employeemanagementcasestudy.repository.ITeacherRepository;
 import com.example.employeemanagementcasestudy.service.ITeacherService;
@@ -15,14 +16,15 @@ import java.util.List;
 public class TeacherServiceImpl implements ITeacherService {
     @Autowired
     private ITeacherRepository iTeacherRepository;
+
     @Override
     public void addNewTeacher(Teacher teacher) {
-    iTeacherRepository.save(teacher);
+        iTeacherRepository.save(teacher);
     }
 
     @Override
     public void deleteTeacher(int id) {
-    iTeacherRepository.deleteById(id);
+        iTeacherRepository.deleteById(id);
     }
 
     @Override
@@ -32,14 +34,27 @@ public class TeacherServiceImpl implements ITeacherService {
 
     @Override
     public void editTeacher(Teacher teacher) {
-    iTeacherRepository.save(teacher);
+        iTeacherRepository.save(teacher);
     }
-    public Teacher findById(int id){
+
+    public Teacher findById(int id) {
         return iTeacherRepository.findById(id).get();
     }
 
     @Override
     public Page<Teacher> displayAllTeacher(String teacherName, Pageable pageable) {
-        return iTeacherRepository.searchName("%" + teacherName + "%" , pageable);
+        return iTeacherRepository.searchName("%" + teacherName + "%", pageable);
+    }
+
+    @Override
+    public void updateTeacher(Teacher teacher) {
+        if (iTeacherRepository.existsById(teacher.getTeacherId())) {
+            iTeacherRepository.save(teacher);
+        }
+    }
+
+    @Override
+    public Teacher findTeacherByAppUser(AppUser appUser) {
+        return iTeacherRepository.findTeacherByAppUser(appUser);
     }
 }
