@@ -62,14 +62,34 @@
             <div class="row col-12">
                 <div class="col-6">
                     <form style="margin: 10px" th:action="@{/teacher/add}" method="post" th:object="${teacherDTO}">
-                        <fieldset style="border: 1px solid black ; height: 470px" >
-                            <legend>
+                        <fieldset>
+                            <div class="input-group">
+                                <label for="contractCode">Mã hợp đồng(CT-xxx)(*): </label>
+                                <input type="text" id="contractCode" th:field="*{contractCode}" placeholder="Nhập mã hợp đồng"/>
+                                <p style="color: red" th:if="${#fields.hasErrors('contractCode')}" th:errors="*{contractCode}"></p>
+                            </div>
+                            <div class="input-group">
+                                <label for="currentDate">Ngày làm hợp đồng: </label>
+                                <input style="border: 0" type="text" id="currentDate" readonly th:field="*{startDate}">
+                            </div>
+                            <div class="input-group">
+                                <label for="endDate">Ngày kết thúc hợp đồng: </label>
+                                <input type="date" required id="endDate"  th:field="*{endDate}"/>
+                                <p style="color: red" th:if="${#fields.hasErrors('endDate')}" th:errors="*{endDate}"></p>
+                            </div>
+                            <div class="input-group">
+                                <label for="salary">Hệ số lương: </label>
+                                <select id="salary" th:field="*{salaryLevel}">
+                                    <option th:value="${salaryLevel.getSalaryLevelId()}" th:each="salaryLevel: ${salaryLevelList}" th:text="${salaryLevel.getCoefficientsSalary()}"></option>
+                                </select>
+                            </div>
+                        </fieldset>
+                        <fieldset class="border border-dark rounded-3 p-3" >
+                            <legend class="float-none w-auto px-3">
                                 Thêm Mới Giáo Viên
                             </legend>
                             <div class="row col-12">
                                 <div class="col-6">
-                                    Tài Khoản:
-                                    <input th:text="${user.getUsername()}" th:value="${user.getUserId()}" th:field="*{appUser}">
                                     Họ Và Tên
                                     <input class="form-control" type="text" placeholder="Ex: Trần Anh Tuấn" aria-label="default input example" th:field="*{teacherName}">
                                     Địa Chỉ
@@ -89,12 +109,17 @@
                                             Nữ
                                         </label>
                                     </div>
+                                    <label>Chọn role</label>
+                                        <div class="form-check" th:each="role : ${appRoleList}">
+                                            <input class="form-check-input" type="checkbox" th:value="${role.roleId}"
+                                                   th:field="*{appRoles}" id="flexCheckDefault">
+                                            <label class="form-check-label" for="flexCheckDefault" th:text="${role.roleName}">
+                                            </label>
+                                        </div>
                                     Số CMND / CCCD:
                                     <input class="form-control" type="text" placeholder="Ex : 1234567899" aria-label="default input example" th:field="*{identificationCard}">
                                 </div>
                                 <div class="col-6">
-                                    Mã Hợp Đồng:
-                                    <input th:text="${contract.getContractCode()}" th:value="${contract.getContractId()}" th:field="*{contract}">
                                     Mã Giáo Viên
                                     <input class="form-control" type="text" placeholder="Ex : TC-01" aria-label="default input example" th:field="*{teacherCode}">
                                     Mail:
@@ -104,7 +129,10 @@
                                     Lương:
                                     <input class="form-control" type="number" placeholder="Ex : 50000000" aria-label="default input example" th:field="*{basicSalary}">
                                     Hình Ảnh
-                                    <input class="form-control" type="text" placeholder="Đường Link Của Ảnh" aria-label="default input example" th:field="*{imgOfTeacher}">
+                                    <input type="text" hidden id="imgUrl" name="img" th:field="*{imgOfTeacher}"/>
+                                    <input type="file" onchange="displayButton()" id="photo"/>
+                                    <button type="button" onclick="uploadImage()" style="display: none" id="upload">Upload firebase</button>
+<!--                                    <input class="form-control" type="text" placeholder="Đường Link Của Ảnh" aria-label="default input example" th:field="*{imgOfTeacher}">-->
                                     <button  style="margin-top: 10px ; text-align: right" type="submit" class="btn btn-success">Success</button>
                                 </div>
                             </div>
@@ -118,3 +146,67 @@
         </div>
     </div>
 </div>
+<script>
+    // Lấy ngày hiện tại
+    var currentDate = new Date();
+
+    // Format ngày hiện tại dưới dạng YYYY-MM-DD
+    var formattedDate = currentDate.toISOString().split('T')[0];
+    // Lấy thông tin ngày, tháng, năm
+    // var day = currentDate.getDate();
+    // var month = currentDate.getMonth() + 1; // Lưu ý: Tháng bắt đầu từ 0
+    // var year = currentDate.getFullYear();
+    // // Định dạng lại chuỗi ngày theo "dd/mm/yyyy"
+    // var formattedDate = (day < 10 ? '0' : '') + day + '/' + (month < 10 ? '0' : '') + month + '/' + year;
+    // Gán giá trị cho ô input
+    document.getElementById('currentDate').value = formattedDate;
+</script>
+<script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-storage.js"></script>
+<script>
+    //code được lấy trên firebase sau khi đã config
+    const firebaseConfig = {
+        apiKey: "AIzaSyAudKalmoetcWYY5mKx7GqIc6IMFdEnaIo",
+        authDomain: "case-group2.firebaseapp.com",
+        projectId: "case-group2",
+        storageBucket: "case-group2.appspot.com",
+        messagingSenderId: "870183228779",
+        appId: "1:870183228779:web:fb4f99c0b6b7373f4b282e",
+        measurementId: "G-NVFJY77T5Q"
+    };
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    console.log(firebase);
+
+    function uploadImage() {
+        const ref = firebase.storage().ref();
+        const file = document.querySelector("#photo").files[0];
+        const name = +new Date() + "-" + file.name;
+        const metadata = {
+            contentType: file.type
+        };
+        const task = ref.child(name).put(file, metadata);
+
+        task.then(snapshot => snapshot.ref.getDownloadURL())
+            .then(url => {
+                // đường dẫn sau khi lưu xong trền firebase sẽ trả về đường dẫn.
+                console.log(url);
+                alert('image uploaded successfully');
+                // gán vào thẻ form để submit
+                document.getElementById("imgUrl").value = url;
+                // submit tự động
+                document.getElementById("form-submit").submit();
+            })
+            .catch(console.error);
+    }
+
+    function displayButton() {
+        let fileValue = document.getElementById("photo").value;
+        if (fileValue != "") {
+            document.getElementById("upload").style.display = "inline";
+        }
+    }
+</script>
+</body>
+</html>
