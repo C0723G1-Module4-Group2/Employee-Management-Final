@@ -17,6 +17,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.List;
 
 @Controller()
@@ -68,16 +69,16 @@ public class TeacherController {
 //        return "redirect:/teacher";
 //    }
     @PostMapping("/add")
-    public String addNewTeacher(@Valid @ModelAttribute("teacherDTO") TeacherDTO teacherDTO , BindingResult bindingResult) {
-        if (bindingResult.hasFieldErrors()){
+    public String addNewTeacher(@Valid @ModelAttribute("teacherDTO") TeacherDTO teacherDTO, BindingResult bindingResult) {
+        if (bindingResult.hasFieldErrors()) {
             return "/teacher/add";
-        }else {
+        } else {
             Contract contract = new Contract();
             String password = EncrytedPasswordUtils.encrytePassword("123");
             AppUser appUser = new AppUser(teacherDTO.getMail(), password, true);
             iAppUserService.createAppUser(appUser);
-            for (AppRole appRole:teacherDTO.getAppRoles()) {
-                userRoleService.createUserRole(new UserRole(appRole,appUser));
+            for (AppRole appRole : teacherDTO.getAppRoles()) {
+                userRoleService.createUserRole(new UserRole(appRole, appUser));
             }
             BeanUtils.copyProperties(teacherDTO, contract);
             iContractService.createContract(contract);
@@ -92,20 +93,21 @@ public class TeacherController {
     }
 
     @GetMapping("/edit")
-    public String showEdit(@RequestParam int id,Model model){
+    public String showEdit(@RequestParam int id, Model model) {
         Teacher teacher = iTeacherService.findById(id);
         TeacherDTO teacherDTO = new TeacherDTO();
-        BeanUtils.copyProperties(teacher,teacherDTO);
-        model.addAttribute("teacherDTO",teacherDTO);
+        BeanUtils.copyProperties(teacher, teacherDTO);
+        model.addAttribute("teacherDTO", teacherDTO);
         return "/teacher/edit";
     }
+
     @PostMapping("/edit")
-    public String edit(@Valid @ModelAttribute TeacherDTO teacherDTO , BindingResult bindingResult){
-        if (bindingResult.hasFieldErrors()){
+    public String edit(@Valid @ModelAttribute TeacherDTO teacherDTO, BindingResult bindingResult) {
+        if (bindingResult.hasFieldErrors()) {
             return "/teacher/edit";
-        }else {
+        } else {
             Teacher teacher1 = iTeacherService.findById(teacherDTO.getTeacherId());
-            BeanUtils.copyProperties(teacherDTO,teacher1);
+            BeanUtils.copyProperties(teacherDTO, teacher1);
             iTeacherService.addNewTeacher(teacher1);
             return "redirect:/teacher";
         }
@@ -125,5 +127,13 @@ public class TeacherController {
         teacher.setStatus(false);
         iTeacherService.updateTeacher(teacher);
         return "redirect:/teacher";
+    }
+
+    @GetMapping("/user/detail")
+    public String detail(Model model, Principal principal) {
+        AppUser appUser = iAppUserService.findByUsername(principal.getName());
+        Teacher teacher = iTeacherService.findTeacherByAppUser(appUser);
+        model.addAttribute("teacher", teacher);
+        return "teacher/detail";
     }
 }
