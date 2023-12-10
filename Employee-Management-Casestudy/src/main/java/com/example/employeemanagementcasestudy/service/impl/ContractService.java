@@ -52,7 +52,7 @@ public class ContractService implements IContractService {
 
     @Override
     public Page<ContractDto1> getContract(String code, Pageable pageable) {
-        return contractRepository.getContract(code,pageable);
+        return contractRepository.getContract("%" + code + "%",pageable);
     }
 
 }

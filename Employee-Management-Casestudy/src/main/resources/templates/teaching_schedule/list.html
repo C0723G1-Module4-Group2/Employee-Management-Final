@@ -363,8 +363,8 @@
                     $("#modal-class").html(`${info.event.title}`)
                     $("#modal-teacher").html(`${info.event.extendedProps.teacherName}`)
                     $("#modal-current").html("Ngày đang chọn: " + new Date(`${info.event.extendedProps.dates}`).toLocaleDateString('en-GB'));
-                    $("#modal-startDate").html(`${info.event.extendedProps.startDate}`)
-                    $("#modal-endDate").html(`${info.event.extendedProps.endDate}`)
+                    $("#modal-startDate").html(new Date(`${info.event.extendedProps.startDate}`).toLocaleDateString('en-GB'))
+                    $("#modal-endDate").html(new Date(`${info.event.extendedProps.endDate}`).toLocaleDateString('en-GB'))
                     $("#modal-startTime").html(`${info.event.extendedProps.startTime}`)
                     $("#modal-endTime").html(`${info.event.extendedProps.endTime}`)
                     $("#teachingScheduleId").val(`${info.event.extendedProps.teachingScheduleId}`)
@@ -401,11 +401,15 @@
         })
         $("#timeSheet").html(sheets)
         $("#teacher").html(teacher)
-        $("#startDate").val("")
-        $("#endDate").val("")
+        $("#startDate").prop("disabled", true)
+        $("#endDate").prop("disabled", true)
         $("#btn-add").prop("disabled", true)
 
     }
+    $("#class").on("change",function (){
+        $("#endDate").prop("disabled", false)
+        $("#startDate").prop("disabled", false)
+    })
 
     function validateEndDate() {
         let startDate = new Date($("#startDate").val());
@@ -514,6 +518,7 @@
             method: "post",
             url: `http://localhost:8080/api-schedules/create`,
             complete: function () {
+                clearData()
                 display();
             }
         })
