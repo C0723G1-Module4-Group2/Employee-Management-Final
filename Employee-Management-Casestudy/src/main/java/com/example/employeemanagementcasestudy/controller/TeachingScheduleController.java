@@ -1,5 +1,9 @@
 package com.example.employeemanagementcasestudy.controller;
+import com.example.employeemanagementcasestudy.model.AppUser;
+import com.example.employeemanagementcasestudy.model.Teacher;
 import com.example.employeemanagementcasestudy.model.TeachingSchedule;
+import com.example.employeemanagementcasestudy.service.IAppUserService;
+import com.example.employeemanagementcasestudy.service.ITeacherService;
 import com.example.employeemanagementcasestudy.service.ITeachingScheduleService;
 import com.example.employeemanagementcasestudy.service.IUserRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,19 +19,19 @@ import java.util.List;
 @RequestMapping("/schedule")
 public class TeachingScheduleController {
     @Autowired
+    private IAppUserService appUserService;
+    @Autowired
     private ITeachingScheduleService teachingScheduleService;
     @Autowired
     private IUserRoleService userRoleService;
+
+
     @GetMapping("")
     public String showCalendar(Model model){
-        List<TeachingSchedule> teachingSchedules = teachingScheduleService.getAll();
-        model.addAttribute("listSchedule",teachingSchedules);
         return "teaching_schedule/list";
     }
     @GetMapping("/user")
     public String showCalendarForUser(Model model, Principal principal){
-//        List<TeachingSchedule> teachingSchedules = teachingScheduleService.getAll();
-//        model.addAttribute("listSchedule",teachingSchedules);
         if (principal == null) {
             return "redirect:/login";
         }

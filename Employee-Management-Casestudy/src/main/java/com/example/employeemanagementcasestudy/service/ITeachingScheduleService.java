@@ -4,8 +4,11 @@ package com.example.employeemanagementcasestudy.service;
 import com.example.employeemanagementcasestudy.dto.TeacherDtoMap;
 import com.example.employeemanagementcasestudy.dto.TeachingScheduleDto;
 import com.example.employeemanagementcasestudy.dto.TimeSheetDto;
+import com.example.employeemanagementcasestudy.model.Teacher;
 import com.example.employeemanagementcasestudy.model.TeachingSchedule;
+import org.springframework.data.repository.query.Param;
 
+import java.security.Principal;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -30,4 +33,6 @@ public interface ITeachingScheduleService {
                                                 LocalDate startDate,
                                                 LocalDate endDate,
                                                 int timeSheetId);
+    List<TeachingScheduleDto> getAllScheduleByTeacher(String username);
+
 }
