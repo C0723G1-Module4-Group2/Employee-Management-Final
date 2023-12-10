@@ -11,9 +11,19 @@
 
     <div class="container col-9">
         <h3>Danh sách lớp học</h3>
-        <div class="notify" th:if="${success}">
+        <div class="notify" th:if="${success}" hidden="hidden">
             <div>
                 <span th:text="${success}" id="successMessage"></span>
+            </div>
+        </div>
+        <div class="notify" th:if="${edit}" hidden="hidden">
+            <div>
+                <span th:text="${edit}" id="editMessage"></span>
+            </div>
+        </div>
+        <div class="notify" th:if="${delete}" hidden="hidden">
+            <div>
+                <span th:text="${delete}" id="deleteMessage"></span>
             </div>
         </div>
         <form action="/classes" method="get" class="d-flex">
@@ -108,6 +118,18 @@
                 title: "Đã thêm lớp thành công",
                 showConfirmButton: false,
                 timer: 1500
+            });
+        }
+        var editMessage = document.getElementById('editMessage');
+        if (editMessage) {
+            Swal.fire("Đã lưu thay đổi", "", "success");
+        }
+        var deleteMessage = document.getElementById('deleteMessage');
+        if (deleteMessage) {
+            Swal.fire({
+                title: "Đã xoá!",
+                text: "Lớp bạn chọn đã được xoá",
+                icon: "success"
             });
         }
     });
