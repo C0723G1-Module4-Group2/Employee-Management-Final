@@ -1,6 +1,7 @@
 package com.example.employeemanagementcasestudy.service.impl;
 
 
+import com.example.employeemanagementcasestudy.model.AppUser;
 import com.example.employeemanagementcasestudy.model.Teacher;
 import com.example.employeemanagementcasestudy.repository.ITeacherRepository;
 import com.example.employeemanagementcasestudy.service.ITeacherService;
@@ -50,5 +51,10 @@ public class TeacherServiceImpl implements ITeacherService {
         if (iTeacherRepository.existsById(teacher.getTeacherId())) {
             iTeacherRepository.save(teacher);
         }
+    }
+
+    @Override
+    public Teacher findTeacherByAppUser(AppUser appUser) {
+        return iTeacherRepository.findTeacherByAppUser(appUser);
     }
 }

@@ -131,12 +131,12 @@ public String showList(Model model,
 
     @GetMapping("/delete")
     public String delete(RedirectAttributes redirectAttributes, @RequestParam int id, Principal principal) {
-        if (principal == null) {
-            return "redirect:/login";
-        }
-        if (!userRoleService.isUserAdmin(principal.getName())) {
-            return "redirect:/403";
-        }
+//        if (principal == null) {
+//            return "redirect:/login";
+//        }
+//        if (!userRoleService.isUserAdmin(principal.getName())) {
+//            return "redirect:/403";
+//        }
         AppUser appUser = appUserService.findById(id);
         appUser.setStatus(false);
         List<UserRole> userRoleList = userRoleService.displayUserRoleByAppUser(id);
