@@ -4,6 +4,7 @@ package com.example.employeemanagementcasestudy.service;
 import com.example.employeemanagementcasestudy.dto.TeacherDtoMap;
 import com.example.employeemanagementcasestudy.dto.TeachingScheduleDto;
 import com.example.employeemanagementcasestudy.dto.TimeSheetDto;
+import com.example.employeemanagementcasestudy.model.Classes;
 import com.example.employeemanagementcasestudy.model.Teacher;
 import com.example.employeemanagementcasestudy.model.TeachingSchedule;
 import org.springframework.data.repository.query.Param;
@@ -34,5 +35,6 @@ public interface ITeachingScheduleService {
                                                 LocalDate endDate,
                                                 int timeSheetId);
     List<TeachingScheduleDto> getAllScheduleByTeacher(String username);
-
+    void deleteTeachingScheduleByClasses(Classes classes);
+    void deleteTeachingScheduleByTeacher(Teacher teacher);
 }

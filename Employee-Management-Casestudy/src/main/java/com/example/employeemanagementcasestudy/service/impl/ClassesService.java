@@ -15,9 +15,10 @@ public class ClassesService implements IClassesService {
     @Autowired
     private IClassesRepository classesRepository;
 
+
     @Override
-    public List<Classes> findAll() {
-        return classesRepository.findAll();
+    public List<Classes> getAllClass() {
+        return classesRepository.getAllClass();
     }
 
     @Override
