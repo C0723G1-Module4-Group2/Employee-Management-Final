@@ -20,23 +20,33 @@
             <h1><b>Quản lý giảng viên</b></h1>
             <div class="w3-section w3-padding-16">
                 <hr>
-
-                <div class="input-group mb-3">
-                    <form action="#">
-                        <fieldset>
-                            <legend style="margin: 5px">Tìm Kiếm</legend>
-                            <input name="searchName" th:value="${searchName}" class="form-control" type="text"
-                                   aria-label="readonly input example" style="margin: 10px;width: 85%;display: inline-block">
-                            <button type="submit" class="btn btn-primary">Tìm Kiếm</button>
-                        </fieldset>
+<!--                <div class="input-group mb-3">-->
+<!--                    <form action="#">-->
+<!--                        <fieldset>-->
+<!--                            <legend style="margin: 5px">Tìm Kiếm</legend>-->
+<!--                            <input name="searchName" th:value="${searchName}" class="form-control" type="text"-->
+<!--                                   aria-label="readonly input example"-->
+<!--                                   style="margin: 10px;width: 85%;display: inline-block">-->
+<!--                            <button type="submit" class="btn btn-primary">Tìm Kiếm</button>-->
+<!--                        </fieldset>-->
+<!--                    </form>-->
+<!--                </div>-->
+<!--                <a class="btn btn-outline-success" th:href="@{teacher/add}" role="button">Add</a>-->
+                <div class="d-flex justify-content-between">
+                    <p>
+                        <a class="btn btn-sm btn-outline-primary"th:href="@{teacher/add}">
+                            Thêm mới giảng viên
+                        </a>
+                    </p>
+                    <form action="#" method="get" class="d-flex">
+                        <input style="width: 125%" class="form-control me-2" name="searchName" placeholder=""
+                               th:value="${searchName}" aria-label="Search">
+                        <button style="width: 50%" class="btn btn-sm btn-outline-success">Tìm kiếm</button>
                     </form>
                 </div>
-                <a class="btn btn-outline-success" th:href="@{teacher/add}" role="button">Add</a>
-
                 <div class="row col-12">
-
                     <div style="padding: 0">
-                        <table class="table table-hover" style="background-color:#A9A9A9">
+                        <table class="table table-striped table-hover">
                             <thead>
                             <tr>
                                 <th style="text-align: center" scope="col">STT</th>
@@ -49,8 +59,8 @@
                             </thead>
                             <tbody>
                             <tr th:if="${!teacherPage.hasContent()}">
-                                <td>
-                                    <h2>Danh Sách Rỗng</h2>
+                                <td colspan="9">
+                                    <h2>Không có giảng viên nào</h2>
                                 </td>
                             </tr>
                             <tr th:each="teacher , status : ${teacherPage}">
@@ -63,7 +73,7 @@
                                     <span th:unless="${teacher.gender} == true">Nữ</span>
                                 </td>
                                 <td><a th:href="@{/teacher/edit(id=${teacher.getTeacherId()})}">
-                                    <button type="button" class="btn btn-sm btn-primary">
+                                    <button type="button" class="btn btn-sm btn-outline-warning">
                                         Chỉnh Sửa
                                     </button>
                                 </a></td>
@@ -72,7 +82,7 @@
                                        data-bs-target="#deleteModal"
                                        th:attr="data-id=${teacher.getTeacherId()}, data-name=${teacher.getTeacherName()}"
                                        onclick="deleteTeacher(this)">
-                                    <button type="button" class="btn btn-sm btn btn-danger">
+                                    <button type="button" class="btn btn-sm btn-outline-danger">
                                         Xoá
                                     </button>
                                 </a></td>
@@ -84,7 +94,7 @@
 data-img = ${teacher.getImgOfTeacher()} , data-salary = ${teacher.getBasicSalary()} , data-address = ${teacher.getAddress()} , data-dob = ${teacher.getDateOfBirth()},
 data-gender = ${teacher.gender}, data-idCard = ${teacher.getIdentificationCard()} , data-email = ${teacher.getMail()} , data-codeTeacher = ${teacher.getTeacherCode()} , data-userName = ${teacher.getAppUser().getUsername()} , data-contract = ${teacher.getContract().getContractCode()}
 " onclick="detailTeacher(this)">
-                                    <button type="button" class="btn btn-sm btn-success">
+                                    <button type="button" class="btn btn-sm btn-outline-success">
                                         Chi Tiết
                                     </button>
                                 </a></td>
@@ -110,134 +120,134 @@ data-gender = ${teacher.gender}, data-idCard = ${teacher.getIdentificationCard()
 </div>
 
 
-    <div class="modal fade" id="detailModal" tabindex="-1" aria-labelledby="detailModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <form action="/blog/detail" method="get">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="detailModalLabel">Chi Tiết</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <input type="hidden" id="detailId" name="id">
-                        <table class="table">
-                            <tr>
-                                <td rowspan="10">
-                                    <img id="img" height="210px" width="155px">
-                                </td>
-                                <th>
-                                    Họ và Tên
-                                </th>
-                                <td>
-                                    <p id="nameTeacher"></p>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>
-                                    Giới Tính
-                                </th>
-                                <td>
-                                    <p id="gender"></p>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>
-                                    Mã Giáo Viên
-                                </th>
-                                <td>
-                                    <p id="codeTeacher"></p>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>
-                                    Tên Tài Khoản
-                                </th>
-                                <td>
-                                    <p id="userName"></p>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>
-                                    Mã Hợp Đồng
-                                </th>
-                                <td>
-                                    <p id="contract"></p>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>
-                                    Lương
-                                </th>
-                                <td>
-                                    <p id="salary"></p>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>
-                                    Ngày Sinh
-                                </th>
-                                <td>
-                                    <p id="dob"></p>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>
-                                    Địa Chỉ
-                                </th>
-                                <td>
-                                    <p id="address"></p>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>
-                                    Email
-                                </th>
-                                <td>
-                                    <p id="mail"></p>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>
-                                    Số Điện Thoại
-                                </th>
-                                <td>
-                                    <p id="phone"></p>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal"
-                                data-bs-target="#deleteModal">Xoá
-                        </button>
-                        <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Đóng</button>
-                    </div>
-                </form>
-            </div>
+<div class="modal fade" id="detailModal" tabindex="-1" aria-labelledby="detailModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="/blog/detail" method="get">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="detailModalLabel">Chi Tiết</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="detailId" name="id">
+                    <table class="table">
+                        <tr>
+                            <td rowspan="10">
+                                <img id="img" height="210px" width="155px">
+                            </td>
+                            <th>
+                                Họ và Tên
+                            </th>
+                            <td>
+                                <p id="nameTeacher"></p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                Giới Tính
+                            </th>
+                            <td>
+                                <p id="gender"></p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                Mã Giáo Viên
+                            </th>
+                            <td>
+                                <p id="codeTeacher"></p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                Tên Tài Khoản
+                            </th>
+                            <td>
+                                <p id="userName"></p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                Mã Hợp Đồng
+                            </th>
+                            <td>
+                                <p id="contract"></p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                Lương
+                            </th>
+                            <td>
+                                <p id="salary"></p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                Ngày Sinh
+                            </th>
+                            <td>
+                                <p id="dob"></p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                Địa Chỉ
+                            </th>
+                            <td>
+                                <p id="address"></p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                Email
+                            </th>
+                            <td>
+                                <p id="mail"></p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                Số Điện Thoại
+                            </th>
+                            <td>
+                                <p id="phone"></p>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal"
+                            data-bs-target="#deleteModal">Xoá
+                    </button>
+                    <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                </div>
+            </form>
         </div>
     </div>
+</div>
 
 
-    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <form action="/teacher/delete " method="get">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="deleteModalLabel">Xoá Giảng Viên</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        Bạn Có Chắc Chắn Muốn Xoá <span id="nameDelete"></span>?
-                        <input type="hidden" id="editId" name="id">
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal"> Đóng</button>
-                        <button type="submit" class="btn btn-sm btn-danger"> Xoá</button>
-                    </div>
-                </form>
-            </div>
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="/teacher/delete " method="get">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="deleteModalLabel">Xoá Giảng Viên</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Bạn Có Chắc Chắn Muốn Xoá <span id="nameDelete"></span>?
+                    <input type="hidden" id="editId" name="id">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal"> Đóng</button>
+                    <button type="submit" class="btn btn-sm btn-danger"> Xoá</button>
+                </div>
+            </form>
         </div>
     </div>
+</div>
 </div>
 </div>
 

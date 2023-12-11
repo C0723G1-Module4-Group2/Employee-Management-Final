@@ -84,7 +84,7 @@
                     <p style="color: red" th:if="${#fields.hasErrors('basicSalary')}" th:errors="*{basicSalary}"></p>
                     Hình Ảnh
                     <input class="form-control" type="text" placeholder="Đường Link Của Ảnh" aria-label="default input example" th:field="*{imgOfTeacher}" th:value="${teacherDTO.getImgOfTeacher()}">
-                    <button  style="margin-top: 10px ; text-align: right" type="submit" class="btn btn-success">Success</button>
+                    <button  style="margin-top: 10px ; text-align: right" type="submit" class="btn btn-sm btn-outline-success">Lưu thay đổi</button>
                   </div>
                 </div>
               </fieldset>
