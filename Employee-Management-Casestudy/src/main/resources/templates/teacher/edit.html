@@ -71,6 +71,10 @@
                   <input hidden th:field="*{appUser}" th:value="${teacherDTO.appUser.getUserId()}">
                   <input hidden th:field="*{contract}" th:value="${teacherDTO.contract.getContractId()}">
                   <input hidden th:field="*{teacherId}" th:value="${teacherDTO.teacherId}">
+                  <input hidden th:field="*{contractCode}" th:value="${teacherDTO.contractCode}">
+                  <input hidden th:field="*{startDate}" th:value="${teacherDTO.getContract().startDate}">
+                  <input hidden th:field="*{endDate}" th:value="${teacherDTO.getContract().getEndDate()}">
+                  <input hidden th:field="*{appRoles}" th:value="${teacherDTO.appRoles}">
                   Họ Và Tên
                   <input class="form-control" type="text" placeholder="Ex: Trần Anh Tuấn" aria-label="default input example" th:field="*{teacherName}" th:value="${teacherDTO.getTeacherName()}">
                   <p style="color: red" th:if="${#fields.hasErrors('teacherName')}" th:errors="*{teacherName}"></p>
