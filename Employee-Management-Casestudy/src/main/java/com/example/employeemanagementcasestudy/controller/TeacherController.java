@@ -97,6 +97,7 @@ public class TeacherController {
         TeacherDTO teacherDTO = new TeacherDTO();
         BeanUtils.copyProperties(teacher,teacherDTO);
         model.addAttribute("teacherDTO",teacherDTO);
+        model.addAttribute("teacher",teacher);
         return "/teacher/edit";
     }
     @PostMapping("/edit")
