@@ -23,8 +23,8 @@
                         <input type="text" id="className" required th:field="*{className}" placeholder="Nhập tên lớp"/>
                         <div style="margin-right: 5px"></div><input type="submit" value="Thêm lớp học này" class="btn btn-sm btn-outline-success"/>
                         <!--                    <span th:if="${#fields.hasErrors('className')}" th:errors="*{className}"></span>-->
-<!--                        <small style="color: red" th:if="${#fields.hasErrors('className')}"-->
-<!--                               th:errors="*{className}"></small><br>-->
+                        <!--                        <small style="color: red" th:if="${#fields.hasErrors('className')}"-->
+                        <!--                               th:errors="*{className}"></small><br>-->
                     </div>
                     <div><span style="color: red" th:text="${validationMessage}"></span></div>
                 </form>

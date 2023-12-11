@@ -1,0 +1,69 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="/layout::head">
+</head>
+<body>
+<div class="container-fluid">
+    <script>
+        function displayToast(message, color) {
+            document.getElementById("toastContent").innerHTML = message;
+            document.getElementById("liveToast").style.background = color;
+            let myAlert = document.getElementById('liveToast');//select id of toast
+            let bsAlert = new bootstrap.Toast(myAlert);//inizialize it
+            bsAlert.show();//show it
+        }
+    </script>
+    <div class="row">
+        <div class="col-3" th:replace="/layout::sidebar">
+        </div>
+        <div class="col-9" style="padding: 0">
+            <div class="position-fixed top-0 end-5 p-3" style="z-index: 11;margin-left: 500px">
+                <div id="liveToast" style="width: 230px; color: white; background:lightgreen ;border-radius:2% 2%;"
+                     class="toast"
+                     role="dialog" aria-live="assertive" aria-atomic="true">
+                    <div class="toast-body">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="30px" height="30px">
+                            <g id="surface1_4_">
+                                <path style="fill:#4CAF50;"
+                                      d="M44,24c0,11.045-8.955,20-20,20S4,35.045,4,24S12.955,4,24,4S44,12.955,44,24z"/>
+                                <path style="fill:#CCFF90;"
+                                      d="M34.602,14.602L21,28.199l-5.602-5.598l-2.797,2.797L21,33.801l16.398-16.402L34.602,14.602z"/>
+                            </g>
+                        </svg>
+                        <span id="toastContent">Nội dung hiển thị</span>
+                    </div>
+                </div>
+            </div>
+            <h1>Quản lý Role</h1>
+            <a href="/app-role/create">
+                <button class="my-2 bg-secondary">Thêm mới role</button>
+            </a>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">STT</th>
+                    <th scope="col">Tên</th>
+                    <th scope="col">Chỉnh sửa</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="role,status: ${appRoleList}">
+                    <td th:text="${status.count}"></td>
+                    <td th:text="${role.getRoleName()}"></td>
+                    <td>
+                        <a th:href="@{/app-role/edit(id=${role.getRoleId()})}">
+                            <button class="my-2 bg-secondary">Chỉnh sửa</button>
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <input hidden id="success" th:value="${success}">
+        <script th:if="${success}">
+            displayToast(document.getElementById("success").value, "green")
+        </script>
+    </div>
+</div>
+</body>
+</html>
