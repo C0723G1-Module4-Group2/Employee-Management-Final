@@ -53,7 +53,7 @@
                         </a>
                     </p>
                     <form action="#" method="get" class="d-flex">
-                        <input style="width: 125%" class="form-control me-2" name="searchName" placeholder=""
+                        <input style="width: 125%" class="form-control me-2" name="searchName" placeholder="Nhập tên giảng viên..."
                                th:value="${searchName}" aria-label="Search">
                         <button style="width: 50%" class="btn btn-sm btn-outline-success">Tìm kiếm</button>
                     </form>
@@ -114,10 +114,10 @@ data-gender = ${teacher.gender}, data-idCard = ${teacher.getIdentificationCard()
                                 </a></td>
                             </tr>
                             <tr>
-                                <td colspan="8" style="text-align: right ; background-color: white">
+                                <td colspan="8" style="text-align: left ; background-color: white">
                                     <a id="previous" style="text-decoration: none" th:if="${teacherPage.hasPrevious()}"
                                        th:href="@{/teacher(page=${teacherPage.number-1},name=${name})}">Trang sau</a>
-                                    <span th:text="${teacherPage.number+1}"></span>/
+                                    <span th:text="${teacherPage.number+1}"></span> /
                                     <span th:text="${teacherPage.totalPages}"></span>
                                     <a id="next" style="text-decoration: none" th:if="${teacherPage.hasNext()}"
                                        th:href="@{/teacher(page=${teacherPage.number+1},name=${name})}">Trang trước</a>
@@ -146,9 +146,11 @@ data-gender = ${teacher.gender}, data-idCard = ${teacher.getIdentificationCard()
                     <input type="hidden" id="detailId" name="id">
                     <table class="table">
                         <tr>
-                            <td rowspan="10">
-                                <img id="img" height="210px" width="155px">
+                            <td colspan="2">
+                                <img id="img" height="180px" width="180px">
                             </td>
+                        </tr>
+                        <tr>
                             <th>
                                 Họ và Tên
                             </th>
@@ -190,7 +192,7 @@ data-gender = ${teacher.gender}, data-idCard = ${teacher.getIdentificationCard()
                         </tr>
                         <tr>
                             <th>
-                                Lương
+                                Lương cơ bản
                             </th>
                             <td>
                                 <p id="salary"></p>
@@ -230,12 +232,6 @@ data-gender = ${teacher.gender}, data-idCard = ${teacher.getIdentificationCard()
                         </tr>
                     </table>
                 </div>
-                <!--                <div class="modal-footer">-->
-                <!--                    <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal"-->
-                <!--                            data-bs-target="#deleteModal">Xoá-->
-                <!--                    </button>-->
-                <!--                    <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Đóng</button>-->
-                <!--                </div>-->
             </form>
         </div>
     </div>

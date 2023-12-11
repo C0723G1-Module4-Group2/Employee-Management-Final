@@ -21,7 +21,7 @@
 <div class="w3-overlay w3-hide-large w3-animate-opacity" onclick="w3_close()" style="cursor:pointer"
      title="close side menu" id="myOverlay"></div>
 
-<div class="w3-main w3-light-grey" style="margin-left:300px; height: 100%">
+<div class="w3-main w3-light-grey" style="margin-left:300px; height: 100vh">
 
   <header id="welcome">
         <span class="w3-button w3-hide-large w3-xxlarge w3-hover-text-grey" onclick="w3_open()"><i
@@ -65,7 +65,7 @@
                         Nữ
                       </label>
                     </div>
-                    Số CMND / CCCD:
+                    Số CMND / CCCD
                     <input class="form-control" type="text" placeholder="Ex : 1234567899" aria-label="default input example" th:value="${teacherDto2.getIdentificationCard()}" th:field="*{identificationCard}">
                     <p style="color: red" th:if="${#fields.hasErrors('identificationCard')}" th:errors="*{identificationCard}"></p>
                   </div>
@@ -76,12 +76,12 @@
                     Mail:
                     <input class="form-control" type="text" placeholder="Ex : Name@gmail.com" aria-label="default input example" th:field="*{mail}" th:value="${teacherDto2.getMail()}">
                     <p style="color: red" th:if="${#fields.hasErrors('mail')}" th:errors="*{mail}"></p>
-                    Số Điện Thoại:
+                    Số Điện Thoại
                     <input class="form-control" type="text" placeholder="Ex :0236 6517 021" aria-label="default input example" th:field="*{phoneNumber}" th:value="${teacherDto2.getPhoneNumber()}">
                     <p style="color: red" th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}"></p>
 
-                    Lương:
-                    <input class="form-control" type="number" placeholder="Ex : 50000000" aria-label="default input example" th:field="*{basicSalary}" th:value="${teacherDto2.getBasicSalary()}">
+                    Lương cơ bản
+                    <input style="margin-bottom: 13px" class="form-control" type="number" placeholder="Ex : 50000000" aria-label="default input example" th:field="*{basicSalary}" th:value="${teacherDto2.getBasicSalary()}">
                     <p style="color: red" th:if="${#fields.hasErrors('basicSalary')}" th:errors="*{basicSalary}"></p>
                     Hình Ảnh
                     <input class="form-control" type="text" placeholder="Đường Link Của Ảnh" aria-label="default input example" th:field="*{imgOfTeacher}" th:value="${teacherDto2.getImgOfTeacher()}">
@@ -91,8 +91,8 @@
               </fieldset>
             </form>
           </div>
-          <div class="col-6">
-            <img src="https://yt3.googleusercontent.com/ytc/APkrFKaATITgvlVNlaGJgZ450FVhXg44Bew0MCEao0M=s900-c-k-c0x00ffffff-no-rj" width="100%" height="100%" style="margin: 10px" >
+          <div class="col-6 d-flex justify-content-center">
+            <img src="https://yt3.googleusercontent.com/ytc/APkrFKaATITgvlVNlaGJgZ450FVhXg44Bew0MCEao0M=s900-c-k-c0x00ffffff-no-rj" width="300px" height="300px%" style="margin: 24px" >
           </div>
         </div>
       </div>
