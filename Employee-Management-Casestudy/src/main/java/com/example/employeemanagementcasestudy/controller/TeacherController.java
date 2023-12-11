@@ -12,6 +12,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -35,6 +36,8 @@ public class TeacherController {
     private IUserRoleService userRoleService;
     @Autowired
     private IAppRoleService appRoleService;
+    @Autowired
+    private ITeachingScheduleService teachingScheduleService;
 
     @GetMapping("")
     public String showManagementTeacher(@RequestParam(defaultValue = "0") int page,
@@ -121,17 +124,19 @@ public class TeacherController {
         return "redirect:/teacher";
     }
 
+    @Transactional
     @GetMapping("/delete")
     public String delete(@RequestParam int id) {
         Teacher teacher = iTeacherService.findById(id);
         teacher.setStatus(false);
         iTeacherService.updateTeacher(teacher);
+        teachingScheduleService.deleteTeachingScheduleByTeacher(iTeacherService.findById(id));
         return "redirect:/teacher";
     }
 
     @GetMapping("/user/detail")
     public String detail(Model model, Principal principal) {
-                if (principal == null) {
+        if (principal == null) {
             return "redirect:/login";
         }
         if (userRoleService.isUserAdmin(principal.getName())) {

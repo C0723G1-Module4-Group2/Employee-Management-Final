@@ -3,6 +3,7 @@ package com.example.employeemanagementcasestudy.controller;
 import com.example.employeemanagementcasestudy.dto.ClassDto;
 import com.example.employeemanagementcasestudy.model.Classes;
 import com.example.employeemanagementcasestudy.service.IClassesService;
+import com.example.employeemanagementcasestudy.service.ITeachingScheduleService;
 import com.example.employeemanagementcasestudy.service.IUserRoleService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,8 @@ public class ClassesController {
     private IClassesService classesService;
     @Autowired
     private IUserRoleService userRoleService;
+    @Autowired
+    private ITeachingScheduleService teachingScheduleService;
 
     @GetMapping
     public String showList(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "") String searchingName, Model model) {
@@ -113,6 +116,7 @@ public class ClassesController {
 //            return "redirect:/403";
 //        }
         classesService.remove(id);
+        teachingScheduleService.deleteTeachingScheduleByClasses(classesService.findById(id));
         attributes.addFlashAttribute("delete", "Xoá thành công");
         return "redirect:/classes";
     }

@@ -20,7 +20,7 @@ public class RestClassesController {
     private IClassesService classesService;
 @GetMapping("")
     public ResponseEntity<List<Classes>>  getAllClass(){
-    List<Classes> classes = classesService.findAll();
+    List<Classes> classes = classesService.getAllClass();
     if (classes.isEmpty()) {
         return new ResponseEntity<>(classes, HttpStatus.OK);
     }

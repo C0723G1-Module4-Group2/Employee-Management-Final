@@ -3,6 +3,7 @@ package com.example.employeemanagementcasestudy.service.impl;
 import com.example.employeemanagementcasestudy.dto.TeacherDtoMap;
 import com.example.employeemanagementcasestudy.dto.TeachingScheduleDto;
 import com.example.employeemanagementcasestudy.dto.TimeSheetDto;
+import com.example.employeemanagementcasestudy.model.Classes;
 import com.example.employeemanagementcasestudy.model.Teacher;
 import com.example.employeemanagementcasestudy.model.TeachingSchedule;
 import com.example.employeemanagementcasestudy.repository.ITeachingScheduleRepository;
@@ -85,6 +86,15 @@ public class TeachingScheduleService implements ITeachingScheduleService {
         return teachingScheduleRepository.getAllScheduleByTeacher(username);
     }
 
+    @Override
+    public void deleteTeachingScheduleByClasses(Classes classes) {
+        teachingScheduleRepository.deleteTeachingScheduleByClasses(classes);
+    }
+
+    @Override
+    public void deleteTeachingScheduleByTeacher(Teacher teacher) {
+        teachingScheduleRepository.deleteTeachingScheduleByTeacher(teacher);
+    }
 
 
 }

@@ -224,14 +224,24 @@
                 }
             }
             let calendar = new FullCalendar.Calendar(calendarEl, {
+                locale: 'vi',
                 headerToolbar: {
                     left: 'prev,today,next',
                     center: 'title',
                     right: 'timeGridWeek,timeGridDay,list'
                 },
+                buttonText: {
+                    today: 'Hôm nay',
+                    month: 'Tháng',
+                    week: 'Tuần',
+                    day: 'Ngày',
+                    list: 'Lịch'
+                },
                 slotMinTime: '08:00:00',
                 slotMaxTime: '17:30:00',
                 initialView: 'timeGridWeek',
+                allDaySlot: false,
+                noEventsContent: 'Không có lịch để hiển thị',
                 events: events,
 
                 eventClick: function (info) {
