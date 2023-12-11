@@ -4,7 +4,21 @@
 <head th:replace="/layout::head">
 </head>
 <body>
-
+<div class="notify" th:if="${success}" hidden="hidden">
+    <div>
+        <span th:text="${success}" id="successMessage"></span>
+    </div>
+</div>
+<div class="notify" th:if="${edit}" hidden="hidden">
+    <div>
+        <span th:text="${edit}" id="editMessage"></span>
+    </div>
+</div>
+<div class="notify" th:if="${delete}" hidden="hidden">
+    <div>
+        <span th:text="${delete}" id="deleteMessage"></span>
+    </div>
+</div>
 <nav th:replace="/layout::sidebar"></nav>
 
 
@@ -20,21 +34,21 @@
             <h1><b>Quản lý giảng viên</b></h1>
             <div class="w3-section w3-padding-16">
                 <hr>
-<!--                <div class="input-group mb-3">-->
-<!--                    <form action="#">-->
-<!--                        <fieldset>-->
-<!--                            <legend style="margin: 5px">Tìm Kiếm</legend>-->
-<!--                            <input name="searchName" th:value="${searchName}" class="form-control" type="text"-->
-<!--                                   aria-label="readonly input example"-->
-<!--                                   style="margin: 10px;width: 85%;display: inline-block">-->
-<!--                            <button type="submit" class="btn btn-primary">Tìm Kiếm</button>-->
-<!--                        </fieldset>-->
-<!--                    </form>-->
-<!--                </div>-->
-<!--                <a class="btn btn-outline-success" th:href="@{teacher/add}" role="button">Add</a>-->
+                <!--                <div class="input-group mb-3">-->
+                <!--                    <form action="#">-->
+                <!--                        <fieldset>-->
+                <!--                            <legend style="margin: 5px">Tìm Kiếm</legend>-->
+                <!--                            <input name="searchName" th:value="${searchName}" class="form-control" type="text"-->
+                <!--                                   aria-label="readonly input example"-->
+                <!--                                   style="margin: 10px;width: 85%;display: inline-block">-->
+                <!--                            <button type="submit" class="btn btn-primary">Tìm Kiếm</button>-->
+                <!--                        </fieldset>-->
+                <!--                    </form>-->
+                <!--                </div>-->
+                <!--                <a class="btn btn-outline-success" th:href="@{teacher/add}" role="button">Add</a>-->
                 <div class="d-flex justify-content-between">
                     <p>
-                        <a class="btn btn-sm btn-outline-primary"th:href="@{teacher/add}">
+                        <a class="btn btn-sm btn-outline-primary" th:href="@{teacher/add}">
                             Thêm mới giảng viên
                         </a>
                     </p>
@@ -216,12 +230,12 @@ data-gender = ${teacher.gender}, data-idCard = ${teacher.getIdentificationCard()
                         </tr>
                     </table>
                 </div>
-<!--                <div class="modal-footer">-->
-<!--                    <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal"-->
-<!--                            data-bs-target="#deleteModal">Xoá-->
-<!--                    </button>-->
-<!--                    <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Đóng</button>-->
-<!--                </div>-->
+                <!--                <div class="modal-footer">-->
+                <!--                    <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal"-->
+                <!--                            data-bs-target="#deleteModal">Xoá-->
+                <!--                    </button>-->
+                <!--                    <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Đóng</button>-->
+                <!--                </div>-->
             </form>
         </div>
     </div>
@@ -247,8 +261,6 @@ data-gender = ${teacher.gender}, data-idCard = ${teacher.getIdentificationCard()
             </form>
         </div>
     </div>
-</div>
-</div>
 </div>
 
 </body>
@@ -326,5 +338,32 @@ data-gender = ${teacher.gender}, data-idCard = ${teacher.getIdentificationCard()
         // document.getElementById("editId").value = id;
         console.log(name)
     }
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.10.1/sweetalert2.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var successMessage = document.getElementById('successMessage');
+        if (successMessage) {
+            Swal.fire({
+                position: "top",
+                icon: "success",
+                title: "Đã thêm giảng viên thành công",
+                showConfirmButton: false,
+                timer: 1500
+            });
+        }
+        var editMessage = document.getElementById('editMessage');
+        if (editMessage) {
+            Swal.fire("Đã lưu thay đổi", "", "success");
+        }
+        var deleteMessage = document.getElementById('deleteMessage');
+        if (deleteMessage) {
+            Swal.fire({
+                title: "Đã xoá!",
+                text: "Giảng viên đã được xoá",
+                icon: "success"
+            });
+        }
+    });
 </script>
 </html>
