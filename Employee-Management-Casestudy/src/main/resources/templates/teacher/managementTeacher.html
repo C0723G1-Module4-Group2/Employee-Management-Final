@@ -1,8 +1,12 @@
 <!doctype html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
-
 <head th:replace="/layout::head">
 </head>
+<style>
+    th,td {
+        text-align: center;
+    }
+</style>
 <body>
 <div class="notify" th:if="${success}" hidden="hidden">
     <div>
@@ -65,9 +69,9 @@
                             <tr>
                                 <th style="text-align: center" scope="col">STT</th>
                                 <th style="text-align: center" scope="col">Tên</th>
-                                <th style="text-align: center" scope="col">Ngày/Tháng/NămSinh</th>
+                                <th style="text-align: center" scope="col">Ngày, tháng, năm sinh</th>
                                 <th style="text-align: center" scope="col">Địa chỉ</th>
-                                <th style="text-align: center" scope="col">Giới Tính</th>
+                                <th style="text-align: center" scope="col">Giới tính</th>
                                 <th scope="col" colspan="4" style="text-align: center">Chức năng</th>
                             </tr>
                             </thead>
@@ -88,7 +92,7 @@
                                 </td>
                                 <td><a th:href="@{/teacher/edit(id=${teacher.getTeacherId()})}">
                                     <button type="button" class="btn btn-sm btn-outline-warning">
-                                        Chỉnh Sửa
+                                        Chỉnh sửa
                                     </button>
                                 </a></td>
                                 <td><a th:href="@{/teacher/delete${teacher.getTeacherId()}}"
@@ -109,7 +113,7 @@ data-img = ${teacher.getImgOfTeacher()} , data-salary = ${teacher.getBasicSalary
 data-gender = ${teacher.gender}, data-idCard = ${teacher.getIdentificationCard()} , data-email = ${teacher.getMail()} , data-codeTeacher = ${teacher.getTeacherCode()} , data-userName = ${teacher.getAppUser().getUsername()} , data-contract = ${teacher.getContract().getContractCode()}
 " onclick="detailTeacher(this)">
                                     <button type="button" class="btn btn-sm btn-outline-success">
-                                        Chi Tiết
+                                        Chi tiết
                                     </button>
                                 </a></td>
                             </tr>
@@ -139,12 +143,12 @@ data-gender = ${teacher.gender}, data-idCard = ${teacher.getIdentificationCard()
         <div class="modal-content">
             <form action="/blog/detail" method="get">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="detailModalLabel">Chi Tiết</h1>
+                    <h1 class="modal-title fs-5" id="detailModalLabel"><b>Chi tiết</b></h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <input type="hidden" id="detailId" name="id">
-                    <table class="table">
+                    <table class="table" style="border: 1px solid black">
                         <tr>
                             <td colspan="2">
                                 <img id="img" height="180px" width="180px">
@@ -152,7 +156,7 @@ data-gender = ${teacher.gender}, data-idCard = ${teacher.getIdentificationCard()
                         </tr>
                         <tr>
                             <th>
-                                Họ và Tên
+                                Họ và tên
                             </th>
                             <td>
                                 <p id="nameTeacher"></p>
@@ -160,7 +164,7 @@ data-gender = ${teacher.gender}, data-idCard = ${teacher.getIdentificationCard()
                         </tr>
                         <tr>
                             <th>
-                                Giới Tính
+                                Giới tính
                             </th>
                             <td>
                                 <p id="gender"></p>
@@ -168,7 +172,7 @@ data-gender = ${teacher.gender}, data-idCard = ${teacher.getIdentificationCard()
                         </tr>
                         <tr>
                             <th>
-                                Mã Giáo Viên
+                                Mã giảng viên
                             </th>
                             <td>
                                 <p id="codeTeacher"></p>
@@ -176,7 +180,7 @@ data-gender = ${teacher.gender}, data-idCard = ${teacher.getIdentificationCard()
                         </tr>
                         <tr>
                             <th>
-                                Tên Tài Khoản
+                                Tên tài khoản
                             </th>
                             <td>
                                 <p id="userName"></p>
@@ -184,7 +188,7 @@ data-gender = ${teacher.gender}, data-idCard = ${teacher.getIdentificationCard()
                         </tr>
                         <tr>
                             <th>
-                                Mã Hợp Đồng
+                                Mã hợp đồng
                             </th>
                             <td>
                                 <p id="contract"></p>
@@ -200,7 +204,7 @@ data-gender = ${teacher.gender}, data-idCard = ${teacher.getIdentificationCard()
                         </tr>
                         <tr>
                             <th>
-                                Ngày Sinh
+                                Ngày sinh
                             </th>
                             <td>
                                 <p id="dob"></p>
@@ -208,7 +212,7 @@ data-gender = ${teacher.gender}, data-idCard = ${teacher.getIdentificationCard()
                         </tr>
                         <tr>
                             <th>
-                                Địa Chỉ
+                                Địa chỉ
                             </th>
                             <td>
                                 <p id="address"></p>
@@ -224,7 +228,7 @@ data-gender = ${teacher.gender}, data-idCard = ${teacher.getIdentificationCard()
                         </tr>
                         <tr>
                             <th>
-                                Số Điện Thoại
+                                Số điện thoại
                             </th>
                             <td>
                                 <p id="phone"></p>
@@ -243,11 +247,11 @@ data-gender = ${teacher.gender}, data-idCard = ${teacher.getIdentificationCard()
         <div class="modal-content">
             <form action="/teacher/delete " method="get">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="deleteModalLabel">Xoá Giảng Viên</h1>
+                    <h1 class="modal-title fs-5" id="deleteModalLabel">Xoá giảng viên</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    Bạn Có Chắc Chắn Muốn Xoá <span id="nameDelete"></span>?
+                    Bạn có chắc chắn muốn xoá <span id="nameDelete"></span>?
                     <input type="hidden" id="editId" name="id">
                 </div>
                 <div class="modal-footer">

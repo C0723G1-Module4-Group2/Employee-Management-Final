@@ -60,19 +60,19 @@
                             </fieldset>
                             <fieldset class="border border-dark rounded-3 p-3" >
                                 <legend class="float-none w-auto px-3">
-                                    Thêm Mới Giáo Viên
+                                    Thêm mới giảng viên
                                 </legend>
                                 <div class="row col-12">
                                     <div class="col-6">
-                                        Họ Và Tên
+                                        Họ và tên
                                         <input class="form-control"  type="text" placeholder="Vd: Trần Anh Tuấn" aria-label="default input example" th:field="*{teacherName}" required>
                                         <p style="color: red" th:if="${#fields.hasErrors('teacherName')}" th:errors="*{teacherName}"></p>
-                                        Địa Chỉ
+                                        Địa chỉ
                                         <input class="form-control" type="text" id="address" placeholder="Vd: 280 Đ. Trần Hưng Đạo, An Hải Tây, Sơn Trà, Đà Nẵng 550000" aria-label="default input example" required th:field="*{address}">
                                         <p style="color: red" th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></p>
-                                        Ngày Tháng Năm Sinh
+                                        Ngày, tháng, năm sinh
                                         <input class="form-control" type="date" placeholder="Default input" aria-label="default input example" th:field="*{dateOfBirth}" required>
-                                        Giới Tính
+                                        Giới tính
                                         <div class="form-check">
                                             <input class="form-check-input" type="radio" id="flexRadioDefault1" checked th:field="*{gender}" th:value=1>
                                             <label class="form-check-label" for="flexRadioDefault1">
@@ -98,19 +98,19 @@
                                         <spam style="color: red" th:text="${messageIdentificationCard}"></spam>
                                     </div>
                                     <div class="col-6">
-                                        Mã Giáo Viên
+                                        Mã giảng viên
                                         <input class="form-control" type="text" id="teacherCode" placeholder="Vd : TC-01" aria-label="default input example" required th:field="*{teacherCode}">
                                         <p style="color: red" th:if="${#fields.hasErrors('teacherCode')}" th:errors="*{teacherCode}"></p>
                                         <spam style="color: red" th:text="${messageTeacherCode}"></spam>
-                                        Mail:
+                                        Mail
                                         <input class="form-control" type="text" id="mail" placeholder="Vd : Name@gmail.com" aria-label="default input example" required th:field="*{mail}">
                                         <p style="color: red" th:if="${#fields.hasErrors('mail')}" th:errors="*{mail}"></p>
                                         <spam style="color: red" th:text="${messageAppUser}"></spam>
-                                        Số Điện Thoại:
+                                        Số điện thoại
                                         <input class="form-control" type="text" id="phoneNumber" placeholder="Vd :0236 6517 021" aria-label="default input example" required th:field="*{phoneNumber}">
                                         <p style="color: red" th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}"></p>
                                         <spam style="color: red" th:text="${messagePhoneNumber}"></spam>
-                                        Lương:
+                                        Lương cơ bản
                                         <input class="form-control" type="number" id="basicSalary" placeholder="Vd : 50000000" aria-label="default input example" required th:field="*{basicSalary}">
                                         <p style="color: red" th:if="${#fields.hasErrors('basicSalary')}" th:errors="*{basicSalary}"></p>
                                         Hình Ảnh
@@ -136,7 +136,6 @@
 
 <script th:replace="/layout::script-sidebar"></script>
 
-            <h2>Thêm Mới Giáo Viên</h2>
 <!--            <div class="row col-12">-->
 <!--            <table style="padding: 0">-->
 <!--                <thead>-->
@@ -177,9 +176,6 @@
 <!--            </table>-->
 <!--            </div>-->
 
-        </div>
-    </div>
-</div>
 <script>
     // Lấy ngày hiện tại
     var currentDate = new Date();

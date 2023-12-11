@@ -22,22 +22,21 @@
             <div class="w3-section w3-padding-16">
                 <hr>
 
-                <table width="100%" class="table-striped">
+                <table width="100%" class="table">
                     <tbody id="content">
                     <tr>
                         <td class="span-field" width="20%">
-                            <span class="input-group-text">Giảng viên:</span>
+                            Giảng viên:
                         </td>
                         <td>
-                            <select class="form-select input-group-text" aria-label="Default select example" id="teacher"
+                            <select class="form-control" aria-label="Default select example" id="teacher"
                                     onchange="displayBasicSalary()">
-
                             </select>
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <span class=" input-group-text">Lương cơ bản:</span>
+                            Lương cơ bản:
                         </td>
                         <td id="basicSalary">
                             <input readonly type="text" class="form-control" aria-label="Sizing example input"
@@ -46,7 +45,7 @@
                     </tr>
                     <tr>
                         <td>
-                            <span class="input-group-text">Hệ số lương:</span>
+                            Hệ số lương:
                         </td>
                         <td id="coefficientSalary">
                             <input readonly type="text" class="form-control" aria-label="Sizing example input"
@@ -55,16 +54,16 @@
                     </tr>
                     <tr>
                         <td>
-                            <span class="input-group-text">Phụ cấp:</span>
+                            Phụ cấp:
                         </td>
                         <td id="allowance">
                             <input readonly type="text" class="form-control" aria-label="Sizing example input"
                                    aria-describedby="inputGroup-sizing-default">
                         </td>
                     </tr>
-                    <tr hidden>
+                    <tr>
                         <td>
-                            <span class="input-group-text">Khấu trừ (%):</span>
+                            Khấu trừ (%):
                         </td>
                         <td id="warning">
                             <input readonly type="text" class="form-control" aria-label="Sizing example input"
@@ -73,7 +72,7 @@
                     </tr>
                     <tr>
                         <td>
-                            <span class="input-group-text">Tổng lương:</span>
+                            Tổng lương:
                         </td>
                         <td id="result">
                             <input readonly type="text" class="form-control" aria-label="Sizing example input"
@@ -82,7 +81,7 @@
                     </tr>
                     </tbody>
                 </table>
-                <button onclick="printInvoice()" class="btn-outline-success my-3">
+                <button onclick="printInvoice()" class="btn btn-sm btn-outline-success my-3">
                     <svg class="bi me-2" width="16" height="16">
                         <use xlink:href="#printer"/>
                     </svg>
@@ -170,7 +169,7 @@
 
 
     function display() {
-        let teacher = "<option value='0'> -- Chọn giảng viên --</option>"
+        let teacher = "<option value='0'> -- Chọn giảng viên ▼ --</option>"
         $.ajax(
             {
                 contentType: "application/json",
