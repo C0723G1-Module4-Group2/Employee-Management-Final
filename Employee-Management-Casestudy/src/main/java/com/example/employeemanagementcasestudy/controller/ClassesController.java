@@ -91,7 +91,7 @@ public class ClassesController {
         }
         BeanUtils.copyProperties(editingClassDto, editingClass);
 
-        if (classesService.findByName(editingClass.getClassName()) == null) {
+        if (classesService.findByName(editingClass.getClassName()) == null|| classesService.findByName(editingClass.getClassName()).getClassId()==editingClass.getClassId()) {
             editingClass.setStatus(true);
             classesService.addClass(editingClass);
             attributes.addFlashAttribute("edit", "Đã sửa thành công!");
