@@ -103,7 +103,13 @@ public String showList(Model model,
 
     @PostMapping("/update")
     public String updateRole(RedirectAttributes redirectAttributes, UserRoleDto userRoleDto) {
-        AppUser appUser = appUserService.findById(userRoleDto.getUserId());
+//        AppUser appUser = appUserService.findById(userRoleDto.getUserId());
+        AppUser appUser = appUserService.findByUsername(userRoleDto.getUsername());
+        if(appUser.getUserId() !=userRoleDto.getUserId()){
+            redirectAttributes.addFlashAttribute("message",
+                    "Email " + userRoleDto.getUsername() + " đã tồn tại.Vui lòng nhập email khác");
+            return "redirect:/app-user/edit?id="+userRoleDto.getUserId();
+        }
         appUser.setUsername(userRoleDto.getUsername());
         appUserService.updateAppUser(appUser);
         List<AppRole> appRoleList = userRoleDto.getAppRoles();

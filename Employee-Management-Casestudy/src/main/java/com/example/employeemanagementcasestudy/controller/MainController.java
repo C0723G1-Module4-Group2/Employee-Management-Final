@@ -1,8 +1,9 @@
 package com.example.employeemanagementcasestudy.controller;
 
 
-
+import com.example.employeemanagementcasestudy.service.IUserRoleService;
 import com.example.employeemanagementcasestudy.util.WebUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
@@ -15,17 +16,19 @@ import java.util.List;
 
 @Controller
 public class MainController {
+    @Autowired
+    private IUserRoleService userRoleService;
 
     @RequestMapping(value = {"/", "/welcome"}, method = RequestMethod.GET)
-    public String welcomePage(Model model,Principal principal) {
+    public String welcomePage(Model model, Principal principal) {
 //        model.addAttribute("title", "Welcome");
 //        model.addAttribute("message", "This is welcome page!");
-        User loginedUser = (User) ((Authentication) principal).getPrincipal();
-        List<String> roles = WebUtils.Role(loginedUser);
-        if(roles.size()==1){
-            return "login/welcomePageUser";
+//        User loginedUser = (User) ((Authentication) principal).getPrincipal();
+//        List<String> roles = WebUtils.Role(loginedUser);
+        if (userRoleService.isUserAdmin(principal.getName())) {
+            return "teaching_schedule/list";
         }
-        return "login/welcomePage";
+        return "teaching_schedule/listForTeacher";
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)

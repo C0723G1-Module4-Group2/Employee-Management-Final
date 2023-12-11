@@ -16,6 +16,6 @@ public interface IAppUserRepository extends JpaRepository<AppUser, Integer> {
     AppUser findByUsername(String username);
     @Query(value = "select * from app_user where status = 1",nativeQuery = true)
     List<AppUser> findAllAppUser();
-    @Query(value = "select * from app_user where username like :username and status = 1", nativeQuery = true)
+    @Query(value = "select * from app_user where username like :username and status = 1 and username not in ('admin')", nativeQuery = true)
     Page<AppUser> search(@Param("username") String username, Pageable pageable);
 }
