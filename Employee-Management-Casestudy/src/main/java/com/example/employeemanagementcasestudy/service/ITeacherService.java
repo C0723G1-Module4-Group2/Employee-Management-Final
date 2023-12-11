@@ -24,4 +24,9 @@ public interface ITeacherService {
     void updateTeacher(Teacher teacher);
 
     Teacher findTeacherByAppUser(AppUser appUser);
+    Teacher findTeacherByIdentificationCard(String identificationCard);
+
+    Teacher findTeacherByTeacherCode(String teacherCode);
+
+    Teacher findTeacherByPhoneNumber(String phoneNumber);
 }

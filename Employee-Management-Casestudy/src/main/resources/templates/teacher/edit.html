@@ -33,24 +33,25 @@
 
         <div class="row col-12">
           <div class="col-6">
-            <form style="margin: 10px" th:action="@{/teacher/edit}" method="post" th:object="${teacherDTO}">
+            <form style="margin: 10px" th:action="@{/teacher/edit}" method="post" th:object="${teacherDto2}">
               <fieldset class="border border-dark rounded-3 p-3"  >
                 <legend class="float-none w-auto px-3">
                   Chỉnh Sửa Giáo Viên
                 </legend>
                 <div class="row col-12">
                   <div class="col-6">
-                    <input hidden th:field="*{appUser}" th:value="${teacherDTO.appUser.getUserId()}">
-                    <input hidden th:field="*{contract}" th:value="${teacherDTO.contract.getContractId()}">
-                    <input hidden th:field="*{teacherId}" th:value="${teacherDTO.teacherId}">
+                    <input hidden th:field="*{appUser}" th:value="${teacherDto2.appUser.getUserId()}">
+                    <input hidden th:field="*{contract}" th:value="${teacherDto2.contract.getContractId()}">
+                    <input hidden th:field="*{teacherId}" th:value="${teacherDto2.teacherId}">
+                    <input hidden th:field="*{status}" th:value="${teacherDto2.status}">
                     Họ Và Tên
-                    <input class="form-control" type="text" placeholder="Ex: Trần Anh Tuấn" aria-label="default input example" th:field="*{teacherName}" th:value="${teacherDTO.getTeacherName()}">
+                    <input class="form-control" type="text" placeholder="Ex: Trần Anh Tuấn" aria-label="default input example" th:field="*{teacherName}" th:value="${teacherDto2.getTeacherName()}">
                     <p style="color: red" th:if="${#fields.hasErrors('teacherName')}" th:errors="*{teacherName}"></p>
                     Địa Chỉ
-                    <input class="form-control" type="text" placeholder="Ex: 280 Đ. Trần Hưng Đạo, An Hải Tây, Sơn Trà, Đà Nẵng 550000" aria-label="default input example" th:field="*{address}" th:value="${teacherDTO.getAddress()}">
+                    <input class="form-control" type="text" placeholder="Ex: 280 Đ. Trần Hưng Đạo, An Hải Tây, Sơn Trà, Đà Nẵng 550000" aria-label="default input example" th:field="*{address}" th:value="${teacherDto2.getAddress()}">
                     <p style="color: red" th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></p>
                     Ngày Tháng Năm Sinh
-                    <input class="form-control" type="date" placeholder="Default input" aria-label="default input example" th:field="*{dateOfBirth}" th:value="${teacherDTO.getDateOfBirth()}">
+                    <input class="form-control" type="date" placeholder="Default input" aria-label="default input example" th:field="*{dateOfBirth}" th:value="${teacherDto2.getDateOfBirth()}">
                     Giới Tính
                     <div class="form-check">
                       <input class="form-check-input" type="radio" id="flexRadioDefault1" checked th:field="*{gender}" th:value=1>
@@ -65,25 +66,25 @@
                       </label>
                     </div>
                     Số CMND / CCCD:
-                    <input class="form-control" type="text" placeholder="Ex : 1234567899" aria-label="default input example" th:value="${teacherDTO.getIdentificationCard()}" th:field="*{identificationCard}">
+                    <input class="form-control" type="text" placeholder="Ex : 1234567899" aria-label="default input example" th:value="${teacherDto2.getIdentificationCard()}" th:field="*{identificationCard}">
                     <p style="color: red" th:if="${#fields.hasErrors('identificationCard')}" th:errors="*{identificationCard}"></p>
                   </div>
                   <div class="col-6">
                     Mã Giáo Viên
-                    <input class="form-control" type="text" placeholder="Ex : TC-01" aria-label="default input example" th:field="*{teacherCode}" th:value="${teacherDTO.getTeacherCode()}">
+                    <input class="form-control" type="text" placeholder="Ex : TC-01" aria-label="default input example" th:field="*{teacherCode}" th:value="${teacherDto2.getTeacherCode()}">
                     <p style="color: red" th:if="${#fields.hasErrors('teacherCode')}" th:errors="*{teacherCode}"></p>
                     Mail:
-                    <input class="form-control" type="text" placeholder="Ex : Name@gmail.com" aria-label="default input example" th:field="*{mail}" th:value="${teacherDTO.getMail()}">
+                    <input class="form-control" type="text" placeholder="Ex : Name@gmail.com" aria-label="default input example" th:field="*{mail}" th:value="${teacherDto2.getMail()}">
                     <p style="color: red" th:if="${#fields.hasErrors('mail')}" th:errors="*{mail}"></p>
                     Số Điện Thoại:
-                    <input class="form-control" type="text" placeholder="Ex :0236 6517 021" aria-label="default input example" th:field="*{phoneNumber}" th:value="${teacherDTO.getPhoneNumber()}">
+                    <input class="form-control" type="text" placeholder="Ex :0236 6517 021" aria-label="default input example" th:field="*{phoneNumber}" th:value="${teacherDto2.getPhoneNumber()}">
                     <p style="color: red" th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}"></p>
 
                     Lương:
-                    <input class="form-control" type="number" placeholder="Ex : 50000000" aria-label="default input example" th:field="*{basicSalary}" th:value="${teacherDTO.getBasicSalary()}">
+                    <input class="form-control" type="number" placeholder="Ex : 50000000" aria-label="default input example" th:field="*{basicSalary}" th:value="${teacherDto2.getBasicSalary()}">
                     <p style="color: red" th:if="${#fields.hasErrors('basicSalary')}" th:errors="*{basicSalary}"></p>
                     Hình Ảnh
-                    <input class="form-control" type="text" placeholder="Đường Link Của Ảnh" aria-label="default input example" th:field="*{imgOfTeacher}" th:value="${teacherDTO.getImgOfTeacher()}">
+                    <input class="form-control" type="text" placeholder="Đường Link Của Ảnh" aria-label="default input example" th:field="*{imgOfTeacher}" th:value="${teacherDto2.getImgOfTeacher()}">
                     <button  style="margin-top: 10px ; text-align: right" type="submit" class="btn btn-sm btn-outline-success">Lưu thay đổi</button>
                   </div>
                 </div>

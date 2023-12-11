@@ -57,4 +57,19 @@ public class TeacherServiceImpl implements ITeacherService {
     public Teacher findTeacherByAppUser(AppUser appUser) {
         return iTeacherRepository.findTeacherByAppUser(appUser);
     }
+
+    @Override
+    public Teacher findTeacherByIdentificationCard(String identificationCard) {
+        return iTeacherRepository.findTeacherByIdentificationCard(identificationCard);
+    }
+
+    @Override
+    public Teacher findTeacherByTeacherCode(String teacherCode) {
+        return iTeacherRepository.findTeacherByTeacherCode(teacherCode);
+    }
+
+    @Override
+    public Teacher findTeacherByPhoneNumber(String phoneNumber) {
+        return iTeacherRepository.findTeacherByPhoneNumber(phoneNumber);
+    }
 }

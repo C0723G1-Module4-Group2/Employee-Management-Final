@@ -42,7 +42,7 @@ public class AppRoleController {
     public String save(RedirectAttributes redirectAttributes, AppRole appRole) {
         if (appRoleService.findAppRoleByRoleName(appRole.getRoleName()) != null) {
             redirectAttributes.addFlashAttribute("message",
-                    "Tên " + appRole.getRoleName() + " đã tồn tại.Vui lòng nhập tên khác");
+                    "Tên " + appRole.getRoleName() + " đã tồn tại");
             return "redirect:/app-role/create";
         }
         appRoleService.createAppRole(new AppRole(appRole.getRoleName().toUpperCase(), true));
@@ -72,7 +72,7 @@ public class AppRoleController {
             return "redirect:/app-role";
         }else {
             redirectAttributes.addFlashAttribute("message",
-                    "Tên " + appRole.getRoleName() + " đã tồn tại.Vui lòng nhập tên khác");
+                    "Tên " + appRole.getRoleName() + " đã tồn tại");
             return "redirect:/app-role/edit?id="+appRole.getRoleId();
         }
 

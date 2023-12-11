@@ -40,6 +40,7 @@
                                     <label for="contractCode">Mã hợp đồng(CT-xxx)(*): </label><br>
                                     <input class="form-control" type="text" id="contractCode" th:field="*{contractCode}" placeholder="Nhập mã hợp đồng"/>
                                     <p style="color: red" th:if="${#fields.hasErrors('contractCode')}" th:errors="*{contractCode}"></p>
+                                    <spam style="color: red" th:text="${messageContract}"></spam>
                                 </div>
                                 <div class="input-group">
                                     <label for="currentDate">Ngày làm hợp đồng: </label><br>
@@ -94,24 +95,28 @@
                                         Số CMND / CCCD:
                                         <input class="form-control" type="text" id="identificationCard" placeholder="Ex : 1234567899" aria-label="default input example" required th:field="*{identificationCard}">
                                         <p style="color: red" th:if="${#fields.hasErrors('identificationCard')}" th:errors="*{identificationCard}"></p>
+                                        <spam style="color: red" th:text="${messageIdentificationCard}"></spam>
                                     </div>
                                     <div class="col-6">
                                         Mã Giáo Viên
                                         <input class="form-control" type="text" id="teacherCode" placeholder="Ex : TC-01" aria-label="default input example" required th:field="*{teacherCode}">
                                         <p style="color: red" th:if="${#fields.hasErrors('teacherCode')}" th:errors="*{teacherCode}"></p>
+                                        <spam style="color: red" th:text="${messageTeacherCode}"></spam>
                                         Mail:
                                         <input class="form-control" type="text" id="mail" placeholder="Ex : Name@gmail.com" aria-label="default input example" required th:field="*{mail}">
                                         <p style="color: red" th:if="${#fields.hasErrors('mail')}" th:errors="*{mail}"></p>
+                                        <spam style="color: red" th:text="${messageAppUser}"></spam>
                                         Số Điện Thoại:
                                         <input class="form-control" type="text" id="phoneNumber" placeholder="Ex :0236 6517 021" aria-label="default input example" required th:field="*{phoneNumber}">
                                         <p style="color: red" th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}"></p>
+                                        <spam style="color: red" th:text="${messagePhoneNumber}"></spam>
                                         Lương:
                                         <input class="form-control" type="number" id="basicSalary" placeholder="Ex : 50000000" aria-label="default input example" required th:field="*{basicSalary}">
                                         <p style="color: red" th:if="${#fields.hasErrors('basicSalary')}" th:errors="*{basicSalary}"></p>
                                         Hình Ảnh
                                         <input type="text" hidden id="imgUrl" name="img"  th:field="*{imgOfTeacher}"/>
                                         <input type="file" onchange="displayButton()" id="photo"/>
-                                        <button type="button" onclick="uploadImage()" style="display: none" id="upload">Upload firebase</button>
+                                        <button type="button" onclick="uploadImage()" style="display: none" id="upload">Tải lên firebase</button>
                                         <!--                                    <input class="form-control" type="text" placeholder="Đường Link Của Ảnh" aria-label="default input example" th:field="*{imgOfTeacher}">-->
                                         <button  style="margin-top: 10px ; text-align: right" type="submit" class="btn btn-outline-success">Thêm mới</button>
                                     </div>
@@ -120,7 +125,7 @@
                         </form>
                     </div>
                     <div class="col-6">
-                        <img src="https://yt3.googleusercontent.com/ytc/APkrFKaATITgvlVNlaGJgZ450FVhXg44Bew0MCEao0M=s900-c-k-c0x00ffffff-no-rj" width="100%" height="100%" style="margin: 10px" >
+                        <img id ="imgUrl1" width="100%" height="100%" style="margin: 10px" >
                     </div>
                 </div>
             </div>
@@ -221,9 +226,10 @@
             .then(url => {
                 // đường dẫn sau khi lưu xong trền firebase sẽ trả về đường dẫn.
                 console.log(url);
-                alert('image uploaded successfully');
+                alert('Ảnh tải lên thành công');
                 // gán vào thẻ form để submit
                 document.getElementById("imgUrl").value = url;
+                document.getElementById("imgUrl1").src = url;
                 // submit tự động
                 document.getElementById("form-submit").submit();
             })

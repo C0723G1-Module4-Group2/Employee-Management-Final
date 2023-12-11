@@ -21,7 +21,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class TeacherDTO {
+public class TeacherDto2 {
     private int teacherId;
     @NotBlank(message = "Không được để trống")
     @Pattern(regexp = "^TC-\\d{2}$", message = "Vui lòng nhập đúng định dạng TC-xx(x là số bất kì)")
@@ -42,7 +42,7 @@ public class TeacherDTO {
     @NotBlank(message = "Không được để trống")
     @Pattern(regexp = "^[0-9]{1,12}$",message = "Căn cước công dân phải đủ 12 số")
     private String identificationCard;
-//    @NotBlank(message = "Không được để trống")
+    //    @NotBlank(message = "Không được để trống")
 //    @Pattern(regexp = "^[0-9]{1,13}$",message = "Mức Lương Quá Lớn")
     private int basicSalary;
     private int warningCoefficient;
@@ -50,12 +50,4 @@ public class TeacherDTO {
     private String imgOfTeacher;
     private AppUser appUser;
     private Contract contract;
-    @NotBlank(message = "Không được để trống")
-    @Pattern(regexp = "^CT-\\d{3}$", message = "Vui lòng nhập đúng định dạng CT-xxx(x là số bất kì)")
-    private String contractCode;
-    private Date startDate;
-    @NotNull(message = "Không được để trống")
-    private Date endDate;
-    private SalaryLevel salaryLevel;
-    private List<AppRole> appRoles;
 }
