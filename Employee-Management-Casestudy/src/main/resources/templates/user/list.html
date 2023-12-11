@@ -3,7 +3,131 @@
 <head th:replace="/layout::head">
 </head>
 <body>
-<div class="container-fluid">
+
+<nav th:replace="/layout::sidebar"></nav>
+
+
+<div class="w3-overlay w3-hide-large w3-animate-opacity" onclick="w3_close()" style="cursor:pointer"
+     title="close side menu" id="myOverlay"></div>
+
+<div class="w3-main w3-light-grey" style="margin-left:300px; height: 100%">
+
+    <header id="welcome">
+        <span class="w3-button w3-hide-large w3-xxlarge w3-hover-text-grey" onclick="w3_open()"><i
+                class="fa fa-bars"></i></span>
+        <div class="w3-container">
+            <h1><b>Quản lý user</b></h1>
+            <div class="w3-section w3-padding-16">
+                <hr>
+
+                <div class="position-fixed top-0 end-5 p-3" style="z-index: 11;margin-left: 500px">
+                    <div id="liveToast" style="width: 230px; color: white; background:lightgreen ;border-radius:2% 2%;"
+                         class="toast"
+                         role="dialog" aria-live="assertive" aria-atomic="true">
+                        <div class="toast-body">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="30px" height="30px">
+                                <g id="surface1_4_">
+                                    <path style="fill:#4CAF50;"
+                                          d="M44,24c0,11.045-8.955,20-20,20S4,35.045,4,24S12.955,4,24,4S44,12.955,44,24z"/>
+                                    <path style="fill:#CCFF90;"
+                                          d="M34.602,14.602L21,28.199l-5.602-5.598l-2.797,2.797L21,33.801l16.398-16.402L34.602,14.602z"/>
+                                </g>
+                            </svg>
+                            <span id="toastContent">Nội dung hiển thị</span>
+                        </div>
+                    </div>
+                </div>
+                <h1>Quản lý User</h1>
+                <form class="d-flex col-3 my-3" role="search" action="/app-user" method="get">
+                    <input th:value="${name}" class="form-control me-2" type="search" placeholder="Nhập username" aria-label="Search"
+                           name="name">
+                    <button class="btn btn-outline-success" type="submit">Tìm kiếm</button>
+                </form>
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">STT</th>
+                        <th scope="col">Username</th>
+                        <th scope="col">Tên role</th>
+                        <th scope="col">Chỉnh sửa</th>
+                        <th scope="col">Xóa</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="user,status: ${blogAppUser}">
+                        <td th:text="${status.count}"></td>
+                        <td th:text="${user.getUsername()}"></td>
+                        <td>
+                            <div class="dropdown">
+                                <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                                        aria-expanded="false">
+                                    Xem danh sách role
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li th:each="role: ${user.getUserRoles()}" th:text="${role.appRole.roleName}"></li>
+                                </ul>
+                            </div>
+                        </td>
+                        <td>
+                            <a th:href="@{/app-user/edit(id=${user.getUserId()})}">
+                                <button class="my-2 bg-secondary">Chỉnh sửa</button>
+                            </a>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-outline-danger text-primary" data-bs-toggle="modal"
+                                    data-bs-target="#exampleModal"
+                                    th:attr="data-id=${user.getUserId()}, data-name=${user.getUsername()}"
+                                    onclick="deleteUser(this)">
+                                <i class="fas fa-trash-alt"></i>
+                                Xóa
+                            </button>
+                        </td>
+                    </tr>
+                    <tr th:if="${blogAppUser.isEmpty()}">
+                        <td th:colspan="5" class="text-danger">Danh sách rỗng</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div>
+                    <a th:if="${blogAppUser.hasPrevious()}"
+                       th:href="@{/app-user(page=${blogAppUser.getNumber()-1},name=${name})}">Trang sau</a>
+                    <span th:text="${blogAppUser.number+1}"></span>/
+                    <span th:text="${blogAppUser.totalPages}"></span>
+                    <a th:if="${blogAppUser.hasNext()}"
+                       th:href="@{/app-user(page=${blogAppUser.number+1},name=${name})}">Trang trước</a>
+                </div>
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                     aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <form action="/app-user/delete" method="get">
+                                <input hidden="hidden" name="action" value="delete">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5 text-warning" id="exampleModalLabel">Xóa tài khoản</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <input hidden="hidden" name="id" id="idDelete">
+                                    Bạn có muốn xóa tài khoản <span id="deleteName"></span> ?
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Không</button>
+                                    <button type="submit" class="btn btn-danger">Có</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+</div>
+
+<script th:replace="/layout::script-sidebar"></script>
+
+
     <script>
         function displayToast(message, color) {
             document.getElementById("toastContent").innerHTML = message;
@@ -13,111 +137,8 @@
             bsAlert.show();//show it
         }
     </script>
-    <div class="row">
-        <div class="col-3" th:replace="/layout::sidebar">
-        </div>
 
-        <div class="col-9" style="padding: 0">
-            <div class="position-fixed top-0 end-5 p-3" style="z-index: 11;margin-left: 500px">
-                <div id="liveToast" style="width: 230px; color: white; background:lightgreen ;border-radius:2% 2%;"
-                     class="toast"
-                     role="dialog" aria-live="assertive" aria-atomic="true">
-                    <div class="toast-body">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="30px" height="30px">
-                            <g id="surface1_4_">
-                                <path style="fill:#4CAF50;"
-                                      d="M44,24c0,11.045-8.955,20-20,20S4,35.045,4,24S12.955,4,24,4S44,12.955,44,24z"/>
-                                <path style="fill:#CCFF90;"
-                                      d="M34.602,14.602L21,28.199l-5.602-5.598l-2.797,2.797L21,33.801l16.398-16.402L34.602,14.602z"/>
-                            </g>
-                        </svg>
-                        <span id="toastContent">Nội dung hiển thị</span>
-                    </div>
-                </div>
-            </div>
-            <h1>Quản lý User</h1>
-            <form class="d-flex col-3 my-3" role="search" action="/app-user" method="get">
-                <input th:value="${name}" class="form-control me-2" type="search" placeholder="Nhập username" aria-label="Search"
-                       name="name">
-                <button class="btn btn-outline-success" type="submit">Tìm kiếm</button>
-            </form>
-            <table class="table">
-                <thead>
-                <tr>
-                    <th scope="col">STT</th>
-                    <th scope="col">Username</th>
-                    <th scope="col">Tên role</th>
-                    <th scope="col">Chỉnh sửa</th>
-                    <th scope="col">Xóa</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="user,status: ${blogAppUser}">
-                    <td th:text="${status.count}"></td>
-                    <td th:text="${user.getUsername()}"></td>
-                    <td>
-                        <div class="dropdown">
-                            <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                                    aria-expanded="false">
-                                Xem danh sách role
-                            </button>
-                            <ul class="dropdown-menu">
-                                <li th:each="role: ${user.getUserRoles()}" th:text="${role.appRole.roleName}"></li>
-                            </ul>
-                        </div>
-                    </td>
-                    <td>
-                        <a th:href="@{/app-user/edit(id=${user.getUserId()})}">
-                            <button class="my-2 bg-secondary">Chỉnh sửa</button>
-                        </a>
-                    </td>
-                    <td>
-                        <button type="button" class="btn btn-outline-danger text-primary" data-bs-toggle="modal"
-                                data-bs-target="#exampleModal"
-                                th:attr="data-id=${user.getUserId()}, data-name=${user.getUsername()}"
-                                onclick="deleteUser(this)">
-                            <i class="fas fa-trash-alt"></i>
-                            Xóa
-                        </button>
-                    </td>
-                </tr>
-                <tr th:if="${blogAppUser.isEmpty()}">
-                    <td th:colspan="5" class="text-danger">Danh sách rỗng</td>
-                </tr>
-                </tbody>
-            </table>
-            <div>
-                <a th:if="${blogAppUser.hasPrevious()}"
-                   th:href="@{/app-user(page=${blogAppUser.getNumber()-1},name=${name})}">Trang sau</a>
-                <span th:text="${blogAppUser.number+1}"></span>/
-                <span th:text="${blogAppUser.totalPages}"></span>
-                <a th:if="${blogAppUser.hasNext()}"
-                   th:href="@{/app-user(page=${blogAppUser.number+1},name=${name})}">Trang trước</a>
-            </div>
-        </div>
-        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-             aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <form action="/app-user/delete" method="get">
-                        <input hidden="hidden" name="action" value="delete">
-                        <div class="modal-header">
-                            <h1 class="modal-title fs-5 text-warning" id="exampleModalLabel">Xóa tài khoản</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <input hidden="hidden" name="id" id="idDelete">
-                            Bạn có muốn xóa tài khoản <span id="deleteName"></span> ?
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Không</button>
-                            <button type="submit" class="btn btn-danger">Có</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
+
         <script>
             function deleteUser(element) {
                 let id = element.getAttribute('data-id');
@@ -134,7 +155,5 @@
         <script th:if="${success}">
             displayToast(document.getElementById("success").value, "green")
         </script>
-    </div>
-</div>
 </body>
 </html>

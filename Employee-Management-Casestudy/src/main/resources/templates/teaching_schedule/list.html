@@ -3,77 +3,94 @@
 <head th:replace="/layout::head">
 </head>
 <body>
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-3" th:replace="/layout::sidebar">
-        </div>
-        <div class="col-9" >
-            <div class="row">
-                <div class="col-lg-9 col-md-12" style="padding: 0 10px">
-                    <div id="calendar"></div>
-                </div>
-                <div class="col-lg-3 col-md-12" style="padding: 0 10px">
-                    <div class="well well-sm">
-                        <div id="add-event-form">
-                            <fieldset>
-                                <legend>Thêm lịch dạy</legend>
-                                <span class="help-block">Chọn lớp</span><small style="color: red">(*)</small><br>
-                                <select id="class" class="form-control small" onchange="clearData()">
-                                </select>
-                                <span class="help-block">Chọn ngày bắt đầu</span><small
-                                    style="color: red">(*)</small>
-                                <input id="startDate" type="date"
-                                       class="form-control input-small" onchange="displaySheet()">
-                                <span class="help-block">Chọn ngày kết thúc</span><small
-                                    style="color: red">(*)</small>
-                                <input id="endDate" type="date"
-                                       class="form-control input-small" onchange="displaySheet()">
-                                <span class="help-block">Chọn suất dạy</span><small
-                                    style="color: red">(*)</small><br>
-                                <select id="timeSheet" class="form-control small" onchange="displayTeacher()">
-                                </select>
-                                <span class="help-block">Chọn giảng viên</span><small style="color: red">(*)</small>
-                                <select id="teacher" class="form-control small" onchange="displayBtnAdd()">
-                                </select>
-                                <br>
-                                <button id="btn-add" type="button" class="btn btn-success">Thêm
-                                </button>
-                            </fieldset>
-                        </div>
+
+<nav th:replace="/layout::sidebar"></nav>
+
+
+<div class="w3-overlay w3-hide-large w3-animate-opacity" onclick="w3_close()" style="cursor:pointer"
+     title="close side menu" id="myOverlay"></div>
+
+<div class="w3-main w3-light-grey" style="margin-left:300px; height: 100%">
+
+    <header id="welcome">
+        <span class="w3-button w3-hide-large w3-xxlarge w3-hover-text-grey" onclick="w3_open()"><i
+                class="fa fa-bars"></i></span>
+        <div class="w3-container">
+            <h1><b>Codegym</b></h1>
+            <div class="w3-section w3-padding-16">
+                <hr>
+
+                <div class="row">
+                    <div class="col-lg-9 col-md-12" style="padding: 0 10px">
+                        <div id="calendar"></div>
                     </div>
-                    <div>
-                        <div style="margin-top: 20%; font-weight: bold">Chú thích</div>
-                        <table>
-                            <tr>
-                                <td>
-                                    <div style="width: 15px;height: 15px;border-radius: 50%;margin-right: 5px; background-color: green"></div>
-                                </td>
-                                <td>
-                                    Đang hoạt động
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div style="width: 15px;height: 15px;border-radius: 50%;margin-right: 5px; background-color: grey"></div>
-                                </td>
-                                <td>
-                                    Đã hoàn thành
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div style="width: 15px;height: 15px;border-radius: 50%;margin-right: 5px; background-color: #6699ff"></div>
-                                </td>
-                                <td>
-                                    Chưa hoàn thành
-                                </td>
-                            </tr>
-                        </table>
+                    <div class="col-lg-3 col-md-12" style="padding: 0 10px">
+                        <div class="well well-sm">
+                            <div id="add-event-form">
+                                <fieldset>
+                                    <legend>Thêm lịch dạy</legend>
+                                    <span class="help-block">Chọn lớp</span><small style="color: red">(*)</small><br>
+                                    <select id="class" class="form-control small" onchange="clearData()">
+                                    </select>
+                                    <span class="help-block">Chọn ngày bắt đầu</span><small
+                                        style="color: red">(*)</small>
+                                    <input id="startDate" type="date"
+                                           class="form-control input-small" onchange="displaySheet()">
+                                    <span class="help-block">Chọn ngày kết thúc</span><small
+                                        style="color: red">(*)</small>
+                                    <input id="endDate" type="date"
+                                           class="form-control input-small" onchange="displaySheet()">
+                                    <span class="help-block">Chọn suất dạy</span><small
+                                        style="color: red">(*)</small><br>
+                                    <select id="timeSheet" class="form-control small" onchange="displayTeacher()">
+                                    </select>
+                                    <span class="help-block">Chọn giảng viên</span><small style="color: red">(*)</small>
+                                    <select id="teacher" class="form-control small" onchange="displayBtnAdd()">
+                                    </select>
+                                    <br>
+                                    <button id="btn-add" type="button" class="btn btn-success">Thêm
+                                    </button>
+                                </fieldset>
+                            </div>
+                        </div>
+                        <div>
+                            <div style="margin-top: 20%; font-weight: bold">Chú thích</div>
+                            <table>
+                                <tr>
+                                    <td>
+                                        <div style="width: 15px;height: 15px;border-radius: 50%;margin-right: 5px; background-color: green"></div>
+                                    </td>
+                                    <td>
+                                        Đang hoạt động
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div style="width: 15px;height: 15px;border-radius: 50%;margin-right: 5px; background-color: grey"></div>
+                                    </td>
+                                    <td>
+                                        Đã hoàn thành
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div style="width: 15px;height: 15px;border-radius: 50%;margin-right: 5px; background-color: #6699ff"></div>
+                                    </td>
+                                    <td>
+                                        Chưa hoàn thành
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </header>
+
+</div>
+
+<script th:replace="/layout::script-sidebar"></script>
 
     <!-- Button trigger modal -->
     <button id="btn-detail" hidden="hidden" type="button" class="btn btn-primary" data-bs-toggle="modal"
@@ -303,7 +320,7 @@
                             },
                             color: "grey"
                         });
-                    } else if (currentTime >= new Date(`${dates[j]}T${response[i][12]}`) && currentTime <= new Date(`${dates[j]}T${response[i][13]}`)) {
+                    } else if (currentTime >= new Date(`${dates[j]}T${response[i][9]}`) && currentTime <= new Date(`${dates[j]}T${response[i][10]}`)) {
                         events.push({
                             title: `${response[i][7]} `,
                             start: `${dates[j]}T${response[i][9]}`,

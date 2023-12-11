@@ -3,40 +3,53 @@
 <head th:replace="/layout::head">
 </head>
 <body>
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-3" th:replace="/layout::sidebar">
-        </div>
 
-        <div class="col-9" style="padding: 0">
-            <h1>Thêm mới role</h1>
-            <p>
-                <a href="/app-role">
-                    <button class="my-2 bg-secondary">Trở lại</button>
-                </a>
-            </p>
-            <div id="form">
-                <form action="/app-role/save" th:object="${appRole}" method="post">
-                    <table class="table">
-                        <tbody>
-                        <tr>
-                            <td><label for="name">Tên role</label></td>
-                            <td><input placeholder="Nhập tên role" required type="text" id="name" th:field="*{roleName}"/></br>
-                                <spam style="color: red" th:text="${message}"></spam>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td>
-                                <button class="my-2 bg-secondary">Lưu</button>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </form>
+<nav th:replace="/layout::sidebar"></nav>
+
+
+<div class="w3-overlay w3-hide-large w3-animate-opacity" onclick="w3_close()" style="cursor:pointer"
+     title="close side menu" id="myOverlay"></div>
+
+<div class="w3-main w3-light-grey" style="margin-left:300px; height: 100vh">
+
+    <header id="welcome">
+        <span class="w3-button w3-hide-large w3-xxlarge w3-hover-text-grey" onclick="w3_open()"><i
+                class="fa fa-bars"></i></span>
+        <div class="w3-container">
+            <h1><b>Thêm mới quyền cho tài khoản</b></h1>
+            <div class="w3-section w3-padding-16">
+                <hr>
+
+                <p>
+                    <a href="/app-role">
+                        <button class="my-2 bg-secondary">Trở lại</button>
+                    </a>
+                </p>
+                <div id="form">
+                    <form action="/app-role/save" th:object="${appRole}" method="post">
+                        <table class="table">
+                            <tbody>
+                            <tr>
+                                <td><label for="name">Tên role</label></td>
+                                <td><input placeholder="Nhập tên role" required type="text" id="name" th:field="*{roleName}"/></br>
+                                    <spam style="color: red" th:text="${message}"></spam>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>
+                                    <button class="my-2 bg-secondary">Lưu</button>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </form>
+                </div>
             </div>
         </div>
-    </div>
+    </header>
 </div>
+
+<script th:replace="/layout::script-sidebar"></script>
 </body>
 </html>

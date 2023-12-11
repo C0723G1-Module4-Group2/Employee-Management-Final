@@ -12,11 +12,125 @@
     }
 </style>
 <body>
-<div class="container-fluid">
-    <div class="row col-12">
-        <div class="col-3" th:replace="/layout::sidebar">
+
+<nav th:replace="/layout::sidebar"></nav>
+
+
+<div class="w3-overlay w3-hide-large w3-animate-opacity" onclick="w3_close()" style="cursor:pointer"
+     title="close side menu" id="myOverlay"></div>
+
+<div class="w3-main w3-light-grey" style="margin-left:300px; height: 100%">
+
+    <header id="welcome">
+        <span class="w3-button w3-hide-large w3-xxlarge w3-hover-text-grey" onclick="w3_open()"><i
+                class="fa fa-bars"></i></span>
+        <div class="w3-container">
+            <h1><b>Thêm mới giảng viên</b></h1>
+            <div class="w3-section w3-padding-16">
+                <hr>
+
+                <div class="row col-12" >
+                    <div class="col-6">
+                        <form style="margin: 10px" th:action="@{/teacher/add}" method="post" th:object="${teacherDTO}">
+                            <fieldset class="border border-dark rounded-3 p-3">
+                                <legend class="float-none w-auto px-3">
+                                    Thêm mới hợp đồng
+                                </legend>
+                                <div class="input-group">
+                                    <label for="contractCode">Mã hợp đồng(CT-xxx)(*): </label><br>
+                                    <input class="form-control" type="text" id="contractCode" th:field="*{contractCode}" placeholder="Nhập mã hợp đồng"/>
+                                    <p style="color: red" th:if="${#fields.hasErrors('contractCode')}" th:errors="*{contractCode}"></p>
+                                </div>
+                                <div class="input-group">
+                                    <label for="currentDate">Ngày làm hợp đồng: </label><br>
+                                    <input class="form-control" style="border: 0" type="text" id="currentDate" readonly th:field="*{startDate}">
+                                </div>
+                                <div class="input-group">
+                                    <label for="endDate">Ngày kết thúc hợp đồng: </label><br>
+                                    <input class="form-control" type="date" required id="endDate"  th:field="*{endDate}"/>
+                                    <p style="color: red" th:if="${#fields.hasErrors('endDate')}" th:errors="*{endDate}"></p>
+                                </div>
+                                <div class="input-group">
+                                    <label for="salary">Hệ số lương: </label>
+                                    <select id="salary" th:field="*{salaryLevel}">
+                                        <option th:value="${salaryLevel.getSalaryLevelId()}" th:each="salaryLevel: ${salaryLevelList}" th:text="${salaryLevel.getCoefficientsSalary()}"></option>
+                                    </select>
+                                </div>
+                            </fieldset>
+                            <fieldset class="border border-dark rounded-3 p-3" >
+                                <legend class="float-none w-auto px-3">
+                                    Thêm Mới Giáo Viên
+                                </legend>
+                                <div class="row col-12">
+                                    <div class="col-6">
+                                        Họ Và Tên
+                                        <input class="form-control"  type="text" placeholder="Ex: Trần Anh Tuấn" aria-label="default input example" th:field="*{teacherName}" required>
+                                        <p style="color: red" th:if="${#fields.hasErrors('teacherName')}" th:errors="*{teacherName}"></p>
+                                        Địa Chỉ
+                                        <input class="form-control" type="text" id="address" placeholder="Ex: 280 Đ. Trần Hưng Đạo, An Hải Tây, Sơn Trà, Đà Nẵng 550000" aria-label="default input example" required th:field="*{address}">
+                                        <p style="color: red" th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></p>
+                                        Ngày Tháng Năm Sinh
+                                        <input class="form-control" type="date" placeholder="Default input" aria-label="default input example" th:field="*{dateOfBirth}" required>
+                                        Giới Tính
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" id="flexRadioDefault1" checked th:field="*{gender}" th:value=1>
+                                            <label class="form-check-label" for="flexRadioDefault1">
+                                                Nam
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" id="flexRadioDefault2" th:field="*{gender}" th:value=0>
+                                            <label class="form-check-label" for="flexRadioDefault2">
+                                                Nữ
+                                            </label>
+                                        </div>
+                                        <label>Chọn role</label>
+                                        <div class="form-check" th:each="role : ${appRoleList}">
+                                            <input class="form-check-input" type="checkbox" th:value="${role.roleId}"
+                                                   th:field="*{appRoles}" id="flexCheckDefault">
+                                            <label class="form-check-label" for="flexCheckDefault" th:text="${role.roleName}">
+                                            </label>
+                                        </div>
+                                        Số CMND / CCCD:
+                                        <input class="form-control" type="text" id="identificationCard" placeholder="Ex : 1234567899" aria-label="default input example" required th:field="*{identificationCard}">
+                                        <p style="color: red" th:if="${#fields.hasErrors('identificationCard')}" th:errors="*{identificationCard}"></p>
+                                    </div>
+                                    <div class="col-6">
+                                        Mã Giáo Viên
+                                        <input class="form-control" type="text" id="teacherCode" placeholder="Ex : TC-01" aria-label="default input example" required th:field="*{teacherCode}">
+                                        <p style="color: red" th:if="${#fields.hasErrors('teacherCode')}" th:errors="*{teacherCode}"></p>
+                                        Mail:
+                                        <input class="form-control" type="text" id="mail" placeholder="Ex : Name@gmail.com" aria-label="default input example" required th:field="*{mail}">
+                                        <p style="color: red" th:if="${#fields.hasErrors('mail')}" th:errors="*{mail}"></p>
+                                        Số Điện Thoại:
+                                        <input class="form-control" type="text" id="phoneNumber" placeholder="Ex :0236 6517 021" aria-label="default input example" required th:field="*{phoneNumber}">
+                                        <p style="color: red" th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}"></p>
+                                        Lương:
+                                        <input class="form-control" type="number" id="basicSalary" placeholder="Ex : 50000000" aria-label="default input example" required th:field="*{basicSalary}">
+                                        <p style="color: red" th:if="${#fields.hasErrors('basicSalary')}" th:errors="*{basicSalary}"></p>
+                                        Hình Ảnh
+                                        <input type="text" hidden id="imgUrl" name="img"  th:field="*{imgOfTeacher}"/>
+                                        <input type="file" onchange="displayButton()" id="photo"/>
+                                        <button type="button" onclick="uploadImage()" style="display: none" id="upload">Upload firebase</button>
+                                        <!--                                    <input class="form-control" type="text" placeholder="Đường Link Của Ảnh" aria-label="default input example" th:field="*{imgOfTeacher}">-->
+                                        <button  style="margin-top: 10px ; text-align: right" type="submit" class="btn btn-success">Success</button>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </form>
+                    </div>
+                    <div class="col-6">
+                        <img src="https://yt3.googleusercontent.com/ytc/APkrFKaATITgvlVNlaGJgZ450FVhXg44Bew0MCEao0M=s900-c-k-c0x00ffffff-no-rj" width="100%" height="100%" style="margin: 10px" >
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="col-9" style="padding: 0">
+    </header>
+
+</div>
+
+<script th:replace="/layout::script-sidebar"></script>
+
             <h2>Thêm Mới Giáo Viên</h2>
 <!--            <div class="row col-12">-->
 <!--            <table style="padding: 0">-->
@@ -57,100 +171,7 @@
 <!--                </tbody>-->
 <!--            </table>-->
 <!--            </div>-->
-            <div class="row col-12" >
-                <div class="col-6">
-                    <form style="margin: 10px" th:action="@{/teacher/add}" method="post" th:object="${teacherDTO}">
-                        <fieldset class="border border-dark rounded-3 p-3">
-                            <legend class="float-none w-auto px-3">
-                                Thêm mới hợp đồng
-                            </legend>
-                            <div class="input-group">
-                                <label for="contractCode">Mã hợp đồng(CT-xxx)(*): </label><br>
-                                <input class="form-control" type="text" id="contractCode" th:field="*{contractCode}" placeholder="Nhập mã hợp đồng"/>
-                                <p style="color: red" th:if="${#fields.hasErrors('contractCode')}" th:errors="*{contractCode}"></p>
-                            </div>
-                            <div class="input-group">
-                                <label for="currentDate">Ngày làm hợp đồng: </label><br>
-                                <input class="form-control" style="border: 0" type="text" id="currentDate" readonly th:field="*{startDate}">
-                            </div>
-                            <div class="input-group">
-                                <label for="endDate">Ngày kết thúc hợp đồng: </label><br>
-                                <input class="form-control" type="date" required id="endDate"  th:field="*{endDate}"/>
-                                <p style="color: red" th:if="${#fields.hasErrors('endDate')}" th:errors="*{endDate}"></p>
-                            </div>
-                            <div class="input-group">
-                                <label for="salary">Hệ số lương: </label>
-                                <select id="salary" th:field="*{salaryLevel}">
-                                    <option th:value="${salaryLevel.getSalaryLevelId()}" th:each="salaryLevel: ${salaryLevelList}" th:text="${salaryLevel.getCoefficientsSalary()}"></option>
-                                </select>
-                            </div>
-                        </fieldset>
-                        <fieldset class="border border-dark rounded-3 p-3" >
-                            <legend class="float-none w-auto px-3">
-                                Thêm Mới Giáo Viên
-                            </legend>
-                            <div class="row col-12">
-                                <div class="col-6">
-                                    Họ Và Tên
-                                    <input class="form-control"  type="text" placeholder="Ex: Trần Anh Tuấn" aria-label="default input example" th:field="*{teacherName}" required>
-                                    <p style="color: red" th:if="${#fields.hasErrors('teacherName')}" th:errors="*{teacherName}"></p>
-                                    Địa Chỉ
-                                    <input class="form-control" type="text" id="address" placeholder="Ex: 280 Đ. Trần Hưng Đạo, An Hải Tây, Sơn Trà, Đà Nẵng 550000" aria-label="default input example" required th:field="*{address}">
-                                    <p style="color: red" th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></p>
-                                    Ngày Tháng Năm Sinh
-                                    <input class="form-control" type="date" placeholder="Default input" aria-label="default input example" th:field="*{dateOfBirth}" required>
-                                    Giới Tính
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" id="flexRadioDefault1" checked th:field="*{gender}" th:value=1>
-                                        <label class="form-check-label" for="flexRadioDefault1">
-                                            Nam
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" id="flexRadioDefault2" th:field="*{gender}" th:value=0>
-                                        <label class="form-check-label" for="flexRadioDefault2">
-                                            Nữ
-                                        </label>
-                                    </div>
-                                    <label>Chọn role</label>
-                                        <div class="form-check" th:each="role : ${appRoleList}">
-                                            <input class="form-check-input" type="checkbox" th:value="${role.roleId}"
-                                                   th:field="*{appRoles}" id="flexCheckDefault">
-                                            <label class="form-check-label" for="flexCheckDefault" th:text="${role.roleName}">
-                                            </label>
-                                        </div>
-                                    Số CMND / CCCD:
-                                    <input class="form-control" type="text" id="identificationCard" placeholder="Ex : 1234567899" aria-label="default input example" required th:field="*{identificationCard}">
-                                    <p style="color: red" th:if="${#fields.hasErrors('identificationCard')}" th:errors="*{identificationCard}"></p>
-                                </div>
-                                <div class="col-6">
-                                    Mã Giáo Viên
-                                    <input class="form-control" type="text" id="teacherCode" placeholder="Ex : TC-01" aria-label="default input example" required th:field="*{teacherCode}">
-                                    <p style="color: red" th:if="${#fields.hasErrors('teacherCode')}" th:errors="*{teacherCode}"></p>
-                                    Mail:
-                                    <input class="form-control" type="text" id="mail" placeholder="Ex : Name@gmail.com" aria-label="default input example" required th:field="*{mail}">
-                                    <p style="color: red" th:if="${#fields.hasErrors('mail')}" th:errors="*{mail}"></p>
-                                    Số Điện Thoại:
-                                    <input class="form-control" type="text" id="phoneNumber" placeholder="Ex :0236 6517 021" aria-label="default input example" required th:field="*{phoneNumber}">
-                                    <p style="color: red" th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}"></p>
-                                    Lương:
-                                    <input class="form-control" type="number" id="basicSalary" placeholder="Ex : 50000000" aria-label="default input example" required th:field="*{basicSalary}">
-                                    <p style="color: red" th:if="${#fields.hasErrors('basicSalary')}" th:errors="*{basicSalary}"></p>
-                                    Hình Ảnh
-                                    <input type="text" hidden id="imgUrl" name="img"  th:field="*{imgOfTeacher}"/>
-                                    <input type="file" onchange="displayButton()" id="photo"/>
-                                    <button type="button" onclick="uploadImage()" style="display: none" id="upload">Upload firebase</button>
-<!--                                    <input class="form-control" type="text" placeholder="Đường Link Của Ảnh" aria-label="default input example" th:field="*{imgOfTeacher}">-->
-                                    <button  style="margin-top: 10px ; text-align: right" type="submit" class="btn btn-success">Success</button>
-                                </div>
-                            </div>
-                        </fieldset>
-                    </form>
-                </div>
-                <div class="col-6">
-                    <img src="https://yt3.googleusercontent.com/ytc/APkrFKaATITgvlVNlaGJgZ450FVhXg44Bew0MCEao0M=s900-c-k-c0x00ffffff-no-rj" width="100%" height="100%" style="margin: 10px" >
-                </div>
-            </div>
+
         </div>
     </div>
 </div>

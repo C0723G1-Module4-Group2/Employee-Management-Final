@@ -3,7 +3,53 @@
 <head th:replace="/layout::head">
 </head>
 <body>
-<div class="container-fluid">
+
+<nav th:replace="/layout::sidebar"></nav>
+
+
+<div class="w3-overlay w3-hide-large w3-animate-opacity" onclick="w3_close()" style="cursor:pointer"
+     title="close side menu" id="myOverlay"></div>
+
+<div class="w3-main w3-light-grey" style="margin-left:300px; height: 100vh">
+
+    <header id="welcome">
+        <span class="w3-button w3-hide-large w3-xxlarge w3-hover-text-grey" onclick="w3_open()"><i
+                class="fa fa-bars"></i></span>
+        <div class="w3-container">
+            <h1><b>Quản lý quyền</b></h1>
+            <div class="w3-section w3-padding-16">
+                <hr>
+                <a href="/app-role/create">
+                    <button class="my-2 bg-secondary">Thêm mới role</button>
+                </a>
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">STT</th>
+                        <th scope="col">Tên</th>
+                        <th scope="col">Chỉnh sửa</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="role,status: ${appRoleList}">
+                        <td th:text="${status.count}"></td>
+                        <td th:text="${role.getRoleName()}"></td>
+                        <td>
+                            <a th:href="@{/app-role/edit(id=${role.getRoleId()})}">
+                                <button class="my-2 bg-secondary">Chỉnh sửa</button>
+                            </a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </header>
+
+</div>
+
+<script th:replace="/layout::script-sidebar"></script>
+
     <script>
         function displayToast(message, color) {
             document.getElementById("toastContent").innerHTML = message;
@@ -13,10 +59,7 @@
             bsAlert.show();//show it
         }
     </script>
-    <div class="row">
-        <div class="col-3" th:replace="/layout::sidebar">
-        </div>
-        <div class="col-9" style="padding: 0">
+
             <div class="position-fixed top-0 end-5 p-3" style="z-index: 11;margin-left: 500px">
                 <div id="liveToast" style="width: 230px; color: white; background:lightgreen ;border-radius:2% 2%;"
                      class="toast"
@@ -34,36 +77,10 @@
                     </div>
                 </div>
             </div>
-            <h1>Quản lý Role</h1>
-            <a href="/app-role/create">
-                <button class="my-2 bg-secondary">Thêm mới role</button>
-            </a>
-            <table class="table">
-                <thead>
-                <tr>
-                    <th scope="col">STT</th>
-                    <th scope="col">Tên</th>
-                    <th scope="col">Chỉnh sửa</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="role,status: ${appRoleList}">
-                    <td th:text="${status.count}"></td>
-                    <td th:text="${role.getRoleName()}"></td>
-                    <td>
-                        <a th:href="@{/app-role/edit(id=${role.getRoleId()})}">
-                            <button class="my-2 bg-secondary">Chỉnh sửa</button>
-                        </a>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
+
         <input hidden id="success" th:value="${success}">
         <script th:if="${success}">
             displayToast(document.getElementById("success").value, "green")
         </script>
-    </div>
-</div>
 </body>
 </html>

@@ -4,54 +4,70 @@
   <title>Classes</title>
 </head>
 <body>
-<div class="container-fluid">
-  <div class="row">
-    <div class="col-3" th:replace="/layout::sidebar">
-    </div>
-    <div class="col-9">
-      <div class="container mt-4 mt-sm-2">
 
-        <div class="row">
-          <form action="/contracts/update" th:object="${editContract}" method="post">
-            <table class="table">
-              <tr>
-                <th>Mã hợp đồng</th>
-                <td><input style="width: 500px" required scope="row" th:field="*{contractCode}"></td>
-                <span style="color: red" th:if="${#fields.hasErrors('contractCode')}" th:errors="*{contractCode}"></span>
-              </tr>
-              <tr>
-                <th>Ngày bắt đầu hợp đồng</th>
-                <td><input type="date" readonly  style="width: 500px" id="startDate" scope="row" th:field="*{startDate}"></td>
-              </tr>
-              <tr>
-                <th>Ngày kết thúc hợp đồng</th>
-                <td><input type="date" required style="width: 500px" scope="row" id="endDate" th:field="*{endDate}"></td>
-                <span style="color: red" th:if="${#fields.hasErrors('endDate')}" th:errors="*{endDate}"></span>
-              </tr>
-              <tr>
-                <th>Bậc lương</th>
-                <td>
-                  <select id="category" th:field="*{salaryLevel}">
-                    <option th:each="salary: ${salaryLevelList}"
-                            th:text="${salary.coefficientsSalary}" th:value="${salary.salaryLevelId}"></option>
-                  </select>
-                </td>
-              </tr>
-              <input type="hidden" th:field="*{contractId}" th:value="${editContract.getContractId()}">
-            </table>
-            <div>
-              <button type="submit" class="btn btn-outline-primary">Edit</button>
-              <a th:href="@{/contracts}">
-                <button type="button" class="btn btn-outline-primary"> Back To List</button>
-              </a>
-            </div>
+<nav th:replace="/layout::sidebar"></nav>
 
 
-          </form>
+<div class="w3-overlay w3-hide-large w3-animate-opacity" onclick="w3_close()" style="cursor:pointer"
+     title="close side menu" id="myOverlay"></div>
+
+<div class="w3-main w3-light-grey" style="margin-left:300px; height: 100vh">
+
+  <header id="welcome">
+        <span class="w3-button w3-hide-large w3-xxlarge w3-hover-text-grey" onclick="w3_open()"><i
+                class="fa fa-bars"></i></span>
+    <div class="w3-container">
+      <h1><b>Chỉnh sửa hợp đồng</b></h1>
+      <div class="w3-section w3-padding-16">
+        <hr>
+
+        <div class="container mt-4 mt-sm-2">
+          <div class="row">
+            <form action="/contracts/update" th:object="${editContract}" method="post">
+              <table class="table">
+                <tr>
+                  <th>Mã hợp đồng</th>
+                  <td><input style="width: 500px" required scope="row" th:field="*{contractCode}"></td>
+                  <span style="color: red" th:if="${#fields.hasErrors('contractCode')}" th:errors="*{contractCode}"></span>
+                </tr>
+                <tr>
+                  <th>Ngày bắt đầu hợp đồng</th>
+                  <td><input type="date" readonly  style="width: 500px" id="startDate" scope="row" th:field="*{startDate}"></td>
+                </tr>
+                <tr>
+                  <th>Ngày kết thúc hợp đồng</th>
+                  <td><input type="date" required style="width: 500px" scope="row" id="endDate" th:field="*{endDate}"></td>
+                  <span style="color: red" th:if="${#fields.hasErrors('endDate')}" th:errors="*{endDate}"></span>
+                </tr>
+                <tr>
+                  <th>Bậc lương</th>
+                  <td>
+                    <select id="category" th:field="*{salaryLevel}">
+                      <option th:each="salary: ${salaryLevelList}"
+                              th:text="${salary.coefficientsSalary}" th:value="${salary.salaryLevelId}"></option>
+                    </select>
+                  </td>
+                </tr>
+                <input type="hidden" th:field="*{contractId}" th:value="${editContract.getContractId()}">
+              </table>
+              <div>
+                <button type="submit" class="btn btn-outline-primary">Edit</button>
+                <a th:href="@{/contracts}">
+                  <button type="button" class="btn btn-outline-primary"> Back To List</button>
+                </a>
+              </div>
+
+
+            </form>
+          </div>
         </div>
       </div>
     </div>
-  </div>
+  </header>
+
 </div>
+
+<script th:replace="/layout::script-sidebar"></script>
+
 </body>
 </html>
