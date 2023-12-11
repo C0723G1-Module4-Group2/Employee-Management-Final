@@ -84,8 +84,9 @@
                     <a th:if="${classesList.hasPrevious()}"
                        th:href="@{/classes(page=${classesList.getNumber()-1},searchingName=${searchingName})}">Trang
                         trước</a>
-                    <span th:text="${classesList.number+1}"></span>/
-                    <span th:text="${classesList.totalPages}"></span>
+                    <span th:if="${classesList.hasNext()}" th:text="${classesList.number+1}"></span>
+                    <span th:if="${!classesList.hasNext()}" th:text="${classesList.totalPages}"></span>
+                    / <span th:text="${classesList.totalPages}"></span>
                     <a th:if="${classesList.hasNext()}"
                        th:href="@{/classes(page=${classesList.number+1},searchingName=${searchingName})}">Trang sau</a>
                 </div>
