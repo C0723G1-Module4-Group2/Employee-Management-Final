@@ -48,6 +48,7 @@
                         <th>Ngày làm hợp đồng</th>
                         <th>Ngày kết thúc hợp đồng</th>
                         <th>Hệ số lương</th>
+                        <th>Chi tiết</th>
                         <th>Sửa</th>
                         <th>Xoá</th>
                     </tr>
@@ -58,7 +59,11 @@
                         <td th:text="${contract.getContractCode()}"></td>
                         <td th:text="${#dates.format(contract.getStartDate(), 'dd/MM/yyyy')}"></td>
                         <td th:text="${#dates.format(contract.getEndDate(), 'dd/MM/yyyy')}"></td>
-                        <td th:text="${contract.getCoefficientsSalary()}"></td>
+                        <td th:text="${contract.getSalaryLevel().getCoefficientsSalary()}"></td>
+
+                        <td><a class="btn btn-sm btn-outline-success" th:href="@{/contracts/detail(id=${contract.getContractId()})}">
+                            Chi tiết</a></td>
+                        <td>
                         <td><a class="btn btn-sm btn-outline-warning" th:href="@{/contracts/edit/{id}(id=${contract.getContractId()})}">Chỉnh
                             Sửa</a></td>
                         <td>

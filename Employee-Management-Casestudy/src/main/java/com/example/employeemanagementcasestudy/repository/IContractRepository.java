@@ -10,7 +10,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 public interface IContractRepository extends JpaRepository<Contract,Integer> {
-    @Query(value = "select * from contract where contract_code like:code", nativeQuery = true)
+    @Query(value = "select * from contract where contract_code like:code and status =1", nativeQuery = true)
     Page<Contract> search(@Param("code") String code, Pageable pageable);
     @Query(value = "select * from contract where contract_code =:code and status=1", nativeQuery = true)
     Contract findByCode(@Param("code") String code);

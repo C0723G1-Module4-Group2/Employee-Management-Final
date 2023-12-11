@@ -2,6 +2,7 @@ package com.example.employeemanagementcasestudy.service.impl;
 
 
 import com.example.employeemanagementcasestudy.model.AppUser;
+import com.example.employeemanagementcasestudy.model.Contract;
 import com.example.employeemanagementcasestudy.model.Teacher;
 import com.example.employeemanagementcasestudy.repository.ITeacherRepository;
 import com.example.employeemanagementcasestudy.service.ITeacherService;
@@ -71,5 +72,10 @@ public class TeacherServiceImpl implements ITeacherService {
     @Override
     public Teacher findTeacherByPhoneNumber(String phoneNumber) {
         return iTeacherRepository.findTeacherByPhoneNumber(phoneNumber);
+    }
+
+    @Override
+    public Teacher findTeacherByContract(Contract contract) {
+        return iTeacherRepository.findTeacherByContract(contract);
     }
 }
