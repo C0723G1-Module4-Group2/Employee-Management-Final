@@ -103,36 +103,37 @@ public String showList(Model model,
 
     @PostMapping("/update")
     public String updateRole(RedirectAttributes redirectAttributes, UserRoleDto userRoleDto) {
-//        AppUser appUser = appUserService.findById(userRoleDto.getUserId());
-        AppUser appUser = appUserService.findByUsername(userRoleDto.getUsername());
-        if(appUser.getUserId() !=userRoleDto.getUserId()){
+        AppUser appUser = appUserService.findById(userRoleDto.getUserId());
+        if(appUserService.findByUsername(userRoleDto.getUsername()) == null ||
+                appUserService.findByUsername(userRoleDto.getUsername()).getUserId() == userRoleDto.getUserId()){
+            appUser.setUsername(userRoleDto.getUsername());
+            appUserService.updateAppUser(appUser);
+            List<AppRole> appRoleList = userRoleDto.getAppRoles();
+            List<UserRole> userRoleList = userRoleService.displayUserRoleByAppUser(appUser.getUserId());
+            for (UserRole userRole : userRoleList) {
+                if (!appRoleList.contains(userRole.getAppRole())) {
+                    userRoleService.deleteUserRole(userRole);
+                }
+            }
+            for (AppRole appRole : appRoleList) {
+                Integer id;
+                id = userRoleService.findIdByRoleAndUser(appRole.getRoleId(), appUser.getUserId());
+                if (id != null) {
+                    UserRole userRole = new UserRole(id, appRole, appUser);
+                    if (userRoleService.checkUserRole(userRole)) {
+                        userRoleService.updateUserRole(userRole);
+                    }
+                } else {
+                    userRoleService.createUserRole(new UserRole(appRole, appUser));
+                }
+            }
+            redirectAttributes.addFlashAttribute("edit", "Chỉnh sửa thành công");
+            return "redirect:/app-user";
+        }else {
             redirectAttributes.addFlashAttribute("message",
                     "Email " + userRoleDto.getUsername() + " đã tồn tại");
             return "redirect:/app-user/edit?id="+userRoleDto.getUserId();
         }
-        appUser.setUsername(userRoleDto.getUsername());
-        appUserService.updateAppUser(appUser);
-        List<AppRole> appRoleList = userRoleDto.getAppRoles();
-        List<UserRole> userRoleList = userRoleService.displayUserRoleByAppUser(appUser.getUserId());
-        for (UserRole userRole : userRoleList) {
-            if (!appRoleList.contains(userRole.getAppRole())) {
-                userRoleService.deleteUserRole(userRole);
-            }
-        }
-        for (AppRole appRole : appRoleList) {
-            Integer id;
-            id = userRoleService.findIdByRoleAndUser(appRole.getRoleId(), appUser.getUserId());
-            if (id != null) {
-                UserRole userRole = new UserRole(id, appRole, appUser);
-                if (userRoleService.checkUserRole(userRole)) {
-                    userRoleService.updateUserRole(userRole);
-                }
-            } else {
-                userRoleService.createUserRole(new UserRole(appRole, appUser));
-            }
-        }
-        redirectAttributes.addFlashAttribute("edit", "Chỉnh sửa thành công");
-        return "redirect:/app-user";
     }
 
     @GetMapping("/delete")
