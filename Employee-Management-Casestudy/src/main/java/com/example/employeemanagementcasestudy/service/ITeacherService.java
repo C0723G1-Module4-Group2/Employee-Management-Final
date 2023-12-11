@@ -2,6 +2,7 @@ package com.example.employeemanagementcasestudy.service;
 
 
 import com.example.employeemanagementcasestudy.model.AppUser;
+import com.example.employeemanagementcasestudy.model.Contract;
 import com.example.employeemanagementcasestudy.model.Teacher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -29,4 +30,5 @@ public interface ITeacherService {
     Teacher findTeacherByTeacherCode(String teacherCode);
 
     Teacher findTeacherByPhoneNumber(String phoneNumber);
+    Teacher findTeacherByContract(Contract contract);
 }

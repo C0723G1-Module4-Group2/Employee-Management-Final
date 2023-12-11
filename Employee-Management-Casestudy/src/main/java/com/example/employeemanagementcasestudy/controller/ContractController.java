@@ -5,8 +5,10 @@ import com.example.employeemanagementcasestudy.dto.ContractDto;
 import com.example.employeemanagementcasestudy.dto.ContractDto1;
 import com.example.employeemanagementcasestudy.model.Contract;
 import com.example.employeemanagementcasestudy.model.SalaryLevel;
+import com.example.employeemanagementcasestudy.model.Teacher;
 import com.example.employeemanagementcasestudy.service.IContractService;
 import com.example.employeemanagementcasestudy.service.ISalaryLevelService;
+import com.example.employeemanagementcasestudy.service.ITeacherService;
 import com.example.employeemanagementcasestudy.service.IUserRoleService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,13 +37,15 @@ public class ContractController {
     private ISalaryLevelService salaryLevelService;
     @Autowired
     private IUserRoleService userRoleService;
+    @Autowired
+    private ITeacherService teacherService;
 
     @GetMapping
     public String showList(@RequestParam(defaultValue = "0") int page,
                            @RequestParam(defaultValue = "") String searchCode,
                            Model model) {
         Pageable pageable = PageRequest.of(page, 10, Sort.by("contract_code").ascending());
-        Page<ContractDto1> contractPage = contractService.getContract(searchCode, pageable);
+        Page<Contract> contractPage = contractService.findAllContract(searchCode, pageable);
         model.addAttribute("contractPage", contractPage);
         model.addAttribute("searchCode", searchCode);
         return "/contract/list";
@@ -55,13 +59,14 @@ public class ContractController {
         model.addAttribute("salaryLevelList", salaryLevelList);
         return "/contract/create";
     }
+
     @PostMapping("/save")
     public String createNewContract(@Valid @ModelAttribute ContractDto contractDto,
                                     BindingResult bindingResult,
                                     RedirectAttributes redirectAttributes,
                                     Model model
-                                    ){
-        if (bindingResult.hasErrors()){
+    ) {
+        if (bindingResult.hasErrors()) {
             List<SalaryLevel> salaryLevelList = salaryLevelService.findAllSalaryLevel();
             model.addAttribute("salaryLevelList", salaryLevelList);
             return "/contract/create";
@@ -69,14 +74,14 @@ public class ContractController {
         Contract contract = new Contract();
         long currentTimeMillis = System.currentTimeMillis();
         Date currentDate = new Date(currentTimeMillis);
-        BeanUtils.copyProperties(contractDto,contract);
-        if (contractService.findByCode(contractDto.getContractCode()) == null){
+        BeanUtils.copyProperties(contractDto, contract);
+        if (contractService.findByCode(contractDto.getContractCode()) == null) {
             contract.setStartDate(currentDate);
             contract.setStatus(true);
             contractService.createContract(contract);
             redirectAttributes.addFlashAttribute("message", "Create new contract successful");
             return "redirect:/contracts";
-        }else {
+        } else {
             redirectAttributes.addFlashAttribute("message", "Contract is exists");
             return "redirect:/contracts/create";
         }
@@ -92,31 +97,40 @@ public class ContractController {
 //        }
         List<SalaryLevel> salaryLevelList = salaryLevelService.findAllSalaryLevel();
         Contract editContract = contractService.findById(id);
-        if (editContract == null){
-            redirectAttributes.addFlashAttribute("message","Not found");
+        if (editContract == null) {
+            redirectAttributes.addFlashAttribute("message", "Not found");
             return "redirect:/contracts";
-        }else {
-            model.addAttribute("editContract",editContract);
-            model.addAttribute("salaryLevelList",salaryLevelList);
+        } else {
+            model.addAttribute("editContract", editContract);
+            model.addAttribute("salaryLevelList", salaryLevelList);
             return "/contract/edit";
         }
     }
 
     @PostMapping("/update")
-    public String update(@Valid @ModelAttribute ContractDto contractDto,BindingResult bindingResult, RedirectAttributes redirectAttributes,  Model model) {
-        if (bindingResult.hasErrors()){
+    public String update(@Valid @ModelAttribute ContractDto contractDto, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model) {
+        if (bindingResult.hasErrors()) {
             return "/contract/edit";
         }
         Contract editContract = new Contract();
-        BeanUtils.copyProperties(contractDto,editContract);
+        BeanUtils.copyProperties(contractDto, editContract);
         editContract.setStatus(true);
         contractService.updateContract(editContract);
         redirectAttributes.addFlashAttribute("edit", "Update Success");
         return "redirect:/contracts";
     }
+
+    @GetMapping("/detail")
+    public String detail(@RequestParam int id, Model model) {
+        Contract contract = contractService.findById(id);
+        Teacher teacher = teacherService.findTeacherByContract(contract);
+        model.addAttribute("contract", teacher);
+        return "/contract/detail";
+    }
+
     @Transactional
     @GetMapping("/delete")
-    public String delete(@RequestParam int id, RedirectAttributes attributes,Principal principal) {
+    public String delete(@RequestParam int id, RedirectAttributes attributes, Principal principal) {
 //        if (principal == null) {
 //            return "redirect:/login";
 //        }
