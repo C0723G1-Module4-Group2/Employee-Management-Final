@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="/layout :: head">
+    <title>Classes</title>
+</head>
+<body>
+
+<nav th:replace="/layout::sidebar"></nav>
+
+
+<div class="w3-overlay w3-hide-large w3-animate-opacity" onclick="w3_close()" style="cursor:pointer"
+     title="close side menu" id="myOverlay"></div>
+
+<div class="w3-main w3-light-grey" style="margin-left:300px; height: 100vh">
+
+    <header id="welcome">
+        <span class="w3-button w3-hide-large w3-xxlarge w3-hover-text-grey" onclick="w3_open()"><i
+                class="fa fa-bars"></i></span>
+        <div class="w3-container">
+            <h1><b>Cập nhật lớp học</b></h1>
+            <div class="w3-section w3-padding-16">
+                <hr>
+
+                <p>
+                    <a class="btn btn-sm btn-outline-primary" th:href="@{/classes}">
+                        Quay lại Danh sách lớp học
+                    </a>
+                </p>
+                <div id="form">
+                    <form th:action="@{/classes/update}" th:object="${editingClassDto}"
+                          method="POST" >
+                        <input type="hidden" th:field="*{classId}"/>
+                        <div>
+                            <label for="name">Thay đổi tên lớp học: </label>
+                            <input type="text" required id="name" th:field="*{className}">
+                            <input type="submit" value="Lưu thay đổi"/> <div><span style="color: red" th:text="${unsuccess}"></span></div>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </header>
+
+</div>
+
+<script th:replace="/layout::script-sidebar"></script>
+
+</body>
+</html>

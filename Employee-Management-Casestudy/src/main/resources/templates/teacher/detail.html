@@ -1,0 +1,178 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="/layoutUser::headUser">
+</head>
+<body>
+
+<nav th:replace="/layoutUser::sidebarUser"></nav>
+
+
+<div class="w3-overlay w3-hide-large w3-animate-opacity" onclick="w3_close()" style="cursor:pointer"
+     title="close side menu" id="myOverlay"></div>
+
+<div class="w3-main w3-light-grey" style="margin-left:300px; height: 100%">
+
+    <header id="welcome">
+        <span class="w3-button w3-hide-large w3-xxlarge w3-hover-text-grey" onclick="w3_open()"><i
+                class="fa fa-bars"></i></span>
+        <div class="w3-container">
+            <h1><b>Codegym</b></h1>
+            <div class="w3-section w3-padding-16">
+                <hr>
+
+                <table class="table">
+                    <tr>
+                        <td rowspan="10">
+                            <img th:src="${teacher.getImgOfTeacher()}" height="210px" width="155px">
+                        </td>
+                        <th>
+                            Họ và Tên
+                        </th>
+                        <td>
+                            <p th:text="${teacher.getTeacherName()}"></p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            Giới Tính
+                        </th>
+                        <td>
+                            <p th:if="${teacher.isGender() ==true}" >Nam</p>
+                            <p th:if="${teacher.isGender() ==false}" >Nữ</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            Mã Giáo Viên
+                        </th>
+                        <td>
+                            <p th:text="${teacher.getTeacherCode()}"></p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            Tên Tài Khoản
+                        </th>
+                        <td>
+                            <p th:text="${teacher.getAppUser().username}"></p>
+                            <a th:href="@{/resetPassword(email=${teacher.getAppUser().username})}">Đổi mật khẩu</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            Mã Hợp Đồng
+                        </th>
+                        <td>
+                            <p th:text="${teacher.getContract().getContractCode()}"> </p>
+                            <button STYLE="border: none" type="button" class="btn btn-outline-danger text-primary" data-bs-toggle="modal"
+                                    data-bs-target="#exampleModal"
+                                    th:attr="data-contractCode=${teacher.getContract().getContractCode()},
+                                 data-startDate=${teacher.getContract().getStartDate()} ,
+                                 data-endDate=${teacher.getContract().getEndDate()},
+                                 data-salaryLevel=${teacher.getContract().getSalaryLevel().getCoefficientsSalary()}"
+                                    onclick="detailContract(this)">
+                                <i class="fas fa-trash-alt"></i>
+                                Xem chi tiết hợp đồng
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            Lương cơ bản
+                        </th>
+                        <td>
+                            <p th:text="${teacher.getBasicSalary()}"></p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            Ngày Sinh
+                        </th>
+                        <td>
+                            <p th:text="${teacher.getDateOfBirth()}"></p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            Địa Chỉ
+                        </th>
+                        <td>
+                            <p th:text="${teacher.getAddress()}"></p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            Email
+                        </th>
+                        <td>
+                            <p th:text="${teacher.getMail()}"></p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            Số Điện Thoại
+                        </th>
+                        <td>
+                            <p th:text="${teacher.getPhoneNumber()}"></p>
+                        </td>
+                    </tr>
+                </table>
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                     aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <table class="table">
+                                <tr>
+                                    <th> Mã hợp đồng</th>
+                                    <td id="contractCode"></td>
+                                </tr>
+                                <tr>
+                                    <th> Ngày bắt đầu</th>
+                                    <td id="startDate"></td>
+                                </tr>
+                                <tr>
+                                    <th> Ngày kết thúc</th>
+                                    <td id="endDate"></td>
+                                </tr>
+                                <tr>
+                                    <th> Hệ số lương</th>
+                                    <td id="salaryLevel"></td>
+                                </tr>
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+</div>
+
+<script th:replace="/layout::script-sidebar"></script>
+
+    <script>
+        function displayToast(message, color) {
+            document.getElementById("toastContent").innerHTML = message;
+            document.getElementById("liveToast").style.background = color;
+            let myAlert = document.getElementById('liveToast');//select id of toast
+            let bsAlert = new bootstrap.Toast(myAlert);//inizialize it
+            bsAlert.show();//show it
+        }
+    </script>
+
+
+            <script>
+                function detailContract(element) {
+                    let contractCode = element.getAttribute('data-contractCode');
+                    let startDate = element.getAttribute('data-startDate');
+                    let endDate = element.getAttribute('data-endDate');
+                    let salaryLevel = element.getAttribute('data-salaryLevel');
+                    document.getElementById("contractCode").innerHTML = contractCode;
+                    document.getElementById("startDate").innerHTML = startDate;
+                    document.getElementById("endDate").innerHTML = endDate;
+                    document.getElementById("salaryLevel").innerHTML = salaryLevel;
+                }
+            </script>
+</body>
+</html>

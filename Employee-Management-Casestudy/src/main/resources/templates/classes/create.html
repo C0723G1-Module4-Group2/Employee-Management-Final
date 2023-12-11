@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="/layout :: head">
+    <title>Classes</title>
+</head>
+<body>
+
+<nav th:replace="/layout::sidebar"></nav>
+
+
+<div class="w3-overlay w3-hide-large w3-animate-opacity" onclick="w3_close()" style="cursor:pointer"
+     title="close side menu" id="myOverlay"></div>
+
+<div class="w3-main w3-light-grey" style="margin-left:300px; height: 100vh">
+
+    <header id="welcome">
+        <span class="w3-button w3-hide-large w3-xxlarge w3-hover-text-grey" onclick="w3_open()"><i
+                class="fa fa-bars"></i></span>
+        <div class="w3-container">
+            <h1><b>Thêm mới lớp học</b></h1>
+            <div class="w3-section w3-padding-16">
+                <hr>
+                <p>
+                    <a class="btn btn-sm btn-outline-primary" th:href="@{/classes}">
+                        Quay lại Danh sách lớp học
+                    </a>
+                </p>
+                <div id="form">
+                    <form th:action="@{/classes/save}" th:object="${newClassDto}"
+                          method="POST">
+                        <input type="hidden" th:field="*{classId}"/>
+                        <p>Vui lòng nhập tên lớp muốn thêm (*): </p>
+                        <div class="btn-group">
+                            <input type="text" id="className" required th:field="*{className}" placeholder="Nhập tên lớp"/>
+                            <div style="margin-right: 5px"></div><input type="submit" value="Thêm lớp học này" class="btn btn-sm btn-outline-success"/>
+                            <!--                    <span th:if="${#fields.hasErrors('className')}" th:errors="*{className}"></span>-->
+                            <!--                        <small style="color: red" th:if="${#fields.hasErrors('className')}"-->
+                            <!--                               th:errors="*{className}"></small><br>-->
+                        </div>
+                        <div><span style="color: red" th:text="${validationMessage}"></span></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </header>
+
+</div>
+
+<script th:replace="/layout::script-sidebar"></script>
+
+</body>
+</html>
