@@ -131,7 +131,7 @@ public String showList(Model model,
                 userRoleService.createUserRole(new UserRole(appRole, appUser));
             }
         }
-        redirectAttributes.addFlashAttribute("success", "Chỉnh sửa thành công");
+        redirectAttributes.addFlashAttribute("edit", "Chỉnh sửa thành công");
         return "redirect:/app-user";
     }
 
@@ -150,7 +150,7 @@ public String showList(Model model,
             userRoleService.deleteUserRole(userRole);
         }
         appUserService.updateAppUser(appUser);
-        redirectAttributes.addFlashAttribute("success", "Xóa tài khoản thành công");
+        redirectAttributes.addFlashAttribute("delete", "Xóa tài khoản thành công");
         return "redirect:/app-user";
     }
 }

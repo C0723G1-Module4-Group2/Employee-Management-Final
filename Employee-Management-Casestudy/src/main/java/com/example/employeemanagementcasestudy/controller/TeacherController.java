@@ -127,13 +127,14 @@ public class TeacherController {
     }
 
     @PostMapping("/edit")
-    public String edit(@Valid @ModelAttribute TeacherDto2 teacherDto2, BindingResult bindingResult) {
+    public String edit(@Valid @ModelAttribute TeacherDto2 teacherDto2, BindingResult bindingResult, RedirectAttributes attributes) {
         if (bindingResult.hasFieldErrors()) {
             return "/teacher/edit";
         } else {
             Teacher teacher1 = iTeacherService.findById(teacherDto2.getTeacherId());
             BeanUtils.copyProperties(teacherDto2, teacher1);
             iTeacherService.updateTeacher(teacher1);
+            attributes.addFlashAttribute("edit", "Đã sửa thành công!");
             return "redirect:/teacher";
         }
 
@@ -148,11 +149,12 @@ public class TeacherController {
 
     @Transactional
     @GetMapping("/delete")
-    public String delete(@RequestParam int id) {
+    public String delete(@RequestParam int id, RedirectAttributes attributes) {
         Teacher teacher = iTeacherService.findById(id);
         teacher.setStatus(false);
         iTeacherService.updateTeacher(teacher);
         teachingScheduleService.deleteTeachingScheduleByTeacher(iTeacherService.findById(id));
+        attributes.addFlashAttribute("delete", "Xoá thành công");
         return "redirect:/teacher";
     }
 

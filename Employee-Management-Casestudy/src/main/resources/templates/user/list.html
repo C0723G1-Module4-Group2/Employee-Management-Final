@@ -37,11 +37,11 @@
                         </div>
                     </div>
                 </div>
-<!--                <form class="d-flex col-3 my-3" role="search" action="/app-user" method="get">-->
-<!--                    <input th:value="${name}" class="form-control me-2" type="search" placeholder="Nhập username" aria-label="Search"-->
-<!--                           name="name">-->
-<!--                    <button class="btn btn-outline-success" type="submit">Tìm kiếm</button>-->
-<!--                </form>-->
+                <!--                <form class="d-flex col-3 my-3" role="search" action="/app-user" method="get">-->
+                <!--                    <input th:value="${name}" class="form-control me-2" type="search" placeholder="Nhập username" aria-label="Search"-->
+                <!--                           name="name">-->
+                <!--                    <button class="btn btn-outline-success" type="submit">Tìm kiếm</button>-->
+                <!--                </form>-->
                 <form action="/app-user" method="get" class="d-flex">
                     <input style="width: 25%" class="form-control me-2" name="name" placeholder="Nhập email"
                            th:value="${name}" aria-label="Search">
@@ -73,7 +73,8 @@
                             </div>
                         </td>
                         <td>
-                            <a class="btn btn-sm btn-outline-warning" th:href="@{/app-user/edit(id=${user.getUserId()})}">
+                            <a class="btn btn-sm btn-outline-warning"
+                               th:href="@{/app-user/edit(id=${user.getUserId()})}">
                                 Chỉnh sửa
                             </a>
                         </td>
@@ -82,7 +83,7 @@
                                     data-bs-target="#exampleModal"
                                     th:attr="data-id=${user.getUserId()}, data-name=${user.getUsername()}"
                                     onclick="deleteUser(this)">
-<!--                                <i class="fas fa-trash-alt"></i>-->
+                                <!--                                <i class="fas fa-trash-alt"></i>-->
                                 Xóa
                             </button>
                         </td>
@@ -116,7 +117,8 @@
                                     Bạn có muốn xóa tài khoản <span id="deleteName"></span> ?
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Không</button>
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Không
+                                    </button>
                                     <button type="submit" class="btn btn-danger">Có</button>
                                 </div>
                             </form>
@@ -131,33 +133,46 @@
 
 <script th:replace="/layout::script-sidebar"></script>
 
+<script>
+    function deleteUser(element) {
+        let id = element.getAttribute('data-id');
+        let name = element.getAttribute('data-name');
+        document.getElementById("deleteName").innerHTML = name;
+        document.getElementById("idDelete").value = id;
+    }
 
-    <script>
-        function displayToast(message, color) {
-            document.getElementById("toastContent").innerHTML = message;
-            document.getElementById("liveToast").style.background = color;
-            let myAlert = document.getElementById('liveToast');//select id of toast
-            let bsAlert = new bootstrap.Toast(myAlert);//inizialize it
-            bsAlert.show();//show it
-        }
-    </script>
+    function submitForm() {
+        document.getElementById("filterForm").submit();
+    }
+</script>
+<input hidden id="success" th:value="${success}">
+<script th:if="${success}">
+    document.addEventListener('DOMContentLoaded', function () {
 
+        Swal.fire({
+            position: "top",
+            icon: "success",
+            title: "Thêm mới thành công thành công",
+            showConfirmButton: false,
+            timer: 1500
+        });
+    })
+</script>
+<script th:if="${edit}">
+    document.addEventListener('DOMContentLoaded', function () {
+        Swal.fire("Đã lưu thay đổi", "", "success");
+    })
+</script>
+<script th:if="${delete}">
+    document.addEventListener('DOMContentLoaded', function () {
+        Swal.fire({
+            title: "Đã xoá!",
+            text: "Xoá thành công",
+            icon: "success"
+        });
+    })
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.10.1/sweetalert2.min.js"></script>
 
-        <script>
-            function deleteUser(element) {
-                let id = element.getAttribute('data-id');
-                let name = element.getAttribute('data-name');
-                document.getElementById("deleteName").innerHTML = name;
-                document.getElementById("idDelete").value = id;
-            }
-
-            function submitForm() {
-                document.getElementById("filterForm").submit();
-            }
-        </script>
-        <input hidden id="success" th:value="${success}">
-        <script th:if="${success}">
-            displayToast(document.getElementById("success").value, "green")
-        </script>
 </body>
 </html>

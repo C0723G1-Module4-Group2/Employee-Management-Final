@@ -68,7 +68,7 @@ public class AppRoleController {
         AppRole appRole1 = appRoleService.findAppRoleByRoleName(appRole.getRoleName());
         if(appRole.getRoleId()==appRole1.getRoleId()){
             appRoleService.updateAppRole(appRole);
-            redirectAttributes.addFlashAttribute("success", "Chỉnh sửa thành công");
+            redirectAttributes.addFlashAttribute("edit", "Chỉnh sửa thành công");
             return "redirect:/app-role";
         }else {
             redirectAttributes.addFlashAttribute("message",
