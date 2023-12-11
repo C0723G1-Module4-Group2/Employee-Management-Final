@@ -16,17 +16,17 @@
         <span class="w3-button w3-hide-large w3-xxlarge w3-hover-text-grey" onclick="w3_open()"><i
                 class="fa fa-bars"></i></span>
         <div class="w3-container">
-            <h1><b>Quản lý quyền</b></h1>
+            <h1><b>Quản lý quyền truy cập</b></h1>
             <div class="w3-section w3-padding-16">
                 <hr>
-                <a href="/app-role/create">
-                    <button class="my-2 bg-secondary">Thêm mới role</button>
+                <a class="btn btn-sm btn-outline-primary" href="/app-role/create">
+                    Thêm mới quyền truy cập
                 </a>
-                <table class="table">
+                <table class="table table-striped table-hover">
                     <thead>
                     <tr>
                         <th scope="col">STT</th>
-                        <th scope="col">Tên</th>
+                        <th scope="col">Tên quyền truy cập</th>
                         <th scope="col">Chỉnh sửa</th>
                     </tr>
                     </thead>
@@ -35,8 +35,8 @@
                         <td th:text="${status.count}"></td>
                         <td th:text="${role.getRoleName()}"></td>
                         <td>
-                            <a th:href="@{/app-role/edit(id=${role.getRoleId()})}">
-                                <button class="my-2 bg-secondary">Chỉnh sửa</button>
+                            <a class="btn btn-sm btn-outline-warning" th:href="@{/app-role/edit(id=${role.getRoleId()})}">
+                                Chỉnh sửa
                             </a>
                         </td>
                     </tr>

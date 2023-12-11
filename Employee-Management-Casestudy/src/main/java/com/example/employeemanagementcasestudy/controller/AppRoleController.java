@@ -65,8 +65,16 @@ public class AppRoleController {
 
     @PostMapping("/update")
     public String updateRole(RedirectAttributes redirectAttributes, AppRole appRole) {
-        appRoleService.updateAppRole(appRole);
-        redirectAttributes.addFlashAttribute("success", "Chỉnh sửa thành công");
-        return "redirect:/app-role";
+        AppRole appRole1 = appRoleService.findAppRoleByRoleName(appRole.getRoleName());
+        if(appRole.getRoleId()==appRole1.getRoleId()){
+            appRoleService.updateAppRole(appRole);
+            redirectAttributes.addFlashAttribute("success", "Chỉnh sửa thành công");
+            return "redirect:/app-role";
+        }else {
+            redirectAttributes.addFlashAttribute("message",
+                    "Tên " + appRole.getRoleName() + " đã tồn tại.Vui lòng nhập tên khác");
+            return "redirect:/app-role/edit?id="+appRole.getRoleId();
+        }
+
     }
 }

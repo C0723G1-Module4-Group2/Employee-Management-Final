@@ -16,13 +16,13 @@
         <span class="w3-button w3-hide-large w3-xxlarge w3-hover-text-grey" onclick="w3_open()"><i
                 class="fa fa-bars"></i></span>
         <div class="w3-container">
-            <h1><b>Codegym</b></h1>
+            <h1><b>Chỉnh sửa quyền truy cập</b></h1>
             <div class="w3-section w3-padding-16">
                 <hr>
 
                 <p>
-                    <a href="/app-role">
-                        <button class="my-2 bg-secondary">Trở lại</button>
+                    <a class="btn btn-sm btn-outline-primary" href="/app-role">
+                       Trở lại danh sách quyền truy cập
                     </a>
                 </p>
                 <div id="form">
@@ -32,7 +32,7 @@
                         <table class="table">
                             <tbody>
                             <tr>
-                                <td><label for="name">Tên role</label></td>
+                                <td><label for="name">Tên quyền truy cập(<span style="color: red">*</span>)</label></td>
                                 <td><input required type="text" id="name" th:field="*{roleName}"/></br>
                                     <spam style="color: red" th:text="${message}"></spam>
                                 </td>
@@ -41,7 +41,7 @@
                             <tr>
                                 <td></td>
                                 <td>
-                                    <button class="my-2 bg-secondary">Lưu</button>
+                                    <button class="btn btn-sm btn-outline-success">Lưu</button>
                                 </td>
                             </tr>
                             </tbody>

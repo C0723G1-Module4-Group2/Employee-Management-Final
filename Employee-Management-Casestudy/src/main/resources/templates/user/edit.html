@@ -21,8 +21,8 @@
                 <hr>
 
                 <p>
-                    <a href="/app-user">
-                        <button class="my-2 bg-secondary">Trở lại</button>
+                    <a class="btn btn-sm btn-outline-primary" href="/app-user">
+                      Trở lại danh sách tài khoản
                     </a>
                 </p>
                 <div id="form">
@@ -31,13 +31,13 @@
                         <table class="table">
                             <tbody>
                             <tr>
-                                <td><label for="name">Tên tài khoản</label></td>
+                                <td><label for="name">Email</label></td>
                                 <td><input required type="text" id="name" th:field="*{username}"/></br>
                                     <spam style="color: red" th:text="${message}"></spam>
                                 </td>
                             </tr>
                             <tr>
-                                <td><label>Chọn role </label></td>
+                                <td><label>Chọn quyền truy cập</label></td>
                                 <td>
                                     <div class="form-check" th:each="role : ${appRoleList1}">
                                         <input class="form-check-input" type="checkbox" th:value="${role.roleId}"
@@ -50,7 +50,7 @@
                             <tr>
                                 <td></td>
                                 <td>
-                                    <button class="my-2 bg-secondary">Lưu</button>
+                                    <button class="btn btn-sm btn-outline-success">Lưu</button>
                                 </td>
                             </tr>
                             </tbody>
