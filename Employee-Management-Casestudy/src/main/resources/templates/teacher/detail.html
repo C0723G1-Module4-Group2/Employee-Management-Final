@@ -2,6 +2,11 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head th:replace="/layoutUser::headUser">
 </head>
+<style>
+    th, td {
+        text-align: center;
+    }
+</style>
 <body>
 
 <nav th:replace="/layoutUser::sidebarUser"></nav>
@@ -16,17 +21,17 @@
         <span class="w3-button w3-hide-large w3-xxlarge w3-hover-text-grey" onclick="w3_open()"><i
                 class="fa fa-bars"></i></span>
         <div class="w3-container">
-            <h1><b>Codegym</b></h1>
+            <h1><b>Thông tin cá nhân</b></h1>
             <div class="w3-section w3-padding-16">
                 <hr>
 
-                <table class="table">
+                <table class="table" style="border: 1px solid black">
                     <tr>
-                        <td rowspan="10">
-                            <img th:src="${teacher.getImgOfTeacher()}" height="210px" width="155px">
+                        <td style="width: 24%" rowspan="10">
+                            <img th:src="${teacher.getImgOfTeacher()}" height="210px" width="200px">
                         </td>
                         <th>
-                            Họ và Tên
+                            Họ và tên
                         </th>
                         <td>
                             <p th:text="${teacher.getTeacherName()}"></p>
@@ -34,16 +39,16 @@
                     </tr>
                     <tr>
                         <th>
-                            Giới Tính
+                            Giới tính
                         </th>
                         <td>
-                            <p th:if="${teacher.isGender() ==true}" >Nam</p>
-                            <p th:if="${teacher.isGender() ==false}" >Nữ</p>
+                            <p th:if="${teacher.isGender() ==true}">Nam</p>
+                            <p th:if="${teacher.isGender() ==false}">Nữ</p>
                         </td>
                     </tr>
                     <tr>
                         <th>
-                            Mã Giáo Viên
+                            Mã giảng viên
                         </th>
                         <td>
                             <p th:text="${teacher.getTeacherCode()}"></p>
@@ -51,29 +56,20 @@
                     </tr>
                     <tr>
                         <th>
-                            Tên Tài Khoản
+                            Tên tài khoản
                         </th>
                         <td>
                             <p th:text="${teacher.getAppUser().username}"></p>
-                            <a th:href="@{/resetPassword(email=${teacher.getAppUser().username})}">Đổi mật khẩu</a>
+                            <a th:href="@{/resetPassword(email=${teacher.getAppUser().username})}"><b>Đổi mật
+                                khẩu</b></a>
                         </td>
                     </tr>
                     <tr>
                         <th>
-                            Mã Hợp Đồng
+                            Mã hợp đồng
                         </th>
                         <td>
-                            <p th:text="${teacher.getContract().getContractCode()}"> </p>
-                            <button STYLE="border: none" type="button" class="btn btn-outline-danger text-primary" data-bs-toggle="modal"
-                                    data-bs-target="#exampleModal"
-                                    th:attr="data-contractCode=${teacher.getContract().getContractCode()},
-                                 data-startDate=${teacher.getContract().getStartDate()} ,
-                                 data-endDate=${teacher.getContract().getEndDate()},
-                                 data-salaryLevel=${teacher.getContract().getSalaryLevel().getCoefficientsSalary()}"
-                                    onclick="detailContract(this)">
-                                <i class="fas fa-trash-alt"></i>
-                                Xem chi tiết hợp đồng
-                            </button>
+                            <p th:text="${teacher.getContract().getContractCode()}"></p>
                         </td>
                     </tr>
                     <tr>
@@ -86,7 +82,7 @@
                     </tr>
                     <tr>
                         <th>
-                            Ngày Sinh
+                            Ngày sinh
                         </th>
                         <td>
                             <p th:text="${teacher.getDateOfBirth()}"></p>
@@ -94,7 +90,7 @@
                     </tr>
                     <tr>
                         <th>
-                            Địa Chỉ
+                            Địa chỉ
                         </th>
                         <td>
                             <p th:text="${teacher.getAddress()}"></p>
@@ -110,7 +106,7 @@
                     </tr>
                     <tr>
                         <th>
-                            Số Điện Thoại
+                            Số điện thoại
                         </th>
                         <td>
                             <p th:text="${teacher.getPhoneNumber()}"></p>
@@ -151,28 +147,28 @@
 
 <script th:replace="/layout::script-sidebar"></script>
 
-    <script>
-        function displayToast(message, color) {
-            document.getElementById("toastContent").innerHTML = message;
-            document.getElementById("liveToast").style.background = color;
-            let myAlert = document.getElementById('liveToast');//select id of toast
-            let bsAlert = new bootstrap.Toast(myAlert);//inizialize it
-            bsAlert.show();//show it
-        }
-    </script>
+<script>
+    function displayToast(message, color) {
+        document.getElementById("toastContent").innerHTML = message;
+        document.getElementById("liveToast").style.background = color;
+        let myAlert = document.getElementById('liveToast');//select id of toast
+        let bsAlert = new bootstrap.Toast(myAlert);//inizialize it
+        bsAlert.show();//show it
+    }
+</script>
 
 
-            <script>
-                function detailContract(element) {
-                    let contractCode = element.getAttribute('data-contractCode');
-                    let startDate = element.getAttribute('data-startDate');
-                    let endDate = element.getAttribute('data-endDate');
-                    let salaryLevel = element.getAttribute('data-salaryLevel');
-                    document.getElementById("contractCode").innerHTML = contractCode;
-                    document.getElementById("startDate").innerHTML = startDate;
-                    document.getElementById("endDate").innerHTML = endDate;
-                    document.getElementById("salaryLevel").innerHTML = salaryLevel;
-                }
-            </script>
+<script>
+    function detailContract(element) {
+        let contractCode = element.getAttribute('data-contractCode');
+        let startDate = element.getAttribute('data-startDate');
+        let endDate = element.getAttribute('data-endDate');
+        let salaryLevel = element.getAttribute('data-salaryLevel');
+        document.getElementById("contractCode").innerHTML = contractCode;
+        document.getElementById("startDate").innerHTML = startDate;
+        document.getElementById("endDate").innerHTML = endDate;
+        document.getElementById("salaryLevel").innerHTML = salaryLevel;
+    }
+</script>
 </body>
 </html>
