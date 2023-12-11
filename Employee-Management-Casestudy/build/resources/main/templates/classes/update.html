@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="/layout :: head">
+    <title>Classes</title>
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <div th:replace="/layout::sidebar"></div>
+    <div class="container col-9">
+        <h3>Thay đổi tên lớp </h3>
+        <p>
+            <a class="btn btn-sm btn-outline-primary" th:href="@{/classes}">
+                Quay lại Danh sách lớp học
+            </a>
+        </p>
+        <div id="form">
+            <form th:action="@{/classes/update}" th:object="${editingClassDto}"
+                  method="POST" >
+                <input type="hidden" th:field="*{classId}"/>
+                <div>
+                    <label for="name">Thay đổi tên lớp học: </label>
+                    <input type="text" required id="name" th:field="*{className}">
+                    <input type="submit" value="Lưu thay đổi"/> <div><span style="color: red" th:text="${unsuccess}"></span></div>
+                </div>
+            </form>
+        </div>
+    </div>
+    </div>
+</div>
+</body>
+</html>

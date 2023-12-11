@@ -1,0 +1,220 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="/layout::head">
+</head>
+<style>
+    h2 {
+        margin-top: 20px;
+    }
+
+    .input-group {
+        margin-bottom: 15px;
+    }
+</style>
+<body>
+<div class="container-fluid">
+    <div class="row col-12">
+        <div class="col-3" th:replace="/layout::sidebar">
+        </div>
+        <div class="col-9" style="padding: 0">
+            <h2>Thêm Mới Giáo Viên</h2>
+<!--            <div class="row col-12">-->
+<!--            <table style="padding: 0">-->
+<!--                <thead>-->
+<!--                <tr class="icons">-->
+<!--                    <th class="col-3">-->
+<!--                        <svg style="width: 60px;height: 100px" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-geo-alt" viewBox="0 0 16 16">-->
+<!--                            <path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A31.493 31.493 0 0 1 8 14.58a31.481 31.481 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10"/>-->
+<!--                            <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4m0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>-->
+<!--                        </svg>-->
+<!--                    </th>-->
+<!--                    <th class="col-3">-->
+<!--                        <svg style="width: 60px;height: 100px" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-telephone-fill" viewBox="0 0 16 16">-->
+<!--                            <path fill-rule="evenodd" d="M1.885.511a1.745 1.745 0 0 1 2.61.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511z"/>-->
+<!--                        </svg>-->
+<!--                    </th>-->
+<!--                    <th class="col-3">-->
+<!--                        <svg style="width: 60px;height: 100px" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-envelope-at-fill" viewBox="0 0 16 16">-->
+<!--                            <path d="M2 2A2 2 0 0 0 .05 3.555L8 8.414l7.95-4.859A2 2 0 0 0 14 2zm-2 9.8V4.698l5.803 3.546L0 11.801Zm6.761-2.97-6.57 4.026A2 2 0 0 0 2 14h6.256A4.493 4.493 0 0 1 8 12.5a4.49 4.49 0 0 1 1.606-3.446l-.367-.225L8 9.586l-1.239-.757ZM16 9.671V4.697l-5.803 3.546.338.208A4.482 4.482 0 0 1 12.5 8c1.414 0 2.675.652 3.5 1.671"/>-->
+<!--                            <path d="M15.834 12.244c0 1.168-.577 2.025-1.587 2.025-.503 0-1.002-.228-1.12-.648h-.043c-.118.416-.543.643-1.015.643-.77 0-1.259-.542-1.259-1.434v-.529c0-.844.481-1.4 1.26-1.4.585 0 .87.333.953.63h.03v-.568h.905v2.19c0 .272.18.42.411.42.315 0 .639-.415.639-1.39v-.118c0-1.277-.95-2.326-2.484-2.326h-.04c-1.582 0-2.64 1.067-2.64 2.724v.157c0 1.867 1.237 2.654 2.57 2.654h.045c.507 0 .935-.07 1.18-.18v.731c-.219.1-.643.175-1.237.175h-.044C10.438 16 9 14.82 9 12.646v-.214C9 10.36 10.421 9 12.485 9h.035c2.12 0 3.314 1.43 3.314 3.034zm-4.04.21v.227c0 .586.227.8.581.8.31 0 .564-.17.564-.743v-.367c0-.516-.275-.708-.572-.708-.346 0-.573.245-.573.791Z"/>-->
+<!--                        </svg>-->
+<!--                    </th>-->
+<!--                    <th class="col-3">-->
+<!--                        <svg style="width: 60px;height: 100px" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-globe-asia-australia" viewBox="0 0 16 16">-->
+<!--                            <path d="m10.495 6.92 1.278-.619a.483.483 0 0 0 .126-.782c-.252-.244-.682-.139-.932.107-.23.226-.513.373-.816.53l-.102.054c-.338.178-.264.626.1.736a.476.476 0 0 0 .346-.027ZM7.741 9.808V9.78a.413.413 0 1 1 .783.183l-.22.443a.602.602 0 0 1-.12.167l-.193.185a.36.36 0 1 1-.5-.516l.112-.108a.453.453 0 0 0 .138-.326ZM5.672 12.5l.482.233A.386.386 0 1 0 6.32 12h-.416a.702.702 0 0 1-.419-.139l-.277-.206a.302.302 0 1 0-.298.52l.761.325Z"/>-->
+<!--                            <path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0M1.612 10.867l.756-1.288a1 1 0 0 1 1.545-.225l1.074 1.005a.986.986 0 0 0 1.36-.011l.038-.037a.882.882 0 0 0 .26-.755c-.075-.548.37-1.033.92-1.099.728-.086 1.587-.324 1.728-.957.086-.386-.114-.83-.361-1.2-.207-.312 0-.8.374-.8.123 0 .24-.055.318-.15l.393-.474c.196-.237.491-.368.797-.403.554-.064 1.407-.277 1.583-.973.098-.391-.192-.634-.484-.88-.254-.212-.51-.426-.515-.741a6.998 6.998 0 0 1 3.425 7.692 1.015 1.015 0 0 0-.087-.063l-.316-.204a1 1 0 0 0-.977-.06l-.169.082a1 1 0 0 1-.741.051l-1.021-.329A1 1 0 0 0 11.205 9h-.165a1 1 0 0 0-.945.674l-.172.499a1 1 0 0 1-.404.514l-.802.518a1 1 0 0 0-.458.84v.455a1 1 0 0 0 1 1h.257a1 1 0 0 1 .542.16l.762.49a.998.998 0 0 0 .283.126 7.001 7.001 0 0 1-9.49-3.409Z"/>-->
+<!--                        </svg>-->
+<!--                    </th>-->
+<!--                </tr>-->
+<!--                </thead>-->
+<!--                <tbody>-->
+<!--                <tr>-->
+<!--                    <th style="text-align: center">Địa chỉ: 280 Đ. Trần Hưng Đạo, An Hải Tây, Sơn Trà, Đà Nẵng 550000</th>-->
+<!--                    <th style="text-align: center">0236 6517 021</th>-->
+<!--                    <th style="text-align: center">danang@codegym.vn</th>-->
+<!--                    <th style="text-align: center">WebSite: <a href="https://codegym.vn/lien-he-codegym/">Our Website:</a></th>-->
+<!--                </tr>-->
+<!--                </tbody>-->
+<!--            </table>-->
+<!--            </div>-->
+            <div class="row col-12" >
+                <div class="col-6">
+                    <form style="margin: 10px" th:action="@{/teacher/add}" method="post" th:object="${teacherDTO}">
+                        <fieldset class="border border-dark rounded-3 p-3">
+                            <legend class="float-none w-auto px-3">
+                                Thêm mới hợp đồng
+                            </legend>
+                            <div class="input-group">
+                                <label for="contractCode">Mã hợp đồng(CT-xxx)(*): </label><br>
+                                <input class="form-control" type="text" id="contractCode" th:field="*{contractCode}" placeholder="Nhập mã hợp đồng"/>
+                                <p style="color: red" th:if="${#fields.hasErrors('contractCode')}" th:errors="*{contractCode}"></p>
+                            </div>
+                            <div class="input-group">
+                                <label for="currentDate">Ngày làm hợp đồng: </label><br>
+                                <input class="form-control" style="border: 0" type="text" id="currentDate" readonly th:field="*{startDate}">
+                            </div>
+                            <div class="input-group">
+                                <label for="endDate">Ngày kết thúc hợp đồng: </label><br>
+                                <input class="form-control" type="date" required id="endDate"  th:field="*{endDate}"/>
+                                <p style="color: red" th:if="${#fields.hasErrors('endDate')}" th:errors="*{endDate}"></p>
+                            </div>
+                            <div class="input-group">
+                                <label for="salary">Hệ số lương: </label>
+                                <select id="salary" th:field="*{salaryLevel}">
+                                    <option th:value="${salaryLevel.getSalaryLevelId()}" th:each="salaryLevel: ${salaryLevelList}" th:text="${salaryLevel.getCoefficientsSalary()}"></option>
+                                </select>
+                            </div>
+                        </fieldset>
+                        <fieldset class="border border-dark rounded-3 p-3" >
+                            <legend class="float-none w-auto px-3">
+                                Thêm Mới Giáo Viên
+                            </legend>
+                            <div class="row col-12">
+                                <div class="col-6">
+                                    Họ Và Tên
+                                    <input class="form-control"  type="text" placeholder="Ex: Trần Anh Tuấn" aria-label="default input example" th:field="*{teacherName}" required>
+                                    <p style="color: red" th:if="${#fields.hasErrors('teacherName')}" th:errors="*{teacherName}"></p>
+                                    Địa Chỉ
+                                    <input class="form-control" type="text" id="address" placeholder="Ex: 280 Đ. Trần Hưng Đạo, An Hải Tây, Sơn Trà, Đà Nẵng 550000" aria-label="default input example" required th:field="*{address}">
+                                    <p style="color: red" th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></p>
+                                    Ngày Tháng Năm Sinh
+                                    <input class="form-control" type="date" placeholder="Default input" aria-label="default input example" th:field="*{dateOfBirth}" required>
+                                    Giới Tính
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" id="flexRadioDefault1" checked th:field="*{gender}" th:value=1>
+                                        <label class="form-check-label" for="flexRadioDefault1">
+                                            Nam
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" id="flexRadioDefault2" th:field="*{gender}" th:value=0>
+                                        <label class="form-check-label" for="flexRadioDefault2">
+                                            Nữ
+                                        </label>
+                                    </div>
+                                    <label>Chọn role</label>
+                                        <div class="form-check" th:each="role : ${appRoleList}">
+                                            <input class="form-check-input" type="checkbox" th:value="${role.roleId}"
+                                                   th:field="*{appRoles}" id="flexCheckDefault">
+                                            <label class="form-check-label" for="flexCheckDefault" th:text="${role.roleName}">
+                                            </label>
+                                        </div>
+                                    Số CMND / CCCD:
+                                    <input class="form-control" type="text" id="identificationCard" placeholder="Ex : 1234567899" aria-label="default input example" required th:field="*{identificationCard}">
+                                    <p style="color: red" th:if="${#fields.hasErrors('identificationCard')}" th:errors="*{identificationCard}"></p>
+                                </div>
+                                <div class="col-6">
+                                    Mã Giáo Viên
+                                    <input class="form-control" type="text" id="teacherCode" placeholder="Ex : TC-01" aria-label="default input example" required th:field="*{teacherCode}">
+                                    <p style="color: red" th:if="${#fields.hasErrors('teacherCode')}" th:errors="*{teacherCode}"></p>
+                                    Mail:
+                                    <input class="form-control" type="text" id="mail" placeholder="Ex : Name@gmail.com" aria-label="default input example" required th:field="*{mail}">
+                                    <p style="color: red" th:if="${#fields.hasErrors('mail')}" th:errors="*{mail}"></p>
+                                    Số Điện Thoại:
+                                    <input class="form-control" type="text" id="phoneNumber" placeholder="Ex :0236 6517 021" aria-label="default input example" required th:field="*{phoneNumber}">
+                                    <p style="color: red" th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}"></p>
+                                    Lương:
+                                    <input class="form-control" type="number" id="basicSalary" placeholder="Ex : 50000000" aria-label="default input example" required th:field="*{basicSalary}">
+                                    <p style="color: red" th:if="${#fields.hasErrors('basicSalary')}" th:errors="*{basicSalary}"></p>
+                                    Hình Ảnh
+                                    <input type="text" hidden id="imgUrl" name="img"  th:field="*{imgOfTeacher}"/>
+                                    <input type="file" onchange="displayButton()" id="photo"/>
+                                    <button type="button" onclick="uploadImage()" style="display: none" id="upload">Upload firebase</button>
+<!--                                    <input class="form-control" type="text" placeholder="Đường Link Của Ảnh" aria-label="default input example" th:field="*{imgOfTeacher}">-->
+                                    <button  style="margin-top: 10px ; text-align: right" type="submit" class="btn btn-success">Success</button>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+                <div class="col-6">
+                    <img src="https://yt3.googleusercontent.com/ytc/APkrFKaATITgvlVNlaGJgZ450FVhXg44Bew0MCEao0M=s900-c-k-c0x00ffffff-no-rj" width="100%" height="100%" style="margin: 10px" >
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    // Lấy ngày hiện tại
+    var currentDate = new Date();
+
+    // Format ngày hiện tại dưới dạng YYYY-MM-DD
+    var formattedDate = currentDate.toISOString().split('T')[0];
+    // Lấy thông tin ngày, tháng, năm
+    // var day = currentDate.getDate();
+    // var month = currentDate.getMonth() + 1; // Lưu ý: Tháng bắt đầu từ 0
+    // var year = currentDate.getFullYear();
+    // // Định dạng lại chuỗi ngày theo "dd/mm/yyyy"
+    // var formattedDate = (day < 10 ? '0' : '') + day + '/' + (month < 10 ? '0' : '') + month + '/' + year;
+    // Gán giá trị cho ô input
+    document.getElementById('currentDate').value = formattedDate;
+</script>
+<script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-storage.js"></script>
+<script>
+    //code được lấy trên firebase sau khi đã config
+    const firebaseConfig = {
+        apiKey: "AIzaSyAudKalmoetcWYY5mKx7GqIc6IMFdEnaIo",
+        authDomain: "case-group2.firebaseapp.com",
+        projectId: "case-group2",
+        storageBucket: "case-group2.appspot.com",
+        messagingSenderId: "870183228779",
+        appId: "1:870183228779:web:fb4f99c0b6b7373f4b282e",
+        measurementId: "G-NVFJY77T5Q"
+    };
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    console.log(firebase);
+
+    function uploadImage() {
+        const ref = firebase.storage().ref();
+        const file = document.querySelector("#photo").files[0];
+        const name = +new Date() + "-" + file.name;
+        const metadata = {
+            contentType: file.type
+        };
+        const task = ref.child(name).put(file, metadata);
+
+        task.then(snapshot => snapshot.ref.getDownloadURL())
+            .then(url => {
+                // đường dẫn sau khi lưu xong trền firebase sẽ trả về đường dẫn.
+                console.log(url);
+                alert('image uploaded successfully');
+                // gán vào thẻ form để submit
+                document.getElementById("imgUrl").value = url;
+                // submit tự động
+                document.getElementById("form-submit").submit();
+            })
+            .catch(console.error);
+    }
+
+    function displayButton() {
+        let fileValue = document.getElementById("photo").value;
+        if (fileValue != "") {
+            document.getElementById("upload").style.display = "inline";
+        }
+    }
+</script>
+</body>
+</html>
