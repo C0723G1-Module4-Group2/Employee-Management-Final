@@ -44,12 +44,13 @@
                     </p>
 
                     <form action="/classes" method="get" class="d-flex">
-                        <input style="width: 125%" class="form-control me-2" name="searchingName" placeholder="Nhập tên lớp học"
+                        <input style="width: 125%" class="form-control me-2" name="searchingName" placeholder="Nhập tên lớp học..."
                                th:value="${searchingName}" aria-label="Search">
                         <button style="width: 50%" class="btn btn-sm btn-outline-success">Tìm kiếm</button>
                     </form>
 
                 </div>
+
                 <table id="classes" class="table table-striped table-hover">
                     <thead>
                     <tr>
@@ -79,6 +80,7 @@
                     </tr>
                     </tbody>
                 </table>
+
                 <!--phan trang-->
                 <div>
                     <a th:if="${classesList.hasPrevious()}"
