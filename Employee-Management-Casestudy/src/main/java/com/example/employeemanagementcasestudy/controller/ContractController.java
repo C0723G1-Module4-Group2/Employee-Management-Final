@@ -109,8 +109,9 @@ public class ContractController {
         }
         Contract editContract = new Contract();
         BeanUtils.copyProperties(contractDto,editContract);
+        editContract.setStatus(true);
         contractService.updateContract(editContract);
-        redirectAttributes.addFlashAttribute("message", "Update Success");
+        redirectAttributes.addFlashAttribute("edit", "Update Success");
         return "redirect:/contracts";
     }
     @Transactional
@@ -123,7 +124,7 @@ public class ContractController {
 //            return "redirect:/403";
 //        }
         contractService.deleteContract(id);
-        attributes.addFlashAttribute("message", "Xoá thành công");
+        attributes.addFlashAttribute("delete", "Xoá thành công");
         return "redirect:/contracts";
     }
 }

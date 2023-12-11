@@ -27,7 +27,7 @@ public class ContractService implements IContractService {
 
     @Override
     public void deleteContract(int id) {
-        contractRepository.deleteById(id);
+        contractRepository.deleteContract(id);
     }
 
     @Override

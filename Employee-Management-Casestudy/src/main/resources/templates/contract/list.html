@@ -11,7 +11,16 @@
      title="close side menu" id="myOverlay"></div>
 
 <div class="w3-main w3-light-grey" style="margin-left:300px; height: 100vh">
-
+    <div class="notify" th:if="${edit}" hidden="hidden">
+        <div>
+            <span th:text="${edit}" id="editMessage"></span>
+        </div>
+    </div>
+    <div class="notify" th:if="${delete}" hidden="hidden">
+        <div>
+            <span th:text="${delete}" id="deleteMessage"></span>
+        </div>
+    </div>
     <header id="welcome">
         <span class="w3-button w3-hide-large w3-xxlarge w3-hover-text-grey" onclick="w3_open()"><i
                 class="fa fa-bars"></i></span>
@@ -56,7 +65,7 @@
                             <button type="button" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal"
                                     data-bs-target="#deleteModal"
                                     th:attr="data-id=${contract.getContractId()}, data-name=${contract.getContractCode()}"
-                                    onclick="deleteClass(this)">Xoá
+                                    onclick="deleteContract(this)">Xoá
                             </button>
                         </td>
                     </tr>
@@ -105,13 +114,28 @@
 
 <!--MODAL-->
 <script>
-    function deleteClass(element) {
+    function deleteContract(element) {
         let id = element.getAttribute('data-id');
         let name = element.getAttribute('data-name');
         document.getElementById("name").innerHTML = name;
         document.getElementById("id").value = id;
     }
+    document.addEventListener('DOMContentLoaded', function () {
+        var editMessage = document.getElementById('editMessage');
+        if (editMessage) {
+            Swal.fire("Đã lưu thay đổi", "", "success");
+        }
+        var deleteMessage = document.getElementById('deleteMessage');
+        if (deleteMessage) {
+            Swal.fire({
+                title: "Đã xoá!",
+                text: "Đã xóa hợp đồng thành công",
+                icon: "success"
+            });
+        }
+    });
 </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.10.1/sweetalert2.min.js"></script>
 </body>
 </html>
 
