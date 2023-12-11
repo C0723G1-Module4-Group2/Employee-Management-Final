@@ -47,8 +47,8 @@
                     <tr th:each="contract,status : ${contractPage}">
                         <td th:text="${status.count}"></td>
                         <td th:text="${contract.getContractCode()}"></td>
-                        <td th:text="${contract.getStartDate()}"></td>
-                        <td th:text="${contract.getEndDate()}"></td>
+                        <td th:text="${#dates.format(contract.getStartDate(), 'dd/MM/yyyy')}"></td>
+                        <td th:text="${#dates.format(contract.getEndDate(), 'dd/MM/yyyy')}"></td>
                         <td th:text="${contract.getCoefficientsSalary()}"></td>
                         <td><a class="btn btn-sm btn-outline-warning" th:href="@{/contracts/edit/{id}(id=${contract.getContractId()})}">Chỉnh
                             Sửa</a></td>
