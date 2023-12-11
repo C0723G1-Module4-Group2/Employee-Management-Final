@@ -45,7 +45,7 @@ public class AppUserController {
 public String showList(Model model,
                        @RequestParam(defaultValue = "0") int page,
                        @RequestParam(defaultValue = "") String name) {
-    Pageable pageable = PageRequest.of(page, 7, Sort.by("username").descending());
+    Pageable pageable = PageRequest.of(page, 10, Sort.by("username").descending());
     Page<AppUser> blogAppUser;
         blogAppUser = appUserService.findAllAppUser(name, pageable);
     model.addAttribute("blogAppUser", blogAppUser);
@@ -66,7 +66,7 @@ public String showList(Model model,
     public String save(RedirectAttributes redirectAttributes, UserRoleDto userRoleDto) {
         if (appUserService.findUserIdByUsername(userRoleDto.getUsername()) != null) {
             redirectAttributes.addFlashAttribute("message",
-                    "Tên " + userRoleDto.getUsername() + " đã tồn tại.Vui lòng nhập tên khác");
+                    "Tên " + userRoleDto.getUsername() + " đã tồn tại");
             return "redirect:/app-user/create";
         }
         String password = EncrytedPasswordUtils.encrytePassword("123");
@@ -107,7 +107,7 @@ public String showList(Model model,
         AppUser appUser = appUserService.findByUsername(userRoleDto.getUsername());
         if(appUser.getUserId() !=userRoleDto.getUserId()){
             redirectAttributes.addFlashAttribute("message",
-                    "Email " + userRoleDto.getUsername() + " đã tồn tại.Vui lòng nhập email khác");
+                    "Email " + userRoleDto.getUsername() + " đã tồn tại");
             return "redirect:/app-user/edit?id="+userRoleDto.getUserId();
         }
         appUser.setUsername(userRoleDto.getUsername());

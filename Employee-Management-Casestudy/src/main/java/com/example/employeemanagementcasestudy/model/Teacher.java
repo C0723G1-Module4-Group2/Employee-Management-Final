@@ -45,7 +45,7 @@ public class Teacher {
     private boolean status;
 
     @Column(columnDefinition = "longtext")
-    private String imgOfTeacher;
+    private String imgOfTeacher ="https://facebookninja.vn/wp-content/uploads/2023/06/anh-dai-dien-mac-dinh-zalo.jpg";
 
 
     @OneToOne

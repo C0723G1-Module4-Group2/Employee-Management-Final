@@ -17,4 +17,10 @@ public interface ITeacherRepository extends JpaRepository<Teacher, Integer> {
 
     Teacher findTeacherByAppUser(AppUser appUser);
 
+    Teacher findTeacherByIdentificationCard(String identificationCard);
+
+    Teacher findTeacherByTeacherCode(String teacherCode);
+
+    Teacher findTeacherByPhoneNumber(String phoneNumber);
+
 }
