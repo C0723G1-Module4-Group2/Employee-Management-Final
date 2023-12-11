@@ -157,69 +157,69 @@
                 url: `http://localhost:8080/api-schedules/user`,
             });
             console.log(response)
-            for (let i = 0; i < response.length; i++) {
-                let dates = getAllDates(response[i][2], response[i][1])
-
-                for (let j = 0; j < dates.length; j++) {
-                    if (currentTime > new Date(`${dates[j]}T${response[i][10]}`)) {
-                        events.push({
-                            title: `${response[i][7]} `,
-                            start: `${dates[j]}T${response[i][9]}`,
-                            end: `${dates[j]}T${response[i][10]}`,
-                            // teacher: ,
-                            extendedProps: {
-                                teacherName: `${response[i][8]}`,
-                                dates: `${dates[j]}`,
-                                startDate: `${response[i][2]}`,
-                                endDate: `${response[i][1]}`,
-                                startTime: `${response[i][9]}`,
-                                endTime: `${response[i][10]}`,
-                                teachingScheduleId: `${response[i][0]}`,
-                                classId: `${response[i][4]}`,
-                                teacherId: `${response[i][5]}`,
-                                timeSheetId: `${response[i][6]}`
-                            },
-                            color: "grey"
-                        });
-                    } else if (currentTime >= new Date(`${dates[j]}T${response[i][12]}`) && currentTime <= new Date(`${dates[j]}T${response[i][13]}`)) {
-                        events.push({
-                            title: `${response[i][7]} `,
-                            start: `${dates[j]}T${response[i][9]}`,
-                            end: `${dates[j]}T${response[i][10]}`,
-                            // teacher: ,
-                            extendedProps: {
-                                teacherName: `${response[i][8]}`,
-                                dates: `${dates[j]}`,
-                                startDate: `${response[i][2]}`,
-                                endDate: `${response[i][1]}`,
-                                startTime: `${response[i][9]}`,
-                                endTime: `${response[i][10]}`,
-                                teachingScheduleId: `${response[i][0]}`,
-                                classId: `${response[i][4]}`,
-                                teacherId: `${response[i][5]}`,
-                                timeSheetId: `${response[i][6]}`
-                            },
-                            color: "green"
-                        });
-                    } else {
-                        events.push({
-                            title: `${response[i][7]} `,
-                            start: `${dates[j]}T${response[i][9]}`,
-                            end: `${dates[j]}T${response[i][10]}`,
-                            extendedProps: {
-                                teacherName: `${response[i][8]}`,
-                                dates: `${dates[j]}`,
-                                startDate: `${response[i][2]}`,
-                                endDate: `${response[i][1]}`,
-                                startTime: `${response[i][9]}`,
-                                endTime: `${response[i][10]}`,
-                                teachingScheduleId: `${response[i][0]}`,
-                                classId: `${response[i][4]}`,
-                                teacherId: `${response[i][5]}`,
-                                timeSheetId: `${response[i][6]}`
-                            },
-                            color: "#6699ff"
-                        });
+            if(response != undefined) {
+                for (let i = 0; i < response.length; i++) {
+                    let dates = getAllDates(response[i][2], response[i][1])
+                    for (let j = 0; j < dates.length; j++) {
+                        if (currentTime > new Date(`${dates[j]}T${response[i][10]}`)) {
+                            events.push({
+                                title: `${response[i][7]} `,
+                                start: `${dates[j]}T${response[i][9]}`,
+                                end: `${dates[j]}T${response[i][10]}`,
+                                // teacher: ,
+                                extendedProps: {
+                                    teacherName: `${response[i][8]}`,
+                                    dates: `${dates[j]}`,
+                                    startDate: `${response[i][2]}`,
+                                    endDate: `${response[i][1]}`,
+                                    startTime: `${response[i][9]}`,
+                                    endTime: `${response[i][10]}`,
+                                    teachingScheduleId: `${response[i][0]}`,
+                                    classId: `${response[i][4]}`,
+                                    teacherId: `${response[i][5]}`,
+                                    timeSheetId: `${response[i][6]}`
+                                },
+                                color: "grey"
+                            });
+                        } else if (currentTime >= new Date(`${dates[j]}T${response[i][12]}`) && currentTime <= new Date(`${dates[j]}T${response[i][13]}`)) {
+                            events.push({
+                                title: `${response[i][7]} `,
+                                start: `${dates[j]}T${response[i][9]}`,
+                                end: `${dates[j]}T${response[i][10]}`,
+                                extendedProps: {
+                                    teacherName: `${response[i][8]}`,
+                                    dates: `${dates[j]}`,
+                                    startDate: `${response[i][2]}`,
+                                    endDate: `${response[i][1]}`,
+                                    startTime: `${response[i][9]}`,
+                                    endTime: `${response[i][10]}`,
+                                    teachingScheduleId: `${response[i][0]}`,
+                                    classId: `${response[i][4]}`,
+                                    teacherId: `${response[i][5]}`,
+                                    timeSheetId: `${response[i][6]}`
+                                },
+                                color: "green"
+                            });
+                        } else {
+                            events.push({
+                                title: `${response[i][7]} `,
+                                start: `${dates[j]}T${response[i][9]}`,
+                                end: `${dates[j]}T${response[i][10]}`,
+                                extendedProps: {
+                                    teacherName: `${response[i][8]}`,
+                                    dates: `${dates[j]}`,
+                                    startDate: `${response[i][2]}`,
+                                    endDate: `${response[i][1]}`,
+                                    startTime: `${response[i][9]}`,
+                                    endTime: `${response[i][10]}`,
+                                    teachingScheduleId: `${response[i][0]}`,
+                                    classId: `${response[i][4]}`,
+                                    teacherId: `${response[i][5]}`,
+                                    timeSheetId: `${response[i][6]}`
+                                },
+                                color: "#6699ff"
+                            });
+                        }
                     }
                 }
             }
