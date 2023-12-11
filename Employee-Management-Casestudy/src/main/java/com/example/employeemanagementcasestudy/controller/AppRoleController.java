@@ -65,8 +65,8 @@ public class AppRoleController {
 
     @PostMapping("/update")
     public String updateRole(RedirectAttributes redirectAttributes, AppRole appRole) {
-        AppRole appRole1 = appRoleService.findAppRoleByRoleName(appRole.getRoleName());
-        if(appRole.getRoleId()==appRole1.getRoleId()){
+        if(appRoleService.findAppRoleByRoleName(appRole.getRoleName()) == null
+                || appRole.getRoleId()==appRoleService.findAppRoleByRoleName(appRole.getRoleName()).getRoleId()){
             appRoleService.updateAppRole(appRole);
             redirectAttributes.addFlashAttribute("edit", "Chỉnh sửa thành công");
             return "redirect:/app-role";
