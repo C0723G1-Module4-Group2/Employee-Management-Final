@@ -16,7 +16,7 @@
         <span class="w3-button w3-hide-large w3-xxlarge w3-hover-text-grey" onclick="w3_open()"><i
                 class="fa fa-bars"></i></span>
         <div class="w3-container">
-            <h1><b>Codegym</b></h1>
+            <h1><b>Thông tin chi tiết</b></h1>
             <div class="w3-section w3-padding-16">
                 <hr>
 
@@ -55,7 +55,7 @@
                         </th>
                         <td>
                             <p th:text="${teacher.getAppUser().username}"></p>
-                            <a th:href="@{/resetPassword(email=${teacher.getAppUser().username})}">Đổi mật khẩu</a>
+<!--                            <a th:href="@{/resetPassword(email=${teacher.getAppUser().username})}">Đổi mật khẩu</a>-->
                         </td>
                     </tr>
                     <tr>
@@ -64,16 +64,16 @@
                         </th>
                         <td>
                             <p th:text="${teacher.getContract().getContractCode()}"> </p>
-                            <button STYLE="border: none" type="button" class="btn btn-outline-danger text-primary" data-bs-toggle="modal"
-                                    data-bs-target="#exampleModal"
-                                    th:attr="data-contractCode=${teacher.getContract().getContractCode()},
-                                 data-startDate=${teacher.getContract().getStartDate()} ,
-                                 data-endDate=${teacher.getContract().getEndDate()},
-                                 data-salaryLevel=${teacher.getContract().getSalaryLevel().getCoefficientsSalary()}"
-                                    onclick="detailContract(this)">
-                                <i class="fas fa-trash-alt"></i>
-                                Xem chi tiết hợp đồng
-                            </button>
+<!--                            <button STYLE="border: none" type="button" class="btn btn-outline-danger text-primary" data-bs-toggle="modal"-->
+<!--                                    data-bs-target="#exampleModal"-->
+<!--                                    th:attr="data-contractCode=${teacher.getContract().getContractCode()},-->
+<!--                                 data-startDate=${teacher.getContract().getStartDate()} ,-->
+<!--                                 data-endDate=${teacher.getContract().getEndDate()},-->
+<!--                                 data-salaryLevel=${teacher.getContract().getSalaryLevel().getCoefficientsSalary()}"-->
+<!--                                    onclick="detailContract(this)">-->
+<!--                                <i class="fas fa-trash-alt"></i>-->
+<!--                                Xem chi tiết hợp đồng-->
+<!--                            </button>-->
                         </td>
                     </tr>
                     <tr>
@@ -81,7 +81,7 @@
                             Lương cơ bản
                         </th>
                         <td>
-                            <p th:text="${teacher.getBasicSalary()}"></p>
+                            <p th:text="${#numbers.formatDecimal(teacher.getBasicSalary(), 0,  'COMMA', 0, 'POINT')}+' vnđ'" ></p>
                         </td>
                     </tr>
                     <tr>
@@ -89,7 +89,7 @@
                             Ngày Sinh
                         </th>
                         <td>
-                            <p th:text="${teacher.getDateOfBirth()}"></p>
+                            <p th:text="${#dates.format(teacher.getDateOfBirth(), 'dd/MM/yyyy')}"></p>
                         </td>
                     </tr>
                     <tr>
