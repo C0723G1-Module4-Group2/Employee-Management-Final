@@ -117,6 +117,9 @@
                                         <input type="text" hidden id="imgUrl" name="img"  th:field="*{imgOfTeacher}"/>
                                         <input type="file" onchange="displayButton()" id="photo"/>
                                         <button type="button" onclick="uploadImage()" style="display: none" id="upload">Tải lên firebase</button>
+                                        <div id="loadingSpinner" class="spinner-border" role="status" style="display: none;">
+                                            <span class="visually-hidden">Loading...</span>
+                                        </div>
                                         <!--                                    <input class="form-control" type="text" placeholder="Đường Link Của Ảnh" aria-label="default input example" th:field="*{imgOfTeacher}">-->
                                         <button  style="margin-top: 10px ; text-align: right" type="submit" class="btn btn-outline-success">Thêm mới</button>
                                     </div>
@@ -220,20 +223,26 @@
         const metadata = {
             contentType: file.type
         };
+        document.getElementById("loadingSpinner").style.display = "block";
         const task = ref.child(name).put(file, metadata);
 
         task.then(snapshot => snapshot.ref.getDownloadURL())
             .then(url => {
+                document.getElementById("loadingSpinner").style.display = "none";
                 // đường dẫn sau khi lưu xong trền firebase sẽ trả về đường dẫn.
                 console.log(url);
-                alert('Ảnh tải lên thành công');
+                // alert('Ảnh tải lên thành công');
                 // gán vào thẻ form để submit
                 document.getElementById("imgUrl").value = url;
                 document.getElementById("imgUrl1").src = url;
                 // submit tự động
                 document.getElementById("form-submit").submit();
             })
-            .catch(console.error);
+            .catch(error => {
+                // Ẩn spinner khi xảy ra lỗi
+                document.getElementById("loadingSpinner").style.display = "none";
+                console.error(error);
+            });
     }
 
     function displayButton() {
