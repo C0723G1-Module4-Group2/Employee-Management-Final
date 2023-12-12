@@ -72,10 +72,10 @@ public class RegisterLoginController {
             appUserService.updateAppUser(appUser1);
         }
         if(principal==null){
-            redirectAttributes.addFlashAttribute("success", "Đổi mật khẩu thành công");
+            redirectAttributes.addFlashAttribute("login", "Đổi mật khẩu thành công");
             return "redirect:/login";
         }else {
-            redirectAttributes.addFlashAttribute("success", "Đổi mật khẩu thành công");
+            redirectAttributes.addFlashAttribute("login", "Đổi mật khẩu thành công");
             return "redirect:/";
         }
     }

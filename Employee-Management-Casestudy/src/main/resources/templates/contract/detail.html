@@ -104,7 +104,7 @@
               Lương cơ bản
             </th>
             <td>
-              <p th:text="${contract.getBasicSalary()}"></p>
+              <p th:text = "${#numbers.formatDecimal(contract.getBasicSalary(), 0,  'COMMA', 0, 'POINT')}+' vnđ'"></p>
             </td>
           </tr>
           <tr>
